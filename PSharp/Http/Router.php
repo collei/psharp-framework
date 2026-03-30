@@ -13,6 +13,9 @@ use PSharp\Support\Str;
  */
 class Router
 {
+	/**
+	 * List of supported HTTP methods
+	 */
 	private const HTTP_METHODS = [
 		'GET' => HttpGet::class,
 		'POST' => HttpPost::class,
@@ -25,13 +28,24 @@ class Router
 		'*' => HttpAny::class,
 	];
 
+	/**
+	 * List of crafted endpoints
+	 */
 	private $endpoints = [];
 
+	/**
+	 * Empty constrcutor
+	 */
 	public function __construct()
 	{
 		//
 	}
 
+	/**
+	 * Retrieve all crafted endpoints.
+	 * 
+	 * @return array
+	 */
 	public function getEndpoints()
 	{
 		$mapper = function ($item) {
@@ -44,20 +58,42 @@ class Router
 		);
 	}
 
+	/**
+	 * Map all controllers detected under $namespace.
+	 * 
+	 * @param string $namespace
+	 * @return $this
+	 */
 	public function mapControllers(string $namespace)
 	{
 		$classReflect = new ReflectionClass($controller);
 		
 		$this->mapControllerEndpoints($classReflect);
+
+		return $this;
 	}
 
+	/**
+	 * Map the specified controller.
+	 * 
+	 * @param string|\PSharp\Http\Actions\ControllerBase $controller
+	 * @return $this
+	 */
 	public function mapController(string|ControllerBase $controller)
 	{
 		$classReflect = new ReflectionClass($controller);
 		
 		$this->mapControllerEndpoints($classReflect);
+
+		return $this;
 	}
 
+	/**
+	 * Map all endpoints from the controller's \ReflectionClass instance.
+	 * 
+	 * @param \ReflectionClass $reflect
+	 * @return void
+	 */
 	protected function mapControllerEndpoints(ReflectionClass $reflect)
 	{
 		$className = $reflect->getName();
@@ -72,8 +108,7 @@ class Router
 			$route = $classAttr->newInstance();
 
 			if (empty($route->getRootName())) {
-				$classShortName = $reflect->getShortName();
-				$kebabName = Str::kebab($classShortName);
+				$kebabName = Str::kebab($reflect->getShortName());
 
 				if (Str::endsWith($kebabName, '-controller')) {
 					$kebabName = Str::trimSuffix($kebabName, '-controller');
@@ -88,6 +123,13 @@ class Router
 		}
 	}
 
+	/**
+	 * Map the endpoint from the method's \ReflectionMethod instance.
+	 * 
+	 * @param \ReflectionMethod $reflect
+	 * @param string $className
+	 * @return void
+	 */
 	protected function mapControllerMethodEndpoint(Route $route, ReflectionMethod $reflect, string $className)
 	{
 		$methodName = $reflect->getName();
