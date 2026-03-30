@@ -1,0 +1,15 @@
+/vendor/
+/docs/
+/bootstrap/
+/storage/
+/.env
+/.phpdoc
+CHANGESTO
+Cso.php
+
+#Developement
+*.sublime-project
+*.sublime-workspace
+*.bat
+*.cmd
+*.sh
