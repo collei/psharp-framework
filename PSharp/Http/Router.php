@@ -6,6 +6,7 @@ use ReflectionMethod;
 use PSharp\Http\Methods\{HttpGet,HttpPost,HttpPut,HttpPatch,HttpDelete,HttpHead,HttpOptions,HttpTrace,HttpAny};
 use PSharp\Http\Methods\Base\HttpMethodBase;
 use PSharp\Http\Actions\ControllerBase;
+use PSharp\Support\Str;
 
 /**
  * The app router
@@ -70,6 +71,17 @@ class Router
 
 			$route = $classAttr->newInstance();
 
+			if (empty($route->getRootName())) {
+				$classShortName = $reflect->getShortName();
+				$kebabName = Str::kebab($classShortName);
+
+				if (Str::endsWith($kebabName, '-controller')) {
+					$kebabName = Str::trimSuffix($kebabName, '-controller');
+				}
+
+				$route->setRootNameIfEmpty($kebabName);
+			}
+
 			foreach ($reflect->getMethods() as $method) {
 				$this->mapControllerMethodEndpoint($route, $method, $className);
 			}
@@ -90,6 +102,12 @@ class Router
 			}
 
 			$endpoint = $methodAttr->newInstance();
+
+			if (empty($endpoint->getSimpleName())) {
+				$kebabName = Str::kebab($methodName);
+
+				$endpoint->setSimpleNameIfEmpty($kebabName);
+			}
 
 			$endpoint->setRoute($route)->setAction($action);
 

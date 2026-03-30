@@ -1,16 +1,16 @@
 <?php
 namespace App\Controllers;
 
-use Psharp\Http\Route;
-use Psharp\Http\Actions\ControllerBase;
-use Psharp\Http\Methods\{HttpGet,HttpPost,HttpDelete};
+use PSharp\Http\Route;
+use PSharp\Http\Actions\ControllerBase;
+use PSharp\Http\Methods\{HttpGet,HttpPost,HttpDelete};
 
 #[ApiController]
-#[Route('/guestbook','guests')]
+#[Route('/guestbook')]
 class GuestbookController extends ControllerBase
 {
     #[HttpPost]
-    public function moderate()
+    public function moderatePage()
     {
         return "Welcome to the moderator panel.";
     }

@@ -67,14 +67,14 @@ abstract class Str
 	 *
 	 *	@var array
 	 */
-	protected static $snakeCache = [];
+	protected static $delimitedCache = [];
 
 	/**
-	 *	Keep cache of resolved StudlyCase transforms.
+	 *	Keep cache of resolved PascalCase transforms.
 	 *
 	 *	@var array
 	 */
-	protected static $studlyCache = [];
+	protected static $pascalCache = [];
 
 	/**
 	 *	Keep cache of resolved camelCase transforms.
@@ -181,6 +181,17 @@ abstract class Str
 	}
 
 	/**
+	 *	Tells if this-complex-name is in kebab format
+	 *
+	 *	@param	string	$kebab
+	 *	@return	bool
+	 */
+	public static function isKebab(string $kebab)
+	{
+		return \preg_match('/^[a-z][a-z\d]*(-[a-z][a-z\d]*)*$/', $kebab) === 1;
+	}
+
+	/**
 	 *	Converts thisComplexName to this_complex_name
 	 *
 	 *	@param	string	$camel
@@ -190,6 +201,17 @@ abstract class Str
 	public static function toSnake(string $camel, string $delimiter = '_')
 	{
 		return static::snake($camel, $delimiter);
+	}
+
+	/**
+	 *	Converts thisComplexName to this-complex-name
+	 *
+	 *	@param	string	$camel
+	 *	@return	string
+	 */
+	public static function toKebab(string $camel)
+	{
+		return static::kebab($camel);
 	}
 
 	/**
@@ -1137,15 +1159,39 @@ abstract class Str
 	 * Convert a string to snake case.
 	 *
 	 * @param  string  $value
+	 * @return string
+	 */
+	public static function snake($value)
+	{
+		return static::toDelimitedLowercase($value, '_');
+	}
+
+	/**
+	 * Convert a string to kebab case.
+	 *
+	 * @param  string  $value
 	 * @param  string  $delimiter
 	 * @return string
 	 */
-	public static function snake($value, $delimiter = '_')
+	public static function kebab($value)
+	{
+		return static::toDelimitedLowercase($value, '-');
+	}
+
+	/**
+	 * Convert a string from camel case to a string of
+	 * words in lowercase separated with $delimiter.
+	 *
+	 * @param  string  $value
+	 * @param  string  $delimiter
+	 * @return string
+	 */
+	public static function toDelimitedLowercase($value, $delimiter = '_')
 	{
 		$key = $value;
 
-		if (isset(static::$snakeCache[$key][$delimiter])) {
-			return static::$snakeCache[$key][$delimiter];
+		if (isset(static::$delimitedCache[$key][$delimiter])) {
+			return static::$delimitedCache[$key][$delimiter];
 		}
 
 		if (! ctype_lower($value)) {
@@ -1154,26 +1200,26 @@ abstract class Str
 			$value = static::lower(preg_replace('/(.)(?=[A-Z])/u', '$1'.$delimiter, $value));
 		}
 
-		return static::$snakeCache[$key][$delimiter] = $value;
+		return static::$delimitedCache[$key][$delimiter] = $value;
 	}
 
 	/**
-	 * Convert a value to studly caps case.
+	 * Convert a value to pascal caps case.
 	 *
 	 * @param  string  $value
 	 * @return string
 	 */
-	public static function studly($value)
+	public static function pascal($value)
 	{
 		$key = $value;
 
-		if (isset(static::$studlyCache[$key])) {
-			return static::$studlyCache[$key];
+		if (isset(static::$pascalCache[$key])) {
+			return static::$pascalCache[$key];
 		}
 
 		$value = ucwords(str_replace(['-', '_'], ' ', $value));
 
-		return static::$studlyCache[$key] = str_replace(' ', '', $value);
+		return static::$pascalCache[$key] = str_replace(' ', '', $value);
 	}
 
 	/**

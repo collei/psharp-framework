@@ -125,6 +125,31 @@ abstract class HttpMethodBase implements IEndpoint
 	}
 
 	/**
+	 * Return the simple name of this endpoint.
+	 * 
+	 * @return string
+	 */
+	public function getSimpleName()
+	{
+		return $this->name;
+	}
+
+	/**
+	 * Set the simple name only if empty.
+	 * 
+	 * @param string $name
+	 * @return this
+	 */
+	public function setSimpleNameIfEmpty(string $name)
+    {
+		if (empty($this->name)) {
+			$this->name = $name;
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Return the HTTP method of this endpoint.
 	 * 
 	 * @return string

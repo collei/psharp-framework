@@ -58,13 +58,28 @@ class Route
 	}
 
 	/**
-	 * Return the full name of this endpoint.
+	 * Return the root name of this endpoint.
 	 * 
-	 * @return string
+	 * @return string|null
 	 */
 	public function getRootName()
     {
 		return $this->rootName;
+	}
+
+	/**
+	 * Set the root name only if empty.
+	 * 
+	 * @param string $rootName
+	 * @return this
+	 */
+	public function setRootNameIfEmpty(string $rootName)
+    {
+		if (empty($this->rootName)) {
+			$this->rootName = $rootName;
+		}
+
+		return $this;
 	}
 	
 	/**
