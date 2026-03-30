@@ -1,16 +1,12 @@
 <?php
-namespace App;
 
 echo '<PRE>';
 
-use App\Controllers\GuestbookController;
-use App\Controllers\GuestbookModeratorController;
 use PSharp\Http\Router;
 
 $rout = new Router();
 
-$rout->mapController(GuestbookController::class);
-$rout->mapController(GuestbookModeratorController::class);
+$rout->mapControllers();
 
 $ends = $rout->getEndpoints();
 
