@@ -59,16 +59,27 @@ class Router
 	}
 
 	/**
-	 * Map all controllers detected under $namespace.
+	 * Map all controllers detected under $namespace,
+	 * assuming the project follows psr-4 guidelines.
 	 * 
-	 * @param string $namespace
+	 * @param string $namespace = 'App\Controllers'
 	 * @return $this
 	 */
-	public function mapControllers(string $namespace)
+	public function mapControllers(string $namespace = 'App\Controllers')
 	{
-		$classReflect = new ReflectionClass($controller);
-		
-		$this->mapControllerEndpoints($classReflect);
+		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . $namespace);
+
+		$files = array_diff(scandir($path), array('.','..'));
+
+		foreach ($files as $file) {
+			if (is_file($path . DIRECTORY_SEPARATOR . $file)) {
+				if (Str::endsWith(strtolower($file), '.php')) {
+					$class = $namespace . '\\' . substr($file, 0, -4);
+
+					$this->mapController($class);
+				}
+			}
+		}
 
 		return $this;
 	}
