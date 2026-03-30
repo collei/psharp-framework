@@ -3,18 +3,12 @@ namespace App\Controllers;
 
 use PSharp\Http\Route;
 use PSharp\Http\Actions\ControllerBase;
-use PSharp\Http\Methods\{HttpGet,HttpPost,HttpDelete};
+use PSharp\Http\Methods\{HttpGet,HttpPost};
 
 #[ApiController]
 #[Route('/guestbook')]
 class GuestbookController extends ControllerBase
 {
-    #[HttpPost]
-    public function moderatePage()
-    {
-        return "Welcome to the moderator panel.";
-    }
-
     #[HttpGet(name: 'home')]
     public function home()
     {
