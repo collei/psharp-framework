@@ -27,9 +27,9 @@ abstract class HttpMethodBase
 	 * @param string $path = "/"
 	 * @param string $name = null
 	 */
-	public function __construct(string $path = "/", string $name = null)
+	public function __construct(string $path = null, string $name = null)
 	{
-		$this->path = $path;
+		$this->path = $path ?? '';
 		$this->name = $name;
 	}
 
@@ -85,7 +85,7 @@ abstract class HttpMethodBase
 	public function getPath()
 	{
 		return ($this->route)
-			? str_replace('//','/',($this->route->getRootPath() . '/' . $this->path))
+			? str_replace('//','/',($this->route->getRootPath() . ($this->path ? ('/' . $this->path) : '')))
 			: $this->path;
 	}
 
@@ -107,7 +107,7 @@ abstract class HttpMethodBase
 	public function getName()
 	{
 		return ($this->route)
-			? str_replace(['...','..'],'.',($this->route->getRootName() . '/' . $this->name))
+			? trim(str_replace(['...','..'],'.',($this->route->getRootName() . '.' . $this->name)), ' .')
 			: $this->name;
 	}
 

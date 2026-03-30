@@ -6,6 +6,7 @@
 /.phpdoc
 CHANGESTO
 Cso.php
+output.txt
 
 #Developement
 *.sublime-project

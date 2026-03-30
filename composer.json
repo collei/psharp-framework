@@ -1,0 +1,22 @@
+{
+    "name": "collei/psharp",
+    "description": "Another PHP microframework for webapps",
+    "type": "project",
+    "require": {
+        "php": "^8.0",
+        "nesbot/carbon": "^2.73"
+    },
+    "autoload": {
+        "psr-4": {
+            "Psharp\\": "Psharp",
+            "App\\": "App"
+        }
+    },
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Al Ju",
+            "email": "alarido.su@gmail.com"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteRule ((docs/)?(api|howto))/(.*) $1/$4 [L]
+RewriteRule ((public/)?(images|css|js|media))/(.*\.(css|js|png|jpg|jpeg|jfif|gif)) $1/$4 [L]
+RewriteCond %{REQUEST_URI} !-f 
+RewriteCond %{REQUEST_URI} !-d
+RewriteRule (.*)$ index.php [L]
