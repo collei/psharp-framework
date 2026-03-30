@@ -1,7 +1,7 @@
 <?php
-namespace Psharp\Http\Methods;
+namespace PSharp\Http\Methods;
 
-use Psharp\Http\Methods\Base\HttpMethodBase;
+use PSharp\Http\Methods\Base\HttpMethodBase;
 use Attribute;
 
 /**

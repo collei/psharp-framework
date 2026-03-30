@@ -1,7 +1,7 @@
 <?php
-namespace Psharp\Http;
+namespace PSharp\Http;
 
-use Psharp\Http\Methods\Base\HttpMethodBase;
+use PSharp\Http\Methods\Base\HttpMethodBase;
 use Attribute;
 
 /**
@@ -40,7 +40,7 @@ class Route
 	/**
 	 * Obtains the action from this endpoint.
 	 * 
-	 * @return \Psharp\Http\ControllerBase|null
+	 * @return \PSharp\Http\ControllerBase|null
 	 */
 	public function getController()
 	{

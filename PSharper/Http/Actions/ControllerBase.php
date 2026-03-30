@@ -1,5 +1,5 @@
 <?php
-namespace Psharp\Http\Actions;
+namespace PSharp\Http\Actions;
 
 /**
  * Base controller class

@@ -1,11 +1,11 @@
 <?php
-namespace Psharp\Http;
+namespace PSharp\Http;
 
 use ReflectionClass;
 use ReflectionMethod;
-use Psharp\Http\Methods\{HttpGet,HttpPost,HttpPut,HttpPatch,HttpDelete,HttpHead,HttpOptions,HttpTrace,HttpAny};
-use Psharp\Http\Methods\Base\HttpMethodBase;
-use Psharp\Http\Actions\ControllerBase;
+use PSharp\Http\Methods\{HttpGet,HttpPost,HttpPut,HttpPatch,HttpDelete,HttpHead,HttpOptions,HttpTrace,HttpAny};
+use PSharp\Http\Methods\Base\HttpMethodBase;
+use PSharp\Http\Actions\ControllerBase;
 
 /**
  * The app router
@@ -33,16 +33,8 @@ class Router
 
 	public function getEndpoints()
 	{
-		return $this->endpoints;
-	}
-
-	public function getSchemedEndpoints()
-	{
 		$mapper = function ($item) {
-			$name = $item->getName();
-			$path = $item->getPath();
-			$action = $item->getAction();
-			return (object) compact('name','path','action');
+			return $item->asEndpoint();
 		};
 
 		return array_combine(
@@ -101,7 +93,7 @@ class Router
 
 			$endpoint->setRoute($route)->setAction($action);
 
-			$this->endpoints[$endpoint->getEndpoint()] = $endpoint;
+			$this->endpoints[$endpoint->asString()] = $endpoint;
 		}
 	}
 }

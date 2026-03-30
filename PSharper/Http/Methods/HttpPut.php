@@ -1,14 +1,14 @@
 <?php
-namespace Psharp\Http\Methods;
+namespace PSharp\Http\Methods;
 
-use Psharp\Http\Methods\Base\HttpMethodBase;
+use PSharp\Http\Methods\Base\HttpMethodBase;
 use Attribute;
 
 /**
  * Class attribute for GET endpoints
  */
 #[Attribute(Attribute::TARGET_METHOD)]
-class HttpHead extends HttpMethodBase
+class HttpPut extends HttpMethodBase
 {
 	//
 }

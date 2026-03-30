@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Psharp\\": "Psharp",
+            "PSharp\\": "PSharp",
             "App\\": "App"
         }
     },

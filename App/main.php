@@ -12,7 +12,5 @@ $rout = new Router();
 $rout->mapController(GuestbookController::class);
 
 $ends = $rout->getEndpoints();
-$schends = $rout->getSchemedEndpoints();
 
 print_r($ends);
-print_r($schends);

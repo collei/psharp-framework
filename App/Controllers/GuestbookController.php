@@ -9,7 +9,13 @@ use Psharp\Http\Methods\{HttpGet,HttpPost,HttpDelete};
 #[Route('/guestbook','guests')]
 class GuestbookController extends ControllerBase
 {
-    #[HttpGet('','home')]
+    #[HttpPost]
+    public function moderate()
+    {
+        return "Welcome to the moderator panel.";
+    }
+
+    #[HttpGet(name: 'home')]
     public function home()
     {
         return "Hello, world!";

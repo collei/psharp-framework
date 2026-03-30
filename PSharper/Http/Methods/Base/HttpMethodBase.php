@@ -1,25 +1,28 @@
 <?php
-namespace Psharp\Http\Methods\Base;
+namespace PSharp\Http\Methods\Base;
 
-use Psharp\Http\Route;
-use Psharp\Http\Methods\HttpDelete;
-use Psharp\Http\Methods\HttpGet;
-use Psharp\Http\Methods\HttpHead;
-use Psharp\Http\Methods\HttpOptions;
-use Psharp\Http\Methods\HttpPatch;
-use Psharp\Http\Methods\HttpPost;
-use Psharp\Http\Methods\HttpPut;
-use Psharp\Http\Methods\HttpTrace;
+use PSharp\Http\Route;
+use PSharp\Http\Endpoint;
+use PSharp\Http\IEndpoint;
+use PSharp\Http\Methods\HttpDelete;
+use PSharp\Http\Methods\HttpGet;
+use PSharp\Http\Methods\HttpHead;
+use PSharp\Http\Methods\HttpOptions;
+use PSharp\Http\Methods\HttpPatch;
+use PSharp\Http\Methods\HttpPost;
+use PSharp\Http\Methods\HttpPut;
+use PSharp\Http\Methods\HttpTrace;
 
 /**
  * Base class for route endpoints
  */
-abstract class HttpMethodBase
+abstract class HttpMethodBase implements IEndpoint
 {
 	private $path = null;
 	private $name = null;
 	private $route = null;
 	private $action = null;
+	private $method = null;
 
 	/**
 	 * Constructor.
@@ -31,6 +34,26 @@ abstract class HttpMethodBase
 	{
 		$this->path = $path ?? '';
 		$this->name = $name;
+		$this->method = $this->catterMethod();
+	}
+
+	/**
+	 * Catter the HTTP method from the object instance.
+	 * 
+	 * @return string
+	 */
+	private function catterMethod()
+	{
+		if ($this instanceof HttpDelete) return 'DELETE';
+		if ($this instanceof HttpGet) return 'GET';
+		if ($this instanceof HttpHead) return 'HEAD';
+		if ($this instanceof HttpOptions) return 'OPTIONS';
+		if ($this instanceof HttpPatch) return 'PATCH';
+		if ($this instanceof HttpPost) return 'POST';
+		if ($this instanceof HttpPut) return 'PUT';
+		if ($this instanceof HttpTrace) return 'TRACE';
+
+		return '*';
 	}
 
 	/**
@@ -90,16 +113,6 @@ abstract class HttpMethodBase
 	}
 
 	/**
-	 * Return the method and full path of this endpoint.
-	 * 
-	 * @return string
-	 */
-	public function getEndpoint()
-	{
-		return ($this->getMethod() ?? '*') . ' ' . $this->getPath();
-	}
-
-	/**
 	 * Return the full name of this endpoint.
 	 * 
 	 * @return string
@@ -118,16 +131,41 @@ abstract class HttpMethodBase
 	 */
 	public function getMethod()
 	{
-		if ($this instanceof HttpDelete) return 'DELETE';
-		if ($this instanceof HttpGet) return 'GET';
-		if ($this instanceof HttpHead) return 'HEAD';
-		if ($this instanceof HttpOptions) return 'OPTIONS';
-		if ($this instanceof HttpPatch) return 'PATCH';
-		if ($this instanceof HttpPost) return 'POST';
-		if ($this instanceof HttpPut) return 'PUT';
-		if ($this instanceof HttpTrace) return 'TRACE';
+		return $this->method;
+	}
 
-		return '*';
+	/**
+	 * Return the method and full path of this endpoint.
+	 * 
+	 * @return string
+	 */
+	public function asString()
+	{
+		return ($this->getMethod() ?? '*') . ' ' . $this->getPath();
+	}
+
+	/**
+	 * Set the HTTP method of this endpoint.
+	 * 
+	 * @return string
+	 */
+	protected function setMethod(string $method)
+	{
+		$this->method = $method;
+		return $this;
+	}
+
+	/**
+	 * Return the object content as endpoint.
+	 * 
+	 * @return \PSharp\Http\Endpoint
+	 */
+	public function asEndpoint()
+	{
+		return (new Endpoint($this->path, $this->name))
+					->setRoute($this->route)
+					->setAction($this->action)
+					->setMethod($this->method);
 	}
 	
 	/**
@@ -137,6 +175,6 @@ abstract class HttpMethodBase
 	 */
 	public function __toString()
 	{
-		return $this->getEndpoint();
+		return $this->asString();
 	}
 }
