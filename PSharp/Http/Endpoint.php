@@ -53,10 +53,11 @@ class Endpoint extends HttpMethodBase implements IEndpoint
 			$name = $spec[1];
 			$type = $spec[2] ?? null;
 			$regex = self::REGEX_ACCEPTED[$type] ?? '[^/]+';
-			$default = $spec[3] ?? null;
-			$optional = '?' == ($spec[4] ?? null);
+			$hasDefault = isset($spec[3]) && !empty($spec[3]);
+			$default = $hasDefault ? $spec[3] : null;
+			$optional = empty($default) ? ('?' == ($spec[4] ?? '')) : false;
 
-			$this->parameters[$name] = (object) compact('name','type','regex','default','optional');
+			$this->parameters[$name] = (object) compact('name','type','regex','hasDefault','default','optional');
 		}
 	}
 
@@ -70,25 +71,24 @@ class Endpoint extends HttpMethodBase implements IEndpoint
 		$this->regex = null;
 
 		$path = $this->getPath();
-		$segments = explode('/', $path);
+		$segments = explode('/', trim($path, '/'));
 		$regexSegments = [];
 
 		foreach ($segments as $segment) {
 			if (1 == preg_match(self::REGEX_PARAM_SEGMENT, $segment, $spec)) {
 				$name = $spec[1];
-				$type = $spec[2] ?? null;
+				$type = isset($spec[2]) ? strtolower($spec[2]) : null;
 				$regexSegment = self::REGEX_ACCEPTED[$type] ?? '[^/]+';
-				$optional = $spec[4] ?? '';
+				$default = $spec[3] ?? null;
+				$optional = empty($default) ? ($spec[4] ?? '') : '?';
 
-				$regexSegments[] = '(?<' . $name . '>' . $regexSegment . ')' . $optional;
+				$regexSegments[] = '(/(?<' . $name . '>' . $regexSegment . '))' . $optional;
 			} else {
-				$regexSegments[] = $segment;
+				$regexSegments[] = '/' . $segment;
 			}
 		}
 
-		$regex = implode('/', $regexSegments);
-
-		$this->regex = '@' . str_replace(')?/', ')?/?', $regex) . '@';
+		$this->regex = '@^' . implode('', $regexSegments) . '$@';
 	}
 
 	/**
@@ -105,13 +105,48 @@ class Endpoint extends HttpMethodBase implements IEndpoint
 			$values = [];
 
 			foreach ($out as $key => $value) if (is_string($key)) {
-				$values[$key] = $value;
+				$values[$key] = $this->coerceType(
+					$value, $this->parameters[$key]->type ?? null
+				);
+			}
+
+			foreach ($this->parameters as $name => $spec) if ($spec->hasDefault) {
+				if (! isset($values[$name])) {
+					$values[$name] = $spec->default;
+				}
 			}
 
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Coerces value to the specified type.
+	 * 
+	 * @param string $value
+	 * @param string|null $type = null
+	 * @return mixed
+	 */
+	private function coerceType(string $value, $type = null)
+	{
+		switch ($type) {
+			case 'int':
+				return (int) (float) $value;
+			case 'float':
+				return (float) $value;
+		}
+
+		if (preg_match('/\d+/', $value) == 1) {
+			return (int) $value;
+		}
+
+		if (preg_match('/\d*[.,]\d+/', $value) == 1) {
+			return (float) $value;
+		}
+
+		return $value;
 	}
 
 	/**

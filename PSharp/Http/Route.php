@@ -53,7 +53,7 @@ class Route
 	 * @return string
 	 */
 	public function getRootPath()
-    {
+	{
 		return $this->rootPath;
 	}
 
@@ -63,7 +63,7 @@ class Route
 	 * @return string|null
 	 */
 	public function getRootName()
-    {
+	{
 		return $this->rootName;
 	}
 
@@ -74,7 +74,7 @@ class Route
 	 * @return this
 	 */
 	public function setRootNameIfEmpty(string $rootName)
-    {
+	{
 		if (empty($this->rootName)) {
 			$this->rootName = $rootName;
 		}
