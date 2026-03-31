@@ -176,7 +176,7 @@ abstract class HttpMethodBase implements IEndpoint
 	 */
 	protected function setMethod(string $method)
 	{
-		$this->method = $method;
+		$this->method = strtoupper($method);
 		return $this;
 	}
 
@@ -187,8 +187,7 @@ abstract class HttpMethodBase implements IEndpoint
 	 */
 	public function asEndpoint()
 	{
-		return (new Endpoint($this->path, $this->name))
-					->setRoute($this->route)
+		return (new Endpoint($this->route, $this->path, $this->name))
 					->setAction($this->action)
 					->setMethod($this->method);
 	}
