@@ -49,20 +49,26 @@ class Pipeline
 	}
 
 	/**
-	 * Set the array of pipes.
+	 * Add several pipes after removing any existing.
 	 *
 	 * @param  array|mixed  $pipes
 	 * @return $this
 	 */
 	public function through($pipes)
 	{
-		$this->pipes = is_array($pipes) ? $pipes : func_get_args();
-		//
+		$pipes = is_array($pipes) ? $pipes : func_get_args();
+
+		$this->pipes = [];
+
+		foreach ($pipes as $pipe) {
+			$this->pipe($pipe);
+		}
+
 		return $this;
 	}
 
 	/**
-	 * Add more one pipe.
+	 * Add a single pipe.
 	 *
 	 * @param  Closure|object  $pipe
 	 * @return $this
@@ -70,7 +76,7 @@ class Pipeline
 	public function pipe($pipe)
 	{
 		$this->pipes[] = $pipe;
-		//
+
 		return $this;
 	}
 
@@ -125,7 +131,8 @@ class Pipeline
 		return function ($passable) use ($destination) {
 			try {
 				return $destination($passable);
-			} catch (Throwable $e) {
+			}
+			catch (Throwable $e) {
 				return $this->handleException($passable, $e);
 			}
 		};
@@ -164,8 +171,8 @@ class Pipeline
 							: $pipe(...$parameters);
 
 					return $this->handleCarry($carry);
-					//
-				} catch (Throwable $e) {
+				}
+				catch (Throwable $e) {
 					return $this->handleException($passable, $e);
 				}
 			};
