@@ -1,5 +1,5 @@
 <?php
-namespace PSharp\Http\Factories\Http;
+namespace PSharp\Http\Factories;
 
 /**
  *	Encapsulates a HTTP cookie factory.

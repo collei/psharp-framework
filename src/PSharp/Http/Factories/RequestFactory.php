@@ -6,6 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
+use PSharp\Http\Request;
 use PSharp\Streams\StreamFactory;
 use PSharp\Support\Arr;
 use InvalidArgumentException;
