@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
-use PSharp\Support\Factories\StreamFactory;
+use PSharp\Streams\StreamFactory;
 use PSharp\Support\Arr;
 use InvalidArgumentException;
 
@@ -28,17 +28,17 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	];
 
 	/**
-	 * @var \Zelatus\Support\Streams\StreamFactory
+	 * @var \PSharp\Streams\StreamFactory
 	 */
 	protected $uriFactory;
 
 	/**
-	 * @var \Zelatus\Support\Streams\StreamFactory
+	 * @var \PSharp\Streams\StreamFactory
 	 */
 	protected $streamFactory;
 
 	/**
-	 * @var \Zelatus\Http\Request\UploadedFileFactory
+	 * @var \PSharp\Http\Factories\UploadedFileFactory
 	 */
 	protected $uploadedFileFactory;
 
@@ -58,7 +58,7 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	 *
 	 * @param string $method The HTTP method associated with the request.
 	 * @param UriInterface|string $uri The URI associated with the request. 
-	 * @return \Zelatus\Http\Request
+	 * @return \PSharp\Http\Request
 	 */
 	public function createRequest(string $method, $uri): RequestInterface
 	{
@@ -80,7 +80,7 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	 * @param UriInterface|string $uri The URI associated with the request. 
 	 * @param array $serverParams An array of Server API (SAPI) parameters with
 	 *	 which to seed the generated request instance.
-	 * @return \Zelatus\Http\Request
+	 * @return \PSharp\Http\Request
 	 */
 	public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
 	{
@@ -174,7 +174,7 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	/**
 	 * Create a new uploaded file.
 	 *
-	 * @see \Zelatus\Http\Request\UploadedFileFactory
+	 * @see \PSharp\Http\Factories\UploadedFileFactory
 	 *
 	 * @param string $filename The name of uploade file (usually from $file['tmp_name']).
 	 * @param int $size The size of the file in bytes (usually from $file['size']).
@@ -209,7 +209,7 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	/**
 	 * Captures and returns a request
 	 *
-	 * @return \Zelatus\Http\Request\Request
+	 * @return \PSharp\Http\Request
 	 */
 	public static function captureRequest()
 	{
@@ -241,7 +241,7 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	 * @param array		$files		The request files ($_FILES)
 	 * @param array		$server		The server parameters ($_SERVER)
 	 * @param string|resource|null $content	The raw body data
-	 * @return Zelatus\Http\Request
+	 * @return \PSharp\Http\Request
 	 */
 	public function createFromParts(
 		string $uri, string $method = 'GET',

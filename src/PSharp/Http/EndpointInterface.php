@@ -4,7 +4,7 @@ namespace PSharp\Http;
 /**
  * Base class for route endpoints
  */
-interface IEndpoint
+interface EndpointInterface
 {
 	/**
 	 * Obtains the action from this endpoint.
