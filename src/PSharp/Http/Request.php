@@ -6,8 +6,10 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 use PSharp\Http\Session;
+use PSharp\Http\Factories\UriFactory;
 use PSharp\Support\Arr;
 use PSharp\Support\Str;
 
@@ -15,7 +17,7 @@ use PSharp\Support\Str;
  * Represents a HTTP request.
  *
  */
-class Request implements RequestInterface
+class Request implements RequestInterface, ServerRequestInterface
 {
 	/**
 	 * @var array METHODS
@@ -105,12 +107,7 @@ class Request implements RequestInterface
 	/**
 	 * @var \Zelatus\Routing\Route
 	 */
-	protected $route;
-
-	/**
-	 * @var callback
-	 */
-	protected $routeResolver;
+	protected $endpoint;
 
 	/**
 	 * @var \PSharp\Http\Session
@@ -137,7 +134,7 @@ class Request implements RequestInterface
 	 *
 	 * @return string
 	 */
-	public function getRequestTarget()
+	public function getRequestTarget(): string
 	{
 		return empty($this->requestTarget) ? '/' : $this->requestTarget;
 	}
@@ -148,7 +145,7 @@ class Request implements RequestInterface
 	 * @param	string	$default = 'html'
 	 * @return	string
 	 */
-	public function getRequestFormat($default = 'html')
+	public function getRequestFormat($default = 'html'): string
 	{
 		if (null === $this->format) {
 			$this->format = $this->attributes->get('_format');
@@ -162,7 +159,7 @@ class Request implements RequestInterface
 	 *
 	 * @param	string	$format
 	 */
-	public function setRequestFormat($format)
+	public function setRequestFormat(string $format)
 	{
 		$this->format = $format;
 	}
@@ -201,7 +198,7 @@ class Request implements RequestInterface
 	 * @param mixed $requestTarget
 	 * @return static
 	 */
-	public function withRequestTarget($requestTarget)
+	public function withRequestTarget($requestTarget) : RequestInterface
 	{
 		$new = new static;
 		$new->requestTarget = $requestTarget;
@@ -213,7 +210,7 @@ class Request implements RequestInterface
 	 *
 	 * @return string Returns the request method.
 	 */
-	public function method()
+	public function method() : string
 	{
 		return $this->getMethod();
 	}
@@ -223,7 +220,7 @@ class Request implements RequestInterface
 	 *
 	 * @return string Returns the request method.
 	 */
-	public function getMethod()
+	public function getMethod() : string
 	{
 		return $this->method;
 	}
@@ -233,7 +230,7 @@ class Request implements RequestInterface
 	 *
 	 * @return bool
 	 */
-	public function isMethod(string $method)
+	public function isMethod(string $method) : bool
 	{
 		return strcasecmp($method, $this->method) === 0;
 	}
@@ -253,7 +250,7 @@ class Request implements RequestInterface
 	 * @return static
 	 * @throws \InvalidArgumentException for invalid HTTP methods.
 	 */
-	public function withMethod($method)
+	public function withMethod($method) : RequestInterface
 	{
 		if (!in_array(strtoupper($method), self::METHODS)) {
 			throw new InvalidArgumentException(
@@ -273,7 +270,7 @@ class Request implements RequestInterface
 	 *
 	 * @return \Psr\Http\Message\UriInterface
 	 */
-	public function getUri()
+	public function getUri() : UriInterface
 	{
 		return $this->uri;
 	}
@@ -283,7 +280,7 @@ class Request implements RequestInterface
 	 *
 	 * @return	\PSharp\Http\Session
 	 */
-	public function getSession()
+	public function getSession() : Session
 	{
 		return $this->session;
 	}
@@ -294,7 +291,7 @@ class Request implements RequestInterface
 	 * @param	string	...$patterns
 	 * @return	bool
 	 */
-	public function is(...$patterns)
+	public function is(string ...$patterns) : bool
 	{
 		$path = $this->getUri()->getPath();
 		//
@@ -313,7 +310,7 @@ class Request implements RequestInterface
 	 * @param	string	...$patterns
 	 * @return	bool
 	 */
-	public function fullUrlIs(...$patterns)
+	public function fullUrlIs(string ...$patterns) : bool
 	{
 		$url = $this->getUri()->toString();
 		//
@@ -331,7 +328,7 @@ class Request implements RequestInterface
 	 *
 	 * @return bool
 	 */
-	public function isSecure()
+	public function isSecure() : bool
 	{
 		$https = $this->getServerParam('HTTPS');
 		//
@@ -346,7 +343,7 @@ class Request implements RequestInterface
 	 * @param bool $preserveHost Preserve the original state of the Host header.
 	 * @return static
 	 */
-	public function withUri(UriInterface $uri, $preserveHost = false)
+	public function withUri(UriInterface $uri, bool $preserveHost = false) : RequestInterface
 	{
 		$new = new static;
 		$host = $uri->getHost();
@@ -376,7 +373,7 @@ class Request implements RequestInterface
 	 *
 	 * @return string HTTP protocol version.
 	 */
-	public function getProtocolVersion()
+	public function getProtocolVersion() : string
 	{
 		return $this->httpVersion;
 	}
@@ -387,7 +384,7 @@ class Request implements RequestInterface
 	 * @param string $version HTTP protocol version
 	 * @return static
 	 */
-	public function withProtocolVersion($version)
+	public function withProtocolVersion($version) : RequestInterface
 	{
 		$new = new static;
 		$new->httpVersion = $version;
@@ -401,7 +398,7 @@ class Request implements RequestInterface
 	 *	 Each key MUST be a header name, and each value MUST be an array of
 	 *	 strings for that header.
 	 */
-	public function getHeaders()
+	public function getHeaders() : array
 	{
 		return $this->headers;
 	}
@@ -414,7 +411,7 @@ class Request implements RequestInterface
 	 *	 name using a case-insensitive string comparison. Returns false if
 	 *	 no matching header name is found in the message.
 	 */
-	public function hasHeader($name)
+	public function hasHeader($name) : bool
 	{
 		if (empty($this->headers)) {
 			return false;
@@ -437,7 +434,7 @@ class Request implements RequestInterface
 	 *	header. If the header does not appear in the message, this method MUST
 	 *	return an empty array.
 	 */
-	public function getHeader($name)
+	public function getHeader(string $name) : array
 	{
 		if (empty($this->headers)) {
 			return [];
@@ -460,7 +457,7 @@ class Request implements RequestInterface
 	 *	concatenated together using a comma. If the header does not appear in
 	 *	the message, this method MUST return an empty string.
 	 */
-	public function getHeaderLine($name)
+	public function getHeaderLine(string $name) : string
 	{
 		if (empty($this->headers)) {
 			return '';
@@ -483,7 +480,7 @@ class Request implements RequestInterface
 	 * @return static
 	 * @throws \InvalidArgumentException for invalid header names or values.
 	 */
-	public function withHeader($name, $value)
+	public function withHeader(string $name, $value) : RequestInterface
 	{
 		if (!is_string($name)) {
 			throw new InvalidArgumentException('Name must be a string');
@@ -526,7 +523,7 @@ class Request implements RequestInterface
 	 * @throws \InvalidArgumentException for invalid header names.
 	 * @throws \InvalidArgumentException for invalid header values.
 	 */
-	public function withAddedHeader($name, $value)
+	public function withAddedHeader(string $name, $value) : RequestInterface
 	{
 		if (!is_string($name)) {
 			throw new InvalidArgumentException('Name must be a string');
@@ -577,7 +574,7 @@ class Request implements RequestInterface
 	 * @param string $name Case-insensitive header field name to remove.
 	 * @return static
 	 */
-	public function withoutHeader($name)
+	public function withoutHeader(string $name) : RequestInterface
 	{
 		if (!is_string($name)) {
 			throw new InvalidArgumentException('Name must be a string');
@@ -602,7 +599,7 @@ class Request implements RequestInterface
 	 *
 	 * @return StreamInterface Returns the body as a stream.
 	 */
-	public function getBody()
+	public function getBody() : StreamInterface
 	{
 		return $this->body;
 	}
@@ -614,7 +611,7 @@ class Request implements RequestInterface
 	 * @return static
 	 * @throws \InvalidArgumentException When the body is not valid.
 	*/
-	public function withBody(StreamInterface $body)
+	public function withBody(StreamInterface $body) : RequestInterface
 	{
 		$new = new static;
 		$new->body = $body;
@@ -628,7 +625,7 @@ class Request implements RequestInterface
 	 * @param mixed $default
 	 * @return string
 	 */
-	public function getServerParam(string $name, $default = null)
+	public function getServerParam(string $name, $default = null) : string
 	{
 		return $this->serverParams[$name] ?? $default;
 	}
@@ -638,7 +635,7 @@ class Request implements RequestInterface
 	 *
 	 * @return array
 	 */
-	public function getServerParams()
+	public function getServerParams() : array
 	{
 		return $this->serverParams;
 	}
@@ -649,7 +646,7 @@ class Request implements RequestInterface
 	 * @param array $server Array of server parameters, typically from $_SERVER.
 	 * @return static
 	 */
-	public function withServerParams(array $server)
+	public function withServerParams(array $server) : RequestInterface
 	{
 		$cloned = clone $this;
 		$cloned->serverParams = $server;
@@ -661,7 +658,7 @@ class Request implements RequestInterface
 	 *
 	 * @return array
 	 */
-	public function getCookieParams()
+	public function getCookieParams() : array
 	{
 		return $this->cookieParams;
 	}
@@ -672,7 +669,7 @@ class Request implements RequestInterface
 	 * @param array $cookies Array of key/value pairs representing cookies.
 	 * @return static
 	 */
-	public function withCookieParams(array $cookies)
+	public function withCookieParams(array $cookies) : ServerRequestInterface
 	{
 		$cloned = clone $this;
 		//
@@ -686,7 +683,7 @@ class Request implements RequestInterface
 	 *
 	 * @return array
 	 */
-	public function getQueryParams()
+	public function getQueryParams() : array
 	{
 		return $this->queryStringParams;
 	}
@@ -694,11 +691,10 @@ class Request implements RequestInterface
 	/**
 	 * Return an instance with the specified query string arguments.
 	 *
-	 * @param array $query Array of query string arguments, typically from
-	 *	 $_GET.
+	 * @param array $query Array of query string arguments, typically from $_GET.
 	 * @return static
 	 */
-	public function withQueryParams(array $query)
+	public function withQueryParams(array $query) : ServerRequestInterface
 	{
 		$cloned = clone $this;
 		//
@@ -713,7 +709,7 @@ class Request implements RequestInterface
 	 * @return array An array tree of UploadedFileInterface instances; an empty
 	 *	 array MUST be returned if no data is present.
 	 */
-	public function getUploadedFiles()
+	public function getUploadedFiles() : array
 	{
 		return $this->uploadedFiles;
 	}
@@ -725,7 +721,7 @@ class Request implements RequestInterface
 	 * @return static
 	 * @throws \InvalidArgumentException if an invalid structure is provided.
 	 */
-	public function withUploadedFiles(array $uploadedFiles)
+	public function withUploadedFiles(array $uploadedFiles) : ServerRequestInterface
 	{
 		$cloned = clone $this;
 		//
@@ -754,7 +750,7 @@ class Request implements RequestInterface
 	 * @throws \InvalidArgumentException if an unsupported argument type is
 	 *	 provided.
 	 */
-	public function withParsedBody($data)
+	public function withParsedBody($data) : ServerRequestInterface
 	{
 		$cloned = clone $this;
 		//
@@ -774,7 +770,7 @@ class Request implements RequestInterface
 	 *
 	 * @return mixed[] Attributes derived from the request.
 	 */
-	public function getAttributes()
+	public function getAttributes() : array
 	{
 		return $this->attributes;
 	}
@@ -786,7 +782,7 @@ class Request implements RequestInterface
 	 * @param string $name The attribute name.
 	 * @return bool
 	 */
-	public function hasAttribute($name)
+	public function hasAttribute(string $name) : bool
 	{
 		return array_key_exists($name, $this->attributes);
 	}
@@ -799,7 +795,7 @@ class Request implements RequestInterface
 	 * @param mixed $default Default value to return if the attribute does not exist.
 	 * @return mixed
 	 */
-	public function getAttribute($name, $default = null)
+	public function getAttribute(string $name, $default = null)
 	{
 		return $this->attributes[$name] ?? $default;
 	}
@@ -812,7 +808,7 @@ class Request implements RequestInterface
 	 * @param mixed $value The value of the attribute.
 	 * @return static
 	 */
-	public function withAttribute($name, $value)
+	public function withAttribute(string $name, $value) : ServerRequestInterface
 	{
 		$cloned = clone $this;
 		//
@@ -828,7 +824,7 @@ class Request implements RequestInterface
 	 * @param string $name The attribute name.
 	 * @return static
 	 */
-	public function withoutAttribute($name)
+	public function withoutAttribute(string $name) : ServerRequestInterface
 	{
 		$cloned = clone $this;
 		//
@@ -838,20 +834,14 @@ class Request implements RequestInterface
 	}
 
 	/**
-	 * Returns the route bound with the request.
+	 * Returns the endpoint bound with the request.
 	 *
 	 * @return \Zelatus\Routing\Route
 	 */
-	public function route()
+	public function endpoint()
 	{
-		if ($this->route) {
-			return $this->route;
-		}
-
-		if ($resolver = $this->getRouteResolver()) {
-			if ($this->route = $resolver()) {
-				return $this->route;
-			}
+		if ($this->endpoint) {
+			return $this->endpoint;
 		}
 
 		return null;
@@ -1283,30 +1273,5 @@ class Request implements RequestInterface
 		}
 
 		return $default;
-	}
-
-	/**
-	 * Get the route resolver callback.
-	 *
-	 * @return \Closure
-	 */
-	public function getRouteResolver()
-	{
-		return $this->routeResolver ?: function() {
-			//
-		};
-	}
-
-	/**
-	 * Set the route resolver callback.
-	 *
-	 * @param \Closure $callback
-	 * @return $this
-	 */
-	public function setRouteResolver(Closure $callback)
-	{
-		$this->routeResolver = $callback;
-		//
-		return $this;
 	}
 }

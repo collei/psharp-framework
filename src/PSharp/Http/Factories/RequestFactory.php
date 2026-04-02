@@ -83,7 +83,7 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	 *	 which to seed the generated request instance.
 	 * @return \PSharp\Http\Request
 	 */
-	public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
+	public function createServerRequest(string $method, $uri, array $serverParams = []) : ServerRequestInterface
 	{
 		$request = $this->createRequest($method, $uri)
 			->withCookieParams($_COOKIE)
