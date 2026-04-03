@@ -166,7 +166,7 @@ class Stream implements StreamInterface
 	 *
 	 * @return void
 	 */
-	public function close()
+	public function close() : void
 	{
 		if (is_resource($this->handle)) {
 			fclose($this->handle);
@@ -242,7 +242,7 @@ class Stream implements StreamInterface
 	 *
 	 * @return int|null Returns the size in bytes if known, or null if unknown.
 	 */
-	public function getSize()
+	public function getSize() : ?int
 	{
 		if (!is_null($this->size)) {
 			return $this->size;
@@ -271,7 +271,7 @@ class Stream implements StreamInterface
 	 * @return int Position of the file pointer
 	 * @throws \RuntimeException on error.
 	 */
-	public function tell()
+	public function tell() : int
 	{
 		return $this->handle ? ftell($this->handle) : false;
 	}
@@ -281,7 +281,7 @@ class Stream implements StreamInterface
 	 *
 	 * @return bool
 	 */
-	public function eof()
+	public function eof() : bool
 	{
 		return !$this->handle || feof($this->handle);
 	}
@@ -291,7 +291,7 @@ class Stream implements StreamInterface
 	 *
 	 * @return bool
 	 */
-	public function isSeekable()
+	public function isSeekable() : bool
 	{
 		return $this->seekable;
 	}
@@ -308,11 +308,11 @@ class Stream implements StreamInterface
 	 *	 SEEK_END: Set position to end-of-stream plus offset.
 	 * @throws \RuntimeException on failure.
 	 */
-	public function seek($offset, $whence = SEEK_SET)
+	public function seek(int $offset, int $whence = SEEK_SET) : void
 	{
-		return $this->seekable
-			? 0 === fseek($this->handle, $offset, $whence)
-			: false;
+		if ($this->seekable) {
+			fseek($this->handle, $offset, $whence);
+		}
 	}
 
 	/**
@@ -325,15 +325,13 @@ class Stream implements StreamInterface
 	 * @see http://www.php.net/manual/en/function.fseek.php
 	 * @throws \RuntimeException on failure.
 	 */
-	public function rewind()
+	public function rewind() : void
 	{
 		if (!$this->seekable) {
 			throw new RuntimeException('Stream is not seekable.');
 		}
 		//
 		$this->seek(0);
-		//
-		return $this;
 	}
 
 	/**
@@ -341,7 +339,7 @@ class Stream implements StreamInterface
 	 *
 	 * @return bool
 	 */
-	public function isWritable()
+	public function isWritable() : bool
 	{
 		return $this->writable;
 	}
@@ -353,7 +351,7 @@ class Stream implements StreamInterface
 	 * @return int Returns the number of bytes written to the stream.
 	 * @throws \RuntimeException on failure.
 	 */
-	public function write($string)
+	public function write($string) : int
 	{
 		if (!$this->writable) {
 			throw new RuntimeException('Stream is not writable.');
@@ -379,7 +377,7 @@ class Stream implements StreamInterface
 	 *
 	 * @return bool
 	 */
-	public function isReadable()
+	public function isReadable() : bool
 	{
 		return $this->readable;
 	}
@@ -394,7 +392,7 @@ class Stream implements StreamInterface
 	 *	 if no bytes are available.
 	 * @throws \RuntimeException if an error occurs.
 	 */
-	public function read($length)
+	public function read($length) : string
 	{
 		if (!$this->readable) {
 			throw new RuntimeException('Stream is not readable.');
@@ -424,7 +422,7 @@ class Stream implements StreamInterface
 	 * @throws \RuntimeException if unable to read.
 	 * @throws \RuntimeException if error occurs while reading.
 	 */
-	public function getContents()
+	public function getContents() : string
 	{
 		if (!isset($this->handle)) {
 			throw new RuntimeException('Stream is detached.');
