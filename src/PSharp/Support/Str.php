@@ -536,6 +536,66 @@ abstract class Str
 	}
 
 	/**
+	 *	Detect and return the common prefix (if any) between two strings.
+	 *	
+	 *	@param	string	$one
+	 *	@param	string	$another
+	 *	@return	string
+	 */
+	public static function commonPrefix(string $one, string $another)
+	{
+		list($str_one, $str_another) = array($one, $another);
+
+		$len_one = strlen($str_one);
+		$len_another = strlen($str_another);
+		$len_max = 0;
+
+		if ($len_one > $len_another) {
+			$str_one = substr($str_one, 0, $len_another);
+			$len_max = $len_another;
+		} elseif ($len_another > $len_one) {
+			$str_another = substr($str_another, 0, $len_one);
+			$len_max = $len_one;
+		}
+
+		for ($x = 0; $x < $len_max; $x++) if ($str_one[$x] != $str_another[$x]) {
+			return substr($str_one, 0, $x);
+		}
+		
+		return '';
+	}
+
+	/**
+	 *	Detect and return the common suffix (if any) between two strings.
+	 *	
+	 *	@param	string	$one
+	 *	@param	string	$another
+	 *	@return	string
+	 */
+	public static function commonSuffix(string $one, string $another)
+	{
+		list($str_one, $str_another) = array($one, $another);
+
+		$len_one = strlen($str_one);
+		$len_another = strlen($str_another);
+		$len_max = 0;
+
+		if ($len_one > $len_another) {
+			$str_one = substr($str_one, -$len_another);
+			$len_max = $len_another;
+		} elseif ($len_another > $len_one) {
+			$str_another = substr($str_another, -$len_one);
+			$len_max = $len_one;
+		}
+
+		for ($x = $len_max - 1; $x >= 0; $x--) if ($str_one[$x] != $str_another[$x]) {
+			return substr($str_one, -($len_max - $x - 1));
+		}
+		
+		return '';
+	}
+
+	/**
 	 *	Tokenize lines by spaces, except that tokens wrapped by "..." or '...'
 	 *	will remain a single token, no matter how may spaces may exist inside
 	 *
