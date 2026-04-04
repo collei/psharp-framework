@@ -1,6 +1,7 @@
 <?php
 namespace PSharp\Http;
 
+use Stringable;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -8,7 +9,7 @@ use Psr\Http\Message\UriInterface;
  *
  *	@author	alarido <alarido.su@gmail.com>
  */
-class Uri implements UriInterface
+class Uri implements UriInterface, Stringable
 {
 	protected $parts = [
 		'scheme' => '',
