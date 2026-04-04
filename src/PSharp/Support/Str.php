@@ -548,7 +548,7 @@ abstract class Str
 
 		$len_one = strlen($str_one);
 		$len_another = strlen($str_another);
-		$len_max = 0;
+		$len_max = $len_one;
 
 		if ($len_one > $len_another) {
 			$str_one = substr($str_one, 0, $len_another);
@@ -578,7 +578,7 @@ abstract class Str
 
 		$len_one = strlen($str_one);
 		$len_another = strlen($str_another);
-		$len_max = 0;
+		$len_max = $len_one;
 
 		if ($len_one > $len_another) {
 			$str_one = substr($str_one, -$len_another);
