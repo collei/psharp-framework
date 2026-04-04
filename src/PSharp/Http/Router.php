@@ -59,15 +59,16 @@ class Router
 	}
 
 	/**
-	 * Map all controllers detected under $namespace,
+	 * Map all controllers detected under $namespace from the specifed $appDir,
 	 * assuming the project follows psr-4 guidelines.
 	 * 
+	 * @param string $appDir
 	 * @param string $namespace = 'App\Controllers'
 	 * @return $this
 	 */
-	public function mapControllers(string $namespace = 'App\Controllers')
+	public function mapControllers(string $appDir, string $namespace = 'App\Controllers')
 	{
-		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . $namespace);
+		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, $appDir . DIRECTORY_SEPARATOR . $namespace);
 
 		$files = array_diff(scandir($path), array('.','..'));
 
