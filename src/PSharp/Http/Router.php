@@ -67,7 +67,7 @@ class Router
 	 */
 	public function mapControllers(string $namespace = 'App\Controllers')
 	{
-		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . $namespace);
+		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . $namespace);
 
 		$files = array_diff(scandir($path), array('.','..'));
 
