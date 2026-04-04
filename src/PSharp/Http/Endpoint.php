@@ -6,7 +6,7 @@ use PSharp\Http\Methods\Base\HttpMethodBase;
 /**
  * Base class for route endpoints
  */
-class Endpoint extends HttpMethodBase implements IEndpoint
+class Endpoint extends HttpMethodBase implements EndpointInterface
 {
 	protected const REGEX_PARAM_SEGMENT = '@{([\w\-]+)(?>:(\w+))?(?>=([^}?]+))?(\?)?}@';
 
@@ -96,10 +96,10 @@ class Endpoint extends HttpMethodBase implements IEndpoint
 	 * parameter values if any.
 	 * 
 	 * @param string $requestUri
-	 * @param array &$out = []
+	 * @param array &$values = null
 	 * @return bool
 	 */
-	public function matchesUri(string $requestUri, array &$values = [])
+	public function matchesUri(string $requestUri, array &$values = null)
 	{
 		if (preg_match($this->regex, $requestUri, $out) === 1) {
 			$values = [];

@@ -3,7 +3,7 @@ namespace PSharp\Http\Methods\Base;
 
 use PSharp\Http\Route;
 use PSharp\Http\Endpoint;
-use PSharp\Http\IEndpoint;
+use PSharp\Http\EndpointInterface;
 use PSharp\Http\Methods\HttpDelete;
 use PSharp\Http\Methods\HttpGet;
 use PSharp\Http\Methods\HttpHead;
@@ -16,7 +16,7 @@ use PSharp\Http\Methods\HttpTrace;
 /**
  * Base class for route endpoints
  */
-abstract class HttpMethodBase implements IEndpoint
+abstract class HttpMethodBase implements EndpointInterface
 {
 	private $path = null;
 	private $name = null;
