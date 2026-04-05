@@ -11,14 +11,56 @@ use ReflectionNamedType;
 use ReflectionUnionType;
 use ReflectionParameter;
 use ReflectionException;
+use PSharp\Core\DI\ParameterReaper;
+use PSharp\Core\DI\ContainerException;
+use PSharp\Core\DI\NotFoundException;
 
 final class Container
 {
+    /**
+     * Repository of living object instances.
+     */
     private $instances = [];
+
+    /**
+     * Repository of builder closures.
+     */
     private $builders = [];
+
+    /**
+     * List of primitive default values.
+     */
+    private const PRIMITIVE_DEFAULTS = [
+        'bool' => false,
+        'int' => 0,
+        'float' => 0.0,
+        'string' => '',
+        'array' => [],
+        'object' => null,
+        'null' => null,
+        'mixed' => null,
+    ];
+
+    public function isPrimitive(?string $name)
+    {
+        return array_key_exists($name, self::PRIMITIVE_DEFAULTS);
+    }
+
+    public function getPrimitiveDefault(string $name)
+    {
+        if ('object' == $name) {
+            return new stdClass;
+        }
+
+        return self::PRIMITIVE_DEFAULTS[$name] ?? null;
+    }
 
     public function make($class)
     {
+        if (empty($class)) {
+            return null;
+        }
+
         if ($instance = $this->getInstance($class)) {
             return $instance;
         }
@@ -26,20 +68,16 @@ final class Container
         if ($builder = $this->getBuilder($class)) {
             $instance = $this->buildUsing($builder);
 
-            $this->setInstance($class, $instance);
-
-            return $instance;
+            return $this->setInstance($class, $instance);
         }
 
         if (class_exists($class)) {
             $instance = $this->build($class);
 
-            $this->setInstance($class, $instance);
-
-            return $instance;
+            return $this->setInstance($class, $instance);
         }
 
-        throw new Exception("Class $class not found !");
+        throw new ContainerException("Class $class not found !");
     }
 
     public function configureBuilder(string $class, Closure $builder)
@@ -58,7 +96,7 @@ final class Container
 
     protected function setInstance(string $class, $instance)
     {
-        $this->instances[$class] = $instance;
+        return $this->instances[$class] = $instance;
     }
 
     protected function getInstance(string $class)
@@ -77,46 +115,26 @@ final class Container
         }
 
         if (! class_exists($concrete)) {
-            throw new \Exception("Class '$concrete' does not exist");
+            throw new ContainerException("Class '$concrete' does not exist");
         }
 
-        $reflClass = new ReflectionClass($concrete);
+        $reflector = new ReflectionClass($concrete);
 
-        if ($reflConstructor = $reflClass->getConstructor()) {
-            $reflParams = $reflConstructor->getParameters();
-
-            if (empty($reflParams)) {
-                return $reflClass->newInstance();
-            }
-
-            $parameterTypes = [];
-            $parameters = [];
-
-            foreach ($reflParams as $reflPar) {
-                $name = $reflPar->getName();
-                $type = $reflPar->getType();
-
-                if ($type instanceof ReflectionNamedType) {
-                    $type = $type->getName();
-                } elseif ($type instanceof ReflectionUnionType) {
-                    $types = $type->getTypes();
-                    $type = $types[0];
-                    $type = ($type instanceof ReflectionNamedType) ? $type->getName() : null;
-                } else {
-                    $type = null;
-                }
-
-                $parameterTypes[$name] = $type;
-            }
-
-            foreach ($parameterTypes as $name => $type) {
-                $parameters[$name] = $this->make($type);
-            }
-
-            return $reflClass->newInstanceArgs((array) $parameters);
+        if (! $reflector->isInstantiable()) {
+            throw new ContainerException("Class '$concrete' is not instantiable");
         }
 
-        return $reflClass->newInstance();
+        if ($reflConstructor = $reflector->getConstructor()) {
+            if ($reflConstructor->getNumberOfParameters() == 0) {
+                return $reflector->newInstance();
+            }
+
+            $parameters = ParameterReaper::reapFromMethodReflector($reflConstructor, $this);
+
+            return $reflector->newInstanceArgs((array) $parameters);
+        }
+
+        return $reflector->newInstance();
     }
 
     protected function buildUsing(Closure $concrete)
@@ -128,29 +146,7 @@ final class Container
             return $concrete();
         }
 
-        $parameterTypes = [];
-        $parameters = [];
-
-        foreach ($reflParams as $reflPar) {
-            $name = $reflPar->getName();
-            $type = $reflPar->getType();
-
-            if ($type instanceof ReflectionNamedType) {
-                $type = $type->getName();
-            } elseif ($type instanceof ReflectionUnionType) {
-                $types = $type->getTypes();
-                $type = $types[0];
-                $type = ($type instanceof ReflectionNamedType) ? $type->getName() : null;
-            } else {
-                $type = null;
-            }
-
-            $parameterTypes[$name] = $type;
-        }
-
-        foreach ($parameterTypes as $name => $type) {
-            $parameters[$name] = $this->make($type);
-        }
+        $parameters = ParameterReaper::reapValues($reflParams, $this);
 
         $args = (array) $parameters;
 
