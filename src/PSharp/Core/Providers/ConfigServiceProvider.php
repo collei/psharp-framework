@@ -31,13 +31,15 @@ class ConfigServiceProvider extends ServiceProvider
      * 
      * @return void
      */
-    protected function register()
+    public function register()
     {
         $filePath = $this->filePath;
 
         $this->container->configureBuilder(Config::class, function() use ($filePath) {
             return new Config($filePath);
         });        
+
+        $this->setRegistered();
     }
 
     /**
@@ -45,8 +47,10 @@ class ConfigServiceProvider extends ServiceProvider
      * 
      * @return void
      */
-    protected function boot()
+    public function boot()
     {
-        $this->make(Config::class);
+        $this->container->make(Config::class);
+
+        $this->setBooted();
     }
 }
