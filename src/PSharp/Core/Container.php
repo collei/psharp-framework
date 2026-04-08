@@ -109,7 +109,9 @@ final class Container
         }
 
         if ($builder = $this->getBuilder($class)) {
-            return $this->buildUsing($builder);
+            $instance = $this->buildUsing($builder);
+
+            return $this->setInstance($class, $instance);
         }
 
         if (class_exists($class)) {
