@@ -280,9 +280,9 @@ final class Application
      * @param PSharp\Http\Request
      * @return Closure
      */
-    protected function dispatchToRouter()
+    protected function dispatchToRouter(Request $request)
     {
-        return function (Request $request) {
+        return function () use ($request) {
             $this->container->instance($request);
 
             return $this->router->dispatch($request);
