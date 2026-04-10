@@ -9,8 +9,14 @@ use InvalidArgumentException;
  */
 class Endpoint extends HttpMethodBase implements EndpointInterface
 {
+	/**
+	 * @var string
+	 */
 	protected const REGEX_PARAM_SEGMENT = '@{([\w\-]+)(?>:(\w+))?(?>=([^}?]+))?(\?)?}@';
 
+	/**
+	 * @var array
+	 */
 	protected const REGEX_ACCEPTED = [
 		'int' => '\d+',
 		'alpha' => '\w+',
@@ -19,8 +25,15 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 		'slug' => '[\w\d]+(-[\w\d]+)*',
 	];
 
+	/**
+	 * @var array
+	 */
 	private $parameters = [];
-	private $regex = null;
+
+	/**
+	 * @var string
+	 */
+	private $regex;
 
 	/**
 	 * Constructor.
@@ -240,7 +253,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	{
 		$thisMethod = $this->getMethod();
 
-		return ($thisMehtod == '*') || (strtoupper($method) == $thisMethod);
+		return ($thisMethod == '*') || (strtoupper($method) == $thisMethod);
 	}
 
 	/**
