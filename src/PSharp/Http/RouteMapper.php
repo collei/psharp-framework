@@ -9,7 +9,7 @@ use PSharp\Http\Actions\ControllerBase;
 use PSharp\Support\Str;
 
 /**
- * The app router
+ * The app route mapper
  */
 class RouteMapper
 {
@@ -86,7 +86,7 @@ class RouteMapper
 	}
 
 	/**
-	 * Map the specified controller.
+	 * Map the endpoints from the specified controller.
 	 * 
 	 * @param string|\PSharp\Http\Actions\ControllerBase $controller
 	 * @return $this
@@ -113,15 +113,19 @@ class RouteMapper
 		foreach ($reflect->getAttributes() as $classAttr) {
 			$classAttrName = $classAttr->getName();
 
+			// Ignore other attributes
 			if (Route::class != $classAttrName) {
 				continue;
 			}
 
 			$route = $classAttr->newInstance();
 
+			// If route basename is not set,
+			// craft it from controller name in kebab case.
 			if (empty($route->getRootName())) {
 				$kebabName = Str::kebab($reflect->getShortName());
 
+				// strip the '-controller' part if any
 				if (Str::endsWith($kebabName, '-controller')) {
 					$kebabName = Str::trimSuffix($kebabName, '-controller');
 				}
@@ -129,6 +133,7 @@ class RouteMapper
 				$route->setRootNameIfEmpty($kebabName);
 			}
 
+			// Maps endpoints from class methods
 			foreach ($reflect->getMethods() as $method) {
 				$this->mapControllerMethodEndpoint($route, $method, $className);
 			}
@@ -151,12 +156,14 @@ class RouteMapper
 		foreach ($reflect->getAttributes() as $methodAttr) {
 			$methodAttrName = $methodAttr->getName();
 
+			// Ignore non-existent HTTP methods
 			if (! in_array($methodAttrName, self::HTTP_METHODS, true)) {
 				continue;
 			}
 
 			$endpoint = $methodAttr->newInstance();
 
+			// If name is omitted, take the method name in kebab case
 			if (empty($endpoint->getSimpleName())) {
 				$kebabName = Str::kebab($methodName);
 
