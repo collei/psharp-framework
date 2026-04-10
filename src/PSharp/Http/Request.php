@@ -67,7 +67,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * @var string
 	 */
-	protected $body = '';
+	protected $body = null;
 
 	/**
 	 * @var array
@@ -200,9 +200,9 @@ class Request implements RequestInterface, ServerRequestInterface
 	 */
 	public function withRequestTarget($requestTarget) : RequestInterface
 	{
-		$new = new static;
-		$new->requestTarget = $requestTarget;
-		return $new;
+		$cloned = clone $this;
+		$cloned->requestTarget = $requestTarget;
+		return $cloned;
 	}
 
 	/**
@@ -258,9 +258,9 @@ class Request implements RequestInterface, ServerRequestInterface
 			);
 		}
 		//
-		$new = new static;
-		$new->method = $method;
-		return $new;
+		$cloned = clone $this;
+		$cloned->method = $method;
+		return $cloned;
 	}
 
 	/**
@@ -345,9 +345,9 @@ class Request implements RequestInterface, ServerRequestInterface
 	 */
 	public function withUri(UriInterface $uri, bool $preserveHost = false) : RequestInterface
 	{
-		$new = new static;
+		$cloned = clone $this;
 		$host = $uri->getHost();
-		$new->uri = $uri;
+		$cloned->uri = $uri;
 		//
 		// If the new URI contains a host component...
 		if (!empty($host)) {
@@ -357,15 +357,15 @@ class Request implements RequestInterface, ServerRequestInterface
 				// If the Host header is missing or empty...
 				if (empty($header)) {
 					// then adds the Host header in the returned request
-					$new = $new->withHeader('Host', $host);
+					$cloned = $cloned->withHeader('Host', $host);
 				}
 			} else {
 				// updates the Host header in the returned request
-				$new = $new->withHeader('Host', $host);
+				$cloned = $cloned->withHeader('Host', $host);
 			}
 		}
 		//
-		return $new;
+		return $cloned;
 	}
 
 	/**
@@ -386,9 +386,9 @@ class Request implements RequestInterface, ServerRequestInterface
 	 */
 	public function withProtocolVersion($version) : RequestInterface
 	{
-		$new = new static;
-		$new->httpVersion = $version;
-		return $new;
+		$cloned = clone $this;
+		$cloned->httpVersion = $version;
+		return $cloned;
 	}
 
 	/**
@@ -490,28 +490,28 @@ class Request implements RequestInterface, ServerRequestInterface
 			throw new InvalidArgumentException('Value must be a string or array');
 		}
 		//
-		$new = new static;
+		$cloned = clone $this;
 		//
-		if (empty($new->headers)) {
-			$new->headers = [
+		if (empty($cloned->headers)) {
+			$cloned->headers = [
 				$name => is_array($value) ? $value : [$value]
 			];
 		} else {
 			$found = false;
-			foreach ($new->headers as $n => $v) {
+			foreach ($cloned->headers as $n => $v) {
 				if (0 == strcasecmp($n, $name)) {
-					$new->headers[$n] = is_array($value) ? $value : [$value];
+					$cloned->headers[$n] = is_array($value) ? $value : [$value];
 					$found = true;
 					break;
 				}
 			}
 			//
 			if (!$found) {
-				$new->headers[$name] = is_array($value) ? $value : [$value];
+				$cloned->headers[$name] = is_array($value) ? $value : [$value];
 			}
 		}
 		//
-		return $new;
+		return $cloned;
 	}
 
 	/**
@@ -533,26 +533,26 @@ class Request implements RequestInterface, ServerRequestInterface
 			throw new InvalidArgumentException('Value must be a string or array');
 		}
 		//
-		$new = new static;
+		$cloned = clone $this;
 		//
-		if (empty($new->headers)) {
-			$new->headers = [
+		if (empty($cloned->headers)) {
+			$cloned->headers = [
 				$name => is_array($value) ? $value : [$value]
 			];
 		} else {
 			$found = false;
-			foreach ($new->headers as $n => $v) {
+			foreach ($cloned->headers as $n => $v) {
 				if (0 == strcasecmp($n, $name)) {
 					if (!is_array($v)) {
-						$new->headers[$n] = [$v];
+						$cloned->headers[$n] = [$v];
 					}
 					//
 					if (is_array($value)) {
 						foreach ($value as $valueItem) {
-							$new->headers[$n][] = $valueItem;
+							$cloned->headers[$n][] = $valueItem;
 						}
 					} else {
-						$new->headers[$n][] = $value;
+						$cloned->headers[$n][] = $value;
 					}
 					//
 					$found = true;
@@ -561,11 +561,11 @@ class Request implements RequestInterface, ServerRequestInterface
 			}
 			//
 			if (!$found) {
-				$new->headers[$name] = is_array($value) ? $value : [$value];
+				$cloned->headers[$name] = is_array($value) ? $value : [$value];
 			}
 		}
 		//
-		return $new;
+		return $cloned;
 	}
 
 	/**
@@ -580,18 +580,18 @@ class Request implements RequestInterface, ServerRequestInterface
 			throw new InvalidArgumentException('Name must be a string');
 		}
 		//
-		$new = new static;
+		$cloned = clone $this;
 		//
-		if (!empty($new->headers)) {
-			foreach ($new->headers as $n => $v) {
+		if (!empty($cloned->headers)) {
+			foreach ($cloned->headers as $n => $v) {
 				if (0 == strcasecmp($n, $name)) {
-					unset($new->headers[$n]);
+					unset($cloned->headers[$n]);
 					break;
 				}
 			}
 		}
 		//
-		return $new;
+		return $cloned;
 	}
 
 	/**
@@ -613,9 +613,9 @@ class Request implements RequestInterface, ServerRequestInterface
 	*/
 	public function withBody(StreamInterface $body) : RequestInterface
 	{
-		$new = new static;
-		$new->body = $body;
-		return $new;
+		$cloned = clone $this;
+		$cloned->body = $body;
+		return $cloned;
 	}
 
 	/**
@@ -672,9 +672,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	public function withCookieParams(array $cookies) : ServerRequestInterface
 	{
 		$cloned = clone $this;
-		//
 		$cloned->cookieParams = $cookies;
-		//
 		return $cloned;
 	}
 
@@ -697,9 +695,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	public function withQueryParams(array $query) : ServerRequestInterface
 	{
 		$cloned = clone $this;
-		//
 		$cloned->queryStringParams = $query;
-		//
 		return $cloned;
 	}
 
@@ -724,9 +720,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	public function withUploadedFiles(array $uploadedFiles) : ServerRequestInterface
 	{
 		$cloned = clone $this;
-		//
 		$cloned->uploadedFiles = $uploadedFiles;
-		//
 		return $cloned;
 	}
 
@@ -753,9 +747,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	public function withParsedBody($data) : ServerRequestInterface
 	{
 		$cloned = clone $this;
-		//
 		$cloned->parsedBodyContent = $data;
-		//
 		return $cloned;
 	}
 
