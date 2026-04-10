@@ -20,30 +20,43 @@ use PSharp\Core\Container;
 class ParameterReaper
 {
     /**
+     * @var PSharp\Core\Container
+     */
+    protected $container;
+
+    /**
+     * Initializes it.
+     * 
+     * @param PSharp\Core\Container $container
+     */
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
      * Reaps values for a given method of a living instance.
      * 
      * @param object $instance
      * @param string $method
-     * @param PSharp\Core\Container $container
      * @param array $values = []
      * @return array
      */
-    public static function reapMethodParameters(object $instance, string $method, Container $container, array $values = [])
+    public function reapMethodParameters(object $instance, string $method, array $values = [])
     {
-        $reflector = new ReflectionMethod($object, $method);
+        $reflector = new ReflectionMethod($instance, $method);
 
-        return self::reapFromMethodReflector($reflector, $container, $values);
+        return $this->reapFromMethodReflector($reflector, $values);
     }
 
     /**
      * Reaps values from the method reflector.
      * 
      * @param ReflectionMethod $reflector
-     * @param PSharp\Core\Container $container
      * @param array $values = []
      * @return array
      */
-    public static function reapFromMethodReflector(ReflectionMethod $reflector, Container $container, array $values = [])
+    public function reapFromMethodReflector(ReflectionMethod $reflector, array $values = [])
     {
         $reflParams = $reflector->getParameters();
 
@@ -51,10 +64,10 @@ class ParameterReaper
             return [];
         }
 
-        $parameters = self::reapValues($reflParams, $container);
+        $parameters = $this->reapValues($reflParams, $this->container);
 
         foreach ($values as $key => $value) {
-            if (array_key_exists($key, $parameters) && is_null($parameters[$key])) {
+            if (array_key_exists($key, $parameters) && !is_null($parameters[$key])) {
                 $parameters[$key] = $value;
             }
         }
@@ -66,11 +79,10 @@ class ParameterReaper
      * Reaps values for the closure.
      * 
      * @param Closure $closure
-     * @param PSharp\Core\Container $container
      * @param array $values = []
      * @return array
      */
-    public static function reapClosureParameters(Closure $closure, Container $container, array $values = [])
+    public function reapClosureParameters(Closure $closure, array $values = [])
     {
         $reflector = new ReflectionFunction($closure);
 
@@ -80,10 +92,10 @@ class ParameterReaper
             return [];
         }
 
-        $parameters = self::reapValues($reflParams, $container);
+        $parameters = $this->reapValues($reflParams);
 
         foreach ($values as $key => $value) {
-            if (array_key_exists($key, $parameters) && is_null($parameters[$key])) {
+            if (array_key_exists($key, $parameters) && !is_null($value)) {
                 $parameters[$key] = $value;
             }
         }
@@ -95,10 +107,9 @@ class ParameterReaper
      * Reaps values for the parameter list.
      * 
      * @param ReflectionParameter[] $reflParams
-     * @param PSharp\Core\Container $container
      * @return array
      */
-    public static function reapValues(array $reflParams, Container $container)
+    public function reapValues(array $reflParams)
     {
         if (empty($reflParams)) {
             return [];
@@ -149,9 +160,9 @@ class ParameterReaper
             }
 
             // if primitive, gets its default; otherwise, let's get an instance
-            $parameters[$name] = $container->isPrimitive($type)
-                                ? $container->getPrimitiveDefault($type)
-                                : $container->make($type);
+            $parameters[$name] = $this->container->isPrimitive($type)
+                                ? $this->container->getPrimitiveDefault($type)
+                                : $this->container->make($type);
         }
 
         return $parameters;
