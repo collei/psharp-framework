@@ -1,7 +1,7 @@
 <?php
 namespace PSharp\Http\Exceptions;
 
-class NotFoundException extends HttpException
+class HttpNotFoundException extends HttpException
 {
     protected $statusCode;
     protected $headers;
