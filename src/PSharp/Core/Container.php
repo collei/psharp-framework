@@ -42,6 +42,13 @@ final class Container
     private $interfaces = [];
 
     /**
+     * Repository of class interfaces implemented by each class.
+     * 
+     * @var PSharp\Core\DI\ParameterReaper
+     */
+    private $parameterReaper;
+
+    /**
      * List of primitive default values.
      * 
      * @var array
@@ -62,7 +69,10 @@ final class Container
      */
     public function __construct()
     {
+        $this->parameterReaper = new ParameterReaper($this);
+
         $this->setInstance(static::class, $this);
+        $this->setInstance(ParameterReaper::class, $this->parameterReaper);
     }
 
     /**
@@ -173,6 +183,19 @@ final class Container
         $this->addInterfaceImplementors($class);
 
         return $this->instances[$class] = $instance;
+    }
+
+    /**
+     * Adds an instance for the given class to the list.
+     * 
+     * @param object|null $instance
+     * @return object|null
+     */
+    public function instance($instance)
+    {
+        $class = get_class($instance);
+        
+        return $this->setInstance($class, $instance);
     }
 
     /**
@@ -302,7 +325,7 @@ final class Container
                 return $reflector->newInstance();
             }
 
-            $parameters = ParameterReaper::reapFromMethodReflector($reflConstructor, $this);
+            $parameters = $this->parameterReaper->reapFromMethodReflector($reflConstructor);
 
             return $reflector->newInstanceArgs((array) $parameters);
         }
@@ -325,7 +348,7 @@ final class Container
             return $concrete();
         }
 
-        $parameters = ParameterReaper::reapValues($reflParams, $this);
+        $parameters = $this->parameterReaper->reapValues($reflParams);
 
         $args = (array) $parameters;
 
