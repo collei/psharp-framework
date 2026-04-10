@@ -7,9 +7,6 @@ use Closure;
 
 /**
  *	Reunites array helper functions
- *
- *	@author alarido <alarido.su@gmail.com>
- *
  */
 abstract class Arr
 {
