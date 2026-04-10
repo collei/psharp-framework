@@ -187,6 +187,27 @@ final class Container
     }
 
     /**
+     * Remove the resolved instance for this class.
+     * 
+     * @param string $class
+     * @return void
+     */
+    public function forgetInstance(string $class)
+    {
+        unset($this->instances[$class]);
+    }
+
+    /**
+     * Remove all resolved instances.
+     * 
+     * @return void
+     */
+    public function forgetInstances()
+    {
+        $this->instances = [];
+    }
+
+    /**
      * Adds interfaces implemented by the given class.
      * 
      * @param string $class
