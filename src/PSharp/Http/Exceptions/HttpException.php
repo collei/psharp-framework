@@ -1,6 +1,9 @@
 <?php
 namespace PSharp\Http\Exceptions;
 
+use Exception;
+use Throwable;
+
 class HttpException extends Exception
 {
     protected $statusCode;
