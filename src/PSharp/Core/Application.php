@@ -225,6 +225,8 @@ final class Application
         $response = $this->handleRequest($request);
 
         echo $response;
+
+        return $this;
     }
 
     /**
