@@ -6,7 +6,7 @@ use PSharp\Support\Interfaces\Deferrable;
 /**
  * Marks a service provider as a deferrable.
  */
-interface DeferrableProviderInterface extends ProviderInterface, Deferrable 
+interface DeferrableProvider extends ProviderInterface, Deferrable 
 {
     //
 }
