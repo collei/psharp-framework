@@ -1,171 +1,66 @@
 <?php
 namespace PSharp\Http;
 
-use ReflectionClass;
-use ReflectionMethod;
-use PSharp\Http\Methods\{HttpGet,HttpPost,HttpPut,HttpPatch,HttpDelete,HttpHead,HttpOptions,HttpTrace,HttpAny};
-use PSharp\Http\Methods\Base\HttpMethodBase;
-use PSharp\Http\Actions\ControllerBase;
-use PSharp\Support\Str;
+use PSharp\Http\Exceptions\HttpException;
+use PSharp\Http\Exceptions\NotFoundException;
 
-/**
- * The app router
- */
 class Router
 {
-	/**
-	 * List of supported HTTP methods
-	 */
-	private const HTTP_METHODS = [
-		'GET' => HttpGet::class,
-		'POST' => HttpPost::class,
-		'PUT' => HttpPut::class,
-		'PATCH' => HttpPatch::class,
-		'DELETE' => HttpDelete::class,
-		'HEAD' => HttpHead::class,
-		'OPTIONS' => HttpOptions::class,
-		'TRACE' => HttpTrace::class,
-		'*' => HttpAny::class,
-	];
+    private $mapper;
+    
+    public function __construct(RouteMapper $mapper)
+    {
+        $this->mapper = $mapper;
+    }
 
-	/**
-	 * List of crafted endpoints
-	 */
-	private $endpoints = [];
+    public function getEndpoints()
+    {
+        return $this->mapper->getEndpoints();
+    }
 
-	/**
-	 * Empty constrcutor
-	 */
-	public function __construct()
-	{
-		//
-	}
+    public function dispatch(Request $request)
+    {
+        if ($this->matchesEndpoint($request, $uriParameters, $endpoint)) {
+            return $this->dispatchToController($endpoint, $request, $uriParameters);
+        }
 
-	/**
-	 * Retrieve all crafted endpoints.
-	 * 
-	 * @return array
-	 */
-	public function getEndpoints()
-	{
-		$mapper = function ($item) {
-			return $item->asEndpoint();
-		};
+        throw new NotFoundException();
+    }
 
-		return array_combine(
-			array_keys($this->endpoints),
-			array_map($mapper, array_values($this->endpoints))
-		);
-	}
+    protected function matchesEndpoint(Request $request, array &$out = null, Endpoint &$endpoint = null)
+    {
+        $requestUri = $request->getUri()->toString();
+        $requestMethod = $request->getMethod();
 
-	/**
-	 * Map all controllers detected under $namespace from the specifed $appDir,
-	 * assuming the project follows psr-4 guidelines.
-	 * 
-	 * @param string $appDir
-	 * @param string $namespace = 'App\Controllers'
-	 * @return $this
-	 */
-	public function mapControllers(string $appDir, string $namespace = 'App\Controllers')
-	{
-		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, $appDir . DIRECTORY_SEPARATOR . $namespace);
+        foreach ($this->getEndpoints() as $end) {
+            if ($end->matchesMethod($requestMethod) && $end->matchesUri($requestUri, $out)) {
+                $endpoint = $end;
 
-		$files = array_diff(scandir($path), array('.','..'));
+                return true;
+            }
+        }
 
-		foreach ($files as $file) {
-			if (is_file($path . DIRECTORY_SEPARATOR . $file)) {
-				if (Str::endsWith(strtolower($file), '.php')) {
-					$class = $namespace . '\\' . substr($file, 0, -4);
+        return false;
+    }
 
-					$this->mapController($class);
-				}
-			}
-		}
+    protected function dispatchToController(Endpoint $endpoint, Request $request, array $uriParameters)
+    {
+        $action = $endpoint->getParsedAction();
 
-		return $this;
-	}
+        if (is_null($action)) {
+            throw new HttpException(500, 'Action not implemented for endpoint '.$endpoint->getPath());
+        }
+        
+        if ($action instanceof Closure) {
+            // fetches closure dependencies
+            // calls the closure
+        }
 
-	/**
-	 * Map the specified controller.
-	 * 
-	 * @param string|\PSharp\Http\Actions\ControllerBase $controller
-	 * @return $this
-	 */
-	public function mapController(string|ControllerBase $controller)
-	{
-		$classReflect = new ReflectionClass($controller);
-		
-		$this->mapControllerEndpoints($classReflect);
-
-		return $this;
-	}
-
-	/**
-	 * Map all endpoints from the controller's \ReflectionClass instance.
-	 * 
-	 * @param \ReflectionClass $reflect
-	 * @return void
-	 */
-	protected function mapControllerEndpoints(ReflectionClass $reflect)
-	{
-		$className = $reflect->getName();
-		
-		foreach ($reflect->getAttributes() as $classAttr) {
-			$classAttrName = $classAttr->getName();
-
-			if (Route::class != $classAttrName) {
-				continue;
-			}
-
-			$route = $classAttr->newInstance();
-
-			if (empty($route->getRootName())) {
-				$kebabName = Str::kebab($reflect->getShortName());
-
-				if (Str::endsWith($kebabName, '-controller')) {
-					$kebabName = Str::trimSuffix($kebabName, '-controller');
-				}
-
-				$route->setRootNameIfEmpty($kebabName);
-			}
-
-			foreach ($reflect->getMethods() as $method) {
-				$this->mapControllerMethodEndpoint($route, $method, $className);
-			}
-		}
-	}
-
-	/**
-	 * Map the endpoint from the method's \ReflectionMethod instance.
-	 * 
-	 * @param \ReflectionMethod $reflect
-	 * @param string $className
-	 * @return void
-	 */
-	protected function mapControllerMethodEndpoint(Route $route, ReflectionMethod $reflect, string $className)
-	{
-		$methodName = $reflect->getName();
-
-		$action = "{$className}::{$methodName}";
-		
-		foreach ($reflect->getAttributes() as $methodAttr) {
-			$methodAttrName = $methodAttr->getName();
-
-			if (! in_array($methodAttrName, self::HTTP_METHODS, true)) {
-				continue;
-			}
-
-			$endpoint = $methodAttr->newInstance();
-
-			if (empty($endpoint->getSimpleName())) {
-				$kebabName = Str::kebab($methodName);
-
-				$endpoint->setSimpleNameIfEmpty($kebabName);
-			}
-
-			$endpoint->setRoute($route)->setAction($action);
-
-			$this->endpoints[$endpoint->asString()] = $endpoint;
-		}
-	}
+        if (is_callable($action)) {
+            $controller = $container->make($action[0]);
+            // fetches method dependencies
+            // calls method
+        }
+    }
+    
 }
