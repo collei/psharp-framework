@@ -3,8 +3,9 @@ namespace PSharp\Core;
 
 use Closure;
 use PSharp\Support\Pipeline;
-use PSharp\Http\RouteMapper;
-use PSharp\Http\Router;
+use PSharp\Support\Str;
+use PSharp\Http\{RouteMapper,Router,Request,Response};
+use PSharp\Http\Factories\RequestFactory;
 use PSharp\Http\Actions\ControllerBase;
 
 final class Application
@@ -36,8 +37,8 @@ final class Application
     protected function initialize()
     {
         $this->container = new Container();
-        $this->container->setInstance(static::class, $this);
-        $this->container->setInstance(Config::class, $this->config);
+        $this->container->instance($this);
+        $this->container->instance($this->config);
 
         $this->routeMapper = $this->container->make(RouteMapper::class);
         $this->router = $this->container->make(Router::class);
@@ -115,6 +116,8 @@ final class Application
         $request = $this->captureRequest();
 
         $response = $this->handleRequest($request);
+
+        echo $response;
     }
 
     protected function captureRequest()
@@ -150,18 +153,10 @@ final class Application
     protected function dispatchToRouter()
     {
         return function (Request $request) {
-            $this->container->setInstance(Request::class, $request);
+            $this->container->instance($request);
 
-            return $this->dispatch($request);
-            //return $this->router->dispatch($request);
+            return $this->router->dispatch($request);
         };
-    }
-
-    protected function dispatch(Request $request)
-    {
-        $text = $request->getBody()->getContents();
-        echo '<div><b>Request:</b> <font color="red">', $text, '</font></div>';
-        return "Response to <i>$text</i>";
     }
 
 }
