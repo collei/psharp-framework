@@ -7,7 +7,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
 use PSharp\Http\Request;
-use PSharp\Streams\StreamFactory;
+use PSharp\Streams\{Stream, NullStream, StreamFactory};
 use PSharp\Support\Arr;
 use InvalidArgumentException;
 
@@ -29,7 +29,7 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	];
 
 	/**
-	 * @var \PSharp\Streams\StreamFactory
+	 * @var \PSharp\Streams\UriFactory
 	 */
 	protected $uriFactory;
 
@@ -64,6 +64,12 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	public function createRequest(string $method, $uri): RequestInterface
 	{
 		$request = (new Request)->withMethod($method);
+		//
+		$request = $request->withBody(
+			('multipart/form-data' == ($_SERVER['CONTENT_TYPE'] ?? ''))
+				? $this->streamFactory->createStream()
+				: $this->streamFactory->createStreamFromResource(fopen('php://input', 'r'))
+		);
 		//
 		if ($uri instanceof UriInterface) {
 			return $request->withUri($uri);
@@ -371,7 +377,4 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 		//
 		return $request;
 	}
-
-
 }
-
