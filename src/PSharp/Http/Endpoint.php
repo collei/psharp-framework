@@ -2,6 +2,7 @@
 namespace PSharp\Http;
 
 use PSharp\Http\Methods\Base\HttpMethodBase;
+use InvalidArgumentException;
 
 /**
  * Base class for route endpoints
@@ -89,6 +90,86 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 		}
 
 		$this->regex = '@^' . implode('', $regexSegments) . '$@';
+	}
+
+	/**
+	 * Returns the controller class, if any. Otherwise, returns null
+	 * 
+	 * @return string|null
+	 */
+	public function getControllerClass()
+	{
+		return $this->getActionPart(0);
+	}
+
+	/**
+	 * Returns the controller method, if any. Otherwise, returns null.
+	 * 
+	 * @return string|null
+	 */
+	public function getControllerMethod()
+	{
+		return $this->getActionPart(1);
+	}
+
+	/**
+	 * Returns the action part, if any. Otherwise, returns null.
+	 * 
+	 * @param int $index - 0 for class name, 1 for method name.
+	 * @return string|null
+	 * @throws InvalidArgumentException unless $index be either 0 or 1.
+	 */
+	public function getActionPart(int $index)
+	{
+		if ($index < 0 || $index > 1) {
+			throw new InvalidArgumentException('$index must be either 0 or 1');
+		}
+
+		if (is_string($action = $this->parseAction())) {
+			return $action[$index];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the parsed action.
+	 * 
+	 * @return array|Closure|null
+	 */
+	public function getParsedAction()
+	{
+		return $this->parseAction();
+	}
+
+	/**
+	 * Parses the action.
+	 * 
+	 * @return array|Closure|null
+	 */
+	protected function parseAction(): array
+	{
+		$action = $this->getAction();
+
+		if (is_string($action) && strpos($action, '::') !== false) {
+			return explode('::', $action, 2);
+		}
+
+		if ($this->actionIsClosure()) {
+			return $action;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Tells if the associated action is a Closure.
+	 * 
+	 * @return bool
+	 */
+	public function actionIsClosure()
+	{
+		return $this->action instanceof Closure;
 	}
 
 	/**
