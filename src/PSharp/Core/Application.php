@@ -187,6 +187,139 @@ final class Application
     }
 
     /**
+     * Maps the closure $action to a $path endpoint.
+     * 
+     * @param string $method
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function endpoint(string $method, string $path, Closure $action, string $name = null)
+    {
+        $this->mapper->addClosure($method, $path, $action, $name);
+        
+        return $this;
+    }
+
+    /**
+     * Maps the closure $action to a GET $path endpoint.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function get(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('GET', $path, $action, $name);
+    }
+
+    /**
+     * Maps the closure $action to a POST $path endpoint.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function post(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('POST', $path, $action, $name);
+    }
+
+    /**
+     * Maps the closure $action to a PUT $path endpoint.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function put(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('PUT', $path, $action, $name);
+    }
+
+    /**
+     * Maps the closure $action to a PATCH $path endpoint.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function patch(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('PATCH', $path, $action, $name);
+    }
+
+    /**
+     * Maps the closure $action to a DELETE $path endpoint.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function delete(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('DELETE', $path, $action, $name);
+    }
+
+    /**
+     * Maps the closure $action to a HEAD $path endpoint.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function head(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('HEAD', $path, $action, $name);
+    }
+
+    /**
+     * Maps the closure $action to a OPTIONS $path endpoint.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function options(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('OPTIONS', $path, $action, $name);
+    }
+
+    /**
+     * Maps the closure $action to a TRACE $path endpoint.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function trace(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('TRACE', $path, $action, $name);
+    }
+
+    /**
+     * Maps the closure $action to a $path endpoint for any HTTP method.
+     * 
+     * @param string $path
+     * @param Closure $action
+     * @param string|null $name 
+     * @return $this
+     */
+    public function any(string $path, Closure $action, string $name = null)
+    {
+        return $this->endpoint('*', $path, $action, $name);
+    }
+
+    /**
      * Adds middleware to the application middleware stack.
      * 
      * @param stirng ...$middleware
