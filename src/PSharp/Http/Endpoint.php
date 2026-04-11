@@ -60,7 +60,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 * @param Closure $action
 	 * @param string $name = null
 	 */
-	public static function mapToClosure(string $method, string $path, Closure $action, string $name = null)
+	public static function fromClosure(string $method, string $path, Closure $action, string $name = null)
 	{
 		$self = new static(new Route(), $path, $name);
 
