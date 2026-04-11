@@ -4,7 +4,7 @@ namespace PSharp\Core;
 use Closure;
 use PSharp\Support\Pipeline;
 use PSharp\Support\Str;
-use PSharp\Http\{RouteMapper, Router, Request, Response};
+use PSharp\Http\{RouteMapper, Router, Request, Response, Session};
 use PSharp\Http\Factories\RequestFactory;
 use PSharp\Http\Actions\ControllerBase;
 
@@ -60,6 +60,16 @@ final class Application
     }
 
     /**
+     * Terminates application.
+     * 
+     * @return void
+     */
+    public function __destruct()
+    {
+        Session::getInstance()->destroy();
+    }
+
+    /**
      * Retrieves properties.
      * 
      * @property PSharp\Core\Container container
@@ -86,9 +96,12 @@ final class Application
      */
     protected function initialize()
     {
+        Session::start();
+
         $this->container = new Container();
         $this->container->instance($this);
         $this->container->instance($this->config);
+        $this->container->instance(Session::getInstance());
 
         $this->routeMapper = $this->container->make(RouteMapper::class);
         $this->router = $this->container->make(Router::class);
