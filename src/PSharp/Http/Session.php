@@ -8,9 +8,7 @@ use PSharp\Support\Arr;
  *	Manages HTTP user sessions.
  *
  *	@author	linblow AT hotmail DOT fr
- *
  *	@see	https://www.php.net/manual/pt_BR/function.session-start.php#102460 <accessed 2021-10-31 GMT-3>
- *
  */
 class Session
 {
@@ -70,6 +68,17 @@ class Session
 		}
 		//
 		return self::$instance;
+	}
+
+	/**
+	 *	(Re)starts the session.
+	 *
+	 *	@return	bool	TRUE if the session has been initialized,
+	 *					FALSE otherwise.
+	 */
+	public static function start()
+	{
+		return Session::getInstance()->startSession();
 	}
 
 	/**
