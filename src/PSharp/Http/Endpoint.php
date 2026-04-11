@@ -63,7 +63,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 */
 	public static function fromClosure(string $method, string $path, Closure $action, string $name = null)
 	{
-		$self = new static(new Route(), $path, $name);
+		$self = new static(new Route('', ''), $path, $name);
 
 		$self->setMethod($method);
 		$self->setAction($action);
@@ -180,7 +180,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 * 
 	 * @return array|Closure|null
 	 */
-	protected function parseAction(): array
+	protected function parseAction()
 	{
 		$action = $this->getAction();
 
@@ -189,7 +189,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 		}
 
 		if ($this->actionIsClosure()) {
-			return $action;
+			return $this->getAction();
 		}
 
 		return null;
@@ -202,7 +202,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 */
 	public function actionIsClosure()
 	{
-		return $this->action instanceof Closure;
+		return $this->getAction() instanceof Closure;
 	}
 
 	/**

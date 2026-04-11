@@ -1,6 +1,7 @@
 <?php
 namespace PSharp\Http;
 
+use Closure;
 use PSharp\Core\Container;
 use PSharp\Http\Exceptions\HttpException;
 use PSharp\Http\Exceptions\HttpNotFoundException;
@@ -113,7 +114,7 @@ class Router
             // fetches closure dependencies
             $parameters = $this->valueReaper->reapClosureParameters($action, $values);
             // calls the closure
-            return $closure(...$parameters);
+            return $action(...$parameters);
         }
 
         if ($this->isControllerAction($action)) {
