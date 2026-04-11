@@ -1,6 +1,7 @@
 <?php
 namespace PSharp\Http\Methods\Base;
 
+use Closure;
 use PSharp\Http\Route;
 use PSharp\Http\Endpoint;
 use PSharp\Http\EndpointInterface;

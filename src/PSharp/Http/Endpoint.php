@@ -66,7 +66,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 		$self = new static(new Route(), $path, $name);
 
 		$self->setMethod($method);
-		$self->setAction($closure);
+		$self->setAction($action);
 
 		return $self;
 	}
