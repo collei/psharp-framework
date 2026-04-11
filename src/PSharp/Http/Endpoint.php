@@ -24,6 +24,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 		'alphanum' => '[\w\d]+',
 		'float' => '\d+(.\d*)?',
 		'slug' => '[\w\d]+(-[\w\d]+)*',
+		'string' => '[^/]+',
 	];
 
 	/**
@@ -85,8 +86,8 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 
 		foreach ($segments as $segment) if (1 == preg_match(self::REGEX_PARAM_SEGMENT, $segment, $spec)) {
 			$name = $spec[1];
-			$type = $spec[2] ?? null;
-			$regex = self::REGEX_ACCEPTED[$type] ?? '[^/]+';
+			$type = $spec[2] ?? 'string';
+			$regex = self::REGEX_ACCEPTED[$type] ?? self::REGEX_ACCEPTED['string'];
 			$hasDefault = isset($spec[3]) && !empty($spec[3]);
 			$default = $hasDefault ? $spec[3] : null;
 			$optional = empty($default) ? ('?' == ($spec[4] ?? '')) : false;
@@ -111,8 +112,8 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 		foreach ($segments as $segment) {
 			if (1 == preg_match(self::REGEX_PARAM_SEGMENT, $segment, $spec)) {
 				$name = $spec[1];
-				$type = isset($spec[2]) ? strtolower($spec[2]) : null;
-				$regexSegment = self::REGEX_ACCEPTED[$type] ?? '[^/]+';
+				$type = isset($spec[2]) ? strtolower($spec[2]) : 'string';
+				$regexSegment = self::REGEX_ACCEPTED[$type] ?? self::REGEX_ACCEPTED['string'];
 				$default = $spec[3] ?? null;
 				$optional = empty($default) ? ($spec[4] ?? '') : '?';
 
@@ -252,11 +253,11 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 				return (float) $value;
 		}
 
-		if (preg_match('/\d+/', $value) == 1) {
+		if (preg_match('/^\d+$/', $value) == 1) {
 			return (int) $value;
 		}
 
-		if (preg_match('/\d*[.,]\d+/', $value) == 1) {
+		if (preg_match('/^\d*[.,]\d+$/', $value) == 1) {
 			return (float) $value;
 		}
 
