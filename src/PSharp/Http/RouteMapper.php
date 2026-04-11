@@ -59,6 +59,23 @@ class RouteMapper
 	}
 
 	/**
+	 * Adds a Closure to the mapper.
+	 * 
+	 * @param string $method
+	 * @param string $path
+	 * @param Closure $action
+	 * @param string|null $name
+	 */
+	public function addClosure(string $method, string $path, Closure $action, string $name = null)
+	{
+		$endpoint = Endpoint::fromClosure($method, $path, $action, $name);
+
+		$this->endpoints[$endpoint->asString()] = $endpoint;
+
+		return $this;
+	}
+
+	/**
 	 * Map all controllers detected under $namespace from the specifed $appDir,
 	 * assuming the project follows psr-4 guidelines.
 	 * 
