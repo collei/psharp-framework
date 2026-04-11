@@ -3,6 +3,7 @@ namespace PSharp\Http;
 
 use PSharp\Http\Methods\Base\HttpMethodBase;
 use InvalidArgumentException;
+use Closure;
 
 /**
  * Base class for route endpoints

@@ -3,6 +3,7 @@ namespace PSharp\Http;
 
 use ReflectionClass;
 use ReflectionMethod;
+use Closure;
 use PSharp\Http\Methods\{HttpGet,HttpPost,HttpPut,HttpPatch,HttpDelete,HttpHead,HttpOptions,HttpTrace,HttpAny};
 use PSharp\Http\Methods\Base\HttpMethodBase;
 use PSharp\Http\Actions\ControllerBase;
