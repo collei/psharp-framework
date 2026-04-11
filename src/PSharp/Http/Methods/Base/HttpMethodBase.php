@@ -109,7 +109,7 @@ abstract class HttpMethodBase implements EndpointInterface
 	public function getPath()
 	{
 		return ($this->route)
-			? str_replace('//','/',($this->route->getRootPath() . ($this->path ? ('/' . $this->path) : '')))
+			? str_replace(['///','//'],'/',($this->route->getRootPath() . ($this->path ? ('/' . $this->path) : '')))
 			: $this->path;
 	}
 
