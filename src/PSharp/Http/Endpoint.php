@@ -24,6 +24,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 		'alphanum' => '[\w\d]+',
 		'float' => '\d+(.\d*)?',
 		'slug' => '[\w\d]+(-[\w\d]+)*',
+		'guid' => '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}',
 		'string' => '[^/]+',
 	];
 
