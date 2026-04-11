@@ -38,6 +38,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	/**
 	 * Constructor.
 	 * 
+	 * @param Psharp\Http\Route $route
 	 * @param string $path = "/"
 	 * @param string $name = null
 	 */
@@ -49,6 +50,24 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 
 		$this->parseParameters();
 		$this->compileRegex();
+	}
+
+	/**
+	 * Maps to closure.
+	 * 
+	 * @param string $method
+	 * @param string $path
+	 * @param Closure $action
+	 * @param string $name = null
+	 */
+	public static function mapToClosure(string $method, string $path, Closure $action, string $name = null)
+	{
+		$self = new static(new Route(), $path, $name);
+
+		$self->setMethod($method);
+		$self->setAction($closure);
+
+		return $self;
 	}
 
 	/**
