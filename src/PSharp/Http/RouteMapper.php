@@ -141,9 +141,10 @@ class RouteMapper
 	}
 
 	/**
-	 * Map the endpoint from the method's \ReflectionMethod instance.
+	 * Map the endpoint from the method's ReflectionMethod instance.
 	 * 
-	 * @param \ReflectionMethod $reflect
+	 * @param PSharp\Http\Route $route
+	 * @param ReflectionMethod $reflect
 	 * @param string $className
 	 * @return void
 	 */

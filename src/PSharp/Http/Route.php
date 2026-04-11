@@ -12,7 +12,6 @@ class Route
 {
 	private $rootPath = null;
 	private $rootName = null;
-	private $controller = null;
 
 	/**
 	 * Constructor.
@@ -24,27 +23,6 @@ class Route
 	{
 		$this->rootPath = $rootPath;
 		$this->rootName = $rootName;
-	}
-
-	/**
-	 * Define the action for this endpoint.
-	 * 
-	 * @param Route $controller
-	 * @return void
-	 */
-	public function setController(ControllerBase $controller)
-	{
-		$this->controller = $controller;
-	}
-
-	/**
-	 * Obtains the action from this endpoint.
-	 * 
-	 * @return \PSharp\Http\ControllerBase|null
-	 */
-	public function getController()
-	{
-		return $this->controller;
 	}
 
 	/**
