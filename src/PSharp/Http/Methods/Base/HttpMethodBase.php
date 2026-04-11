@@ -59,10 +59,10 @@ abstract class HttpMethodBase implements EndpointInterface
 	/**
 	 * Define the controller route for this endpoint.
 	 * 
-	 * @param Route|null $route
+	 * @param Route $route
 	 * @return $this
 	 */
-	public function setRoute(Route $route = null)
+	public function setRoute(Route $route)
 	{
 		$this->route = $route;
 		return $this;
@@ -71,10 +71,10 @@ abstract class HttpMethodBase implements EndpointInterface
 	/**
 	 * Define the action for this endpoint.
 	 * 
-	 * @param string $action
+	 * @param string|Closure $action
 	 * @return void
 	 */
-	public function setAction(string $action)
+	public function setAction(string|Closure $action)
 	{
 		$this->action = $action;
 		return $this;
