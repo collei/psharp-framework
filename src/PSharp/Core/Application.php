@@ -64,11 +64,16 @@ final class Application
      * 
      * @property PSharp\Core\Container container
      * @property PSharp\Http\Router router
+     * @property PSharp\Http\RouteMapper mapper
      */
     public function __get(string $name)
     {
         if (in_array($name, ['container','router'])) {
             return $this->$name;
+        }
+
+        if ('mapper' == $name) {
+            return $this->routeMapper;
         }
 
         return null;
