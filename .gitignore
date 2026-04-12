@@ -8,6 +8,7 @@
 CHANGESTO
 Cso.php
 output.txt
+appsettings.json
 
 #Developement
 *.sublime-project
