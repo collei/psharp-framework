@@ -12,18 +12,66 @@ class FileLogger extends Logger
     private $loggerPath = '.';
 
     /**
+     * @var string Default level, if any.
+     */
+    protected $defaultLevel = null;
+
+    /**
      * @var string Full path of log file.
      */
-    private $loggerFileName = 'log.txt';
+    protected $fileNameFormat = 'log.txt';
+
+    /**
+     * @var string Format of log entry.
+     */
+    protected $entryLabel = '[{datelabel}] [{level}] {error} {context}';
+
+    /**
+     * @var string Date format for the file name, if needed.
+     */
+    protected $dateFormat = 'Y-m-d';
+
+    /**
+     * @var string Date format for the log entry label.
+     */
+    protected $dateLabelFormat = 'Y-m-d H:i:s.u';
 
     /**
      * Creates this logger.
      * 
-     * @param string $name = null
+     * @param string $name
+     * @param array|null $settings
      */
-    public function __construct(string $name = null)
+    public function __construct(string $name, array $settings = null)
     {
-        $this->setName($name ?? 'FileLogger');
+        $this->setName($name);
+
+        $this->initialize($settings ?? []);
+    }
+
+    /**
+     * Configure some logger settings.
+     * 
+     * @param array $conf
+     * @return void
+     */
+    protected function configure(array $conf)
+    {
+        if (! empty($conf['filename'])) {
+            $this->fileNameFormat = $conf['filename']; 
+        }
+
+        if (! empty($conf['label'])) {
+            $this->entryLabel = $conf['label']; 
+        }
+
+        if (! empty($conf['date'])) {
+            $this->dateFormat = $conf['date']; 
+        }
+
+        if (! empty($conf['datetime'])) {
+            $this->dateLabelFormat = $conf['datetime']; 
+        }
     }
 
     /**
@@ -40,16 +88,18 @@ class FileLogger extends Logger
     }
 
     /**
-     * Configures the logger filename.
+     * Returns the formatted file name.
      * 
-     * @param string $path
-     * @return $this
+     * @return string
      */
-    public function setLoggerFileName(string $fileName)
+    protected function formatFileName()
     {
-        $this->loggerFileName = $fileName;
+        $variables = [
+            'date' => date($this->dateFormat ?: 'Y-m-d'),
+            'level' => trim($this->defaultLevel ?: ''),
+        ];
 
-        return $this;
+        return Str::replaceVariables($this->fileNameFormat, $variables);
     }
 
     /**
@@ -59,7 +109,9 @@ class FileLogger extends Logger
      */
     public function getFilePath()
     {
-        return ($this->loggerPath ?: '.') . DIRECTORY_SEPARATOR . $fileName;
+        $path = ($this->loggerPath ?: '.');
+
+        return Str::normalizePath($path . DIRECTORY_SEPARATOR . $this->formatFileName());
     }
 
     /**
