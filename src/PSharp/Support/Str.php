@@ -913,6 +913,68 @@ abstract class Str
 	}
 
 	/**
+	 * Returns an unique list of all delimited variables found in the text.
+	 * 
+	 * @param string $text
+	 * @param array|null $delimiters - If omitted, uses ['{','}']
+	 * @return array
+	 */
+	public static function getVariables(string $text, array $delimiters = null)
+	{
+		list($left, $right) = (is_array($delimiters) && count($delimiters) == 2)
+								? $delimiters
+								: array('{', '}');
+
+		list($left_len, $right_len) = array(mb_strlen($left), mb_strlen($right));
+
+		$border = mb_strlen($text) - 1;
+		$offset = 0;
+		$variables = [];
+		
+		while ($offset < $border) {
+			$former = mb_strpos($text, $left, $offset);
+			$latter = mb_strpos($text, $right, $offset + $left_len);
+
+			if ($former === false || $latter === false) {
+				break;
+			}
+
+			$variable = mb_substr($text, $former + $left_len, $latter - ($former + $left_len));
+
+			$variables[trim($variable)] = $variable;
+
+			$offset = $latter + $right_len;
+		}
+		
+		return $variables;
+	}
+
+	/**
+	 * Replaces variables with values from a list.
+	 * 
+	 * @param string $text
+	 * @param array $variables
+	 * @param array|null $delimiters - If omitted, uses ['{','}']
+	 * @return string
+	 */
+	public static function replaceVariables(string $text, array $variables, array $delimiters = null)
+	{
+		list($left, $right) = (is_array($delimiters) && count($delimiters) == 2)
+								? $delimiters
+								: array('{', '}');
+
+		$result = $text;
+
+		foreach ($variables as $name => $value) {
+			$variable = $left.$name.$right;
+
+			$result = str_replace($variable, $value, $result);
+		}
+
+		return $result;
+	}
+
+	/**
 	 *	Counts the number of lines up to the specified $limit, where
 	 *	$limit is the last character index of the string.
 	 *	If $limit is omitted, the whole $text is considered.
