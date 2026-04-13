@@ -9,7 +9,7 @@ use DateTime;
 /**
  * Logger equipment.
  */
-class Logger extends AbastractLogger
+class Logger extends AbstractLogger
 {
     /**
      * Logger name.
@@ -17,9 +17,9 @@ class Logger extends AbastractLogger
     private $name;
 
     /**
-     * Logger settings
+     * Datetime label format
      */
-    private $dateFormat = 'Y-m-d H:i:s.u';
+    private $dateLabelFormat = 'Y-m-d H:i:s.u';
 
     /**
      * Creates this logger.
@@ -56,9 +56,9 @@ class Logger extends AbastractLogger
      * @param string $format
      * @return void
      */
-    protected function setDateFormat(string $format)
+    protected function setDateLabelFormat(string $format)
     {
-        $this->dateFormat = $format;
+        $this->dateLabelFormat = $format;
     }
 
     /**
@@ -66,9 +66,9 @@ class Logger extends AbastractLogger
      * 
      * @return string
      */
-    public function getDateFormat()
+    public function getDateLabelFormat()
     {
-        return $this->dateFormat;
+        return $this->dateLabelFormat;
     }
 
     /**
@@ -79,7 +79,7 @@ class Logger extends AbastractLogger
      */
     protected function formatDate(DateTime $dateTime)
     {
-        return $dateTime->format($this->dateFormat);
+        return $dateTime->format($this->dateLabelFormat);
     }
 
     /**
@@ -90,7 +90,7 @@ class Logger extends AbastractLogger
      * @param array $context
      * @return void
      */
-    public function log($level, string|Stringable $message, array $context = array())
+    public function log($level, string|Stringable $message, array $context = array()): void
     {
         $this->write($level, $message, $context);
     }
