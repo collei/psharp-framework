@@ -36,8 +36,8 @@
                 "to": "webmaster@domain",
                 "cc": [],
                 "bcc": [],
-                "subject": "[{datetime}] [{level}] An error occurred",
-                "body": "[{datetime}] [{level}] {error} {context}",
+                "subject": "[{level}] [{datetime}] An error occurred right now!",
+                "body": "{hr}\nError Report\n{hr}\nTime: {datetime}\nLevel: {level}\nDescription: {error}\n{hr}\n{context}\n{hr}\n",
                 "date": "Y-m-d",
                 "datetime": "Y-m-d H:i:s.u"
             }
