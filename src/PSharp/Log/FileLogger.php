@@ -1,6 +1,8 @@
 <?php
 namespace PSharp\Log;
 
+use Stringable;
+
 /**
  * Logger that writes to a file.
  */
@@ -29,12 +31,7 @@ class FileLogger extends Logger
     /**
      * @var string Date format for the file name, if needed.
      */
-    protected $dateFormat = 'Y-m-d';
-
-    /**
-     * @var string Date format for the log entry label.
-     */
-    protected $dateLabelFormat = 'Y-m-d H:i:s.u';
+    protected $fileNameDateFormat = 'Y-m-d';
 
     /**
      * Creates this logger.
@@ -46,7 +43,7 @@ class FileLogger extends Logger
     {
         $this->setName($name);
 
-        $this->initialize($settings ?? []);
+        $this->configure($settings ?? []);
     }
 
     /**
@@ -65,12 +62,12 @@ class FileLogger extends Logger
             $this->entryLabel = $conf['label']; 
         }
 
-        if (! empty($conf['date'])) {
-            $this->dateFormat = $conf['date']; 
+        if (! empty($conf['datetime'])) {
+            $this->setDateLabelFormat($conf['datetime']); 
         }
 
-        if (! empty($conf['datetime'])) {
-            $this->dateLabelFormat = $conf['datetime']; 
+        if (! empty($conf['date'])) {
+            $this->fileNameDateFormat = $conf['date']; 
         }
     }
 
@@ -95,7 +92,7 @@ class FileLogger extends Logger
     protected function formatFileName()
     {
         $variables = [
-            'date' => date($this->dateFormat ?: 'Y-m-d'),
+            'date' => date($this->fileNameDateFormat ?: 'Y-m-d'),
             'level' => trim($this->defaultLevel ?: ''),
         ];
 
