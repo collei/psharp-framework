@@ -2,6 +2,7 @@
 namespace PSharp\Support;
 
 use RangeException;
+use InvalidArgumentException;
 
 /**
  *	Reunites string helper functions
@@ -913,17 +914,58 @@ abstract class Str
 	}
 
 	/**
+	 * Used by the getVariables() function.
+	 * 
+	 * @var array
+	 */
+	protected const VARIABLE_RIGHT_DELIMITERS = [
+		'{' => '}',
+		'[' => '}',
+		'(' => ')',
+		'<' => '>',
+	];
+
+	/**
+	 * Used by the getVariables() function.
+	 * 
+	 * @var array
+	 */
+	protected const VARIABLE_LEFT_DELIMITERS = [
+		'}' => '{',
+		']' => '[',
+		')' => '(',
+		'>' => '<',
+	];
+
+	/**
 	 * Returns an unique list of all delimited variables found in the text.
 	 * 
+	 * If only $left is set:
+	 * 		if $left is one of '{','[','(', $right takes one of '}',']',')', respectively;
+	 * 		otherwise, $right takes $left.
+	 * If only $right is set:
+	 * 		if $right is one of '}',']',')', $left takes one of '{','[','(', respectively;
+	 * 		otherwise, $left takes $right.
+	 * If both are not set, it assumes $left = '{' and $right = '}'.
+	 * 
 	 * @param string $text
-	 * @param array|null $delimiters - If omitted, uses ['{','}']
+	 * @param string|null $left
+	 * @param string|null $right
 	 * @return array
 	 */
-	public static function getVariables(string $text, array $delimiters = null)
+	public static function getVariables(string $text, string $left = null, string $right = null)
 	{
-		list($left, $right) = (is_array($delimiters) && count($delimiters) == 2)
-								? $delimiters
-								: array('{', '}');
+		if (empty($left) && empty($right)) {
+			list($left, $right) = array('{', '}');
+		} elseif (empty($left)) {
+			$left = self::VARIABLE_LEFT_DELIMITERS[$right] ?? $right;
+		} elseif (empty($right)) {
+			$right = self::VARIABLE_RIGHT_DELIMITERS[$left] ?? $left;
+		}
+
+		if ($left == $right) {
+			throw new InvalidArgumentException('Both delimiters must NOT be equal!');
+		}
 
 		list($left_len, $right_len) = array(mb_strlen($left), mb_strlen($right));
 
