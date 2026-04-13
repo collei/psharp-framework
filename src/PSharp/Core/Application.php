@@ -7,6 +7,8 @@ use PSharp\Support\Str;
 use PSharp\Http\{RouteMapper, Router, Request, Response, Session};
 use PSharp\Http\Factories\RequestFactory;
 use PSharp\Http\Actions\ControllerBase;
+use PSharp\Core\Exceptions\ApplicationException;
+use PSharp\Core\Providers\DeferrableProvider;
 
 /**
  * The application main class.
@@ -42,6 +44,16 @@ final class Application
      * @var array
      */
     private $middleware = [];
+
+    /**
+     * @var array
+     */
+    private $providers = [];
+
+    /**
+     * @var bool
+     */
+    private $bootedProviders = false;
 
     /**
      * Initializes application.
@@ -160,7 +172,7 @@ final class Application
     }
 
     /**
-     * Return a valeu or a set of values from the config.
+     * Return a value or a set of values from the config.
      * 
      * @param string $name - use dotted name for single values or smaller portions.
      * @param mixed $default - use to give a default if value not found on config.
@@ -197,6 +209,43 @@ final class Application
         $this->routeMapper->mapControllers($this->baseDir, $namespace);
 
         return $this;
+    }
+
+    /**
+     * Register a service provider for later booting.
+     * 
+     * @param PSharp\Core\Providers\ServiceProvider
+     */
+    public function provide(string $providerClass)
+    {
+        $provider = $this->container->make($providerClass);
+
+        $provider->register();
+
+        $this->providers[$providerClass] = $provider;
+    }
+
+    /**
+     * Boots providers right before running.
+     * 
+     * @return void
+     * @throws PSharp\Core\Exceptions\ApplicationException - when an exception is thrown in provider context.
+     */
+    protected function bootProviders()
+    {
+        $name = '[Unknown]';
+
+        try {
+            foreach ($this->providers as $class => $provider) {
+                $name = $class;
+                $provider->boot();
+            }
+
+            $this->bootedProviders = true;
+        }
+        catch (Throwable $pre) {
+            throw new ApplicationException("Provider $name failed booting.", $this, $pre);
+        }
     }
 
     /**
@@ -371,6 +420,8 @@ final class Application
      */
     public function run()
     {
+        $this->prepareRun();
+
         $request = $this->captureRequest();
 
         $response = $this->handleRequest($request);
@@ -378,6 +429,16 @@ final class Application
         echo $response;
 
         return $this;
+    }
+
+    /**
+     * Performs preparation actions before running.
+     * 
+     * @return void
+     */
+    protected function prepareRun()
+    {
+        $this->bootProviders();
     }
 
     /**
