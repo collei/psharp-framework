@@ -3,12 +3,13 @@ namespace PSharp\Log;
 
 use PSharp\Core\Application;
 use PSharp\Core\Config;
+use PSharp\Support\Arr;
 use Psr\Log\LoggerTrait;
-use Psr\Log\LoggerIntefrface;
+use Psr\Log\LoggerInterface;
 use Stringable;
 use InvalidArgumentException;
 
-class LogManager implements LoggerIntefrface
+class LogManager implements LoggerInterface
 {
     use LoggerTrait;
 
@@ -114,5 +115,122 @@ class LogManager implements LoggerIntefrface
         $logger->setLoggerPath($loggerPath);
 
         return $logger;
+    }
+
+    /**
+     * Initialize the mail logger with its associated settings.
+     * 
+     * @param string $name
+     * @param array $conf
+     * @return PSharp\Log\MailLogger
+     */
+    protected function startMailLogger(string $name, array $conf)
+    {
+        $logger = new MailLogger($name, $conf);
+
+        return $logger;
+    }
+
+    /**
+     * Logs with an arbitrary level.
+     *
+     * @param mixed $level
+     * @param string|Stringable $message
+     * @param array $context
+     * @return void
+     */
+    public function log($level, string|Stringable $message, array $context = array()): void
+    {
+        $this->write($level, $message, $context);
+    }
+
+    /**
+     * Logs with an arbitrary level to the given $channel(s).
+     *
+     * @param string|array $channels
+     * @param mixed $level
+     * @param string|Stringable $message
+     * @param array $context
+     * @return void
+     */
+    public function logTo(string|array $channels, $level, string|Stringable $message, array $context = array()): void
+    {
+        $channels = Arr::wrap($channels);
+
+        $logged = 0;
+
+        foreach ($channels as $channel) {
+            if ($logger = $this->getLogger($channel)) {
+                $logger->log($level, $message, $context);
+
+                ++$logged;
+            }
+        }
+
+        if (0 == $logged) {
+            throw new Exception('None of the specified Logging channels are currently unavailable.');
+        }
+    }
+
+    /**
+     * Writes log to the default channel OR to the first available one.
+     *
+     * @param mixed $level
+     * @param string|Stringable $message
+     * @param array $context
+     * @return void
+     */
+    public function write($level, string|Stringable $message, array $context = array())
+    {
+        if ($logger = $this->getDefaultLogger()) {
+            $logger->log($level, $message, $context);
+
+            return;
+        }
+
+        if ($logger = $this->getFirstAvailableLogger()) {
+            $logger->log($level, $message, $context);
+
+            return;
+        }
+
+        throw new Exception('No logging channels available.');
+    }
+
+    /**
+     * Returns the given logger channel, if any.
+     * 
+     * @param string $channel
+     * @return Psr\Log\LoggerInterface|null
+     */
+    protected function getLogger(string $channel)
+    {
+        return $this->channels[$channel] ?? null;
+    }
+
+    /**
+     * Returns the default logger channel, if any.
+     * 
+     * @return Psr\Log\LoggerInterface|null
+     */
+    protected function getDefaultLogger()
+    {
+        return $this->channels[$this->defaultChannel] ?? null;
+    }
+
+    /**
+     * Returns the first available logger channel, if any.
+     * 
+     * @return Psr\Log\LoggerInterface|null
+     */
+    protected function getFirstAvailableLogger()
+    {
+        foreach ($this->channels as $name => $channel) {
+            if ($channel) {
+                return $channel;
+            }
+        }
+
+        return null;
     }
 }
