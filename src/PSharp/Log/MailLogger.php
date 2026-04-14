@@ -11,13 +11,35 @@ use PSharp\Support\Str;
  */
 class MailLogger extends Logger
 {
+    /**
+     * @var string|null
+     */
     protected $from = null;
-    protected $to = null;
-    protected $cc = [];
-    protected $bcc = [];
-    protected $subject = '[{level}] [{datetime}] An error occurred right now!';
-    protected $body = "{hr}\nError Report\n{hr}\nTime: {datetime}\nLevel: {level}\nDescription: {error}\n{hr}\n{context}\n{hr}\n";
 
+    /**
+     * @var string|null
+     */
+    protected $to = null;
+
+    /**
+     * @var array
+     */
+    protected $cc = [];
+
+    /**
+     * @var array
+     */
+    protected $bcc = [];
+
+    /**
+     * @var string
+     */
+    protected $subject = '[{level}] [{datetime}] An error occurred right now!';
+
+    /**
+     * @var string
+     */
+    protected $body = "{hr}\nError Report\n{hr}\nTime: {datetime}\nLevel: {level}\nDescription: {error}\n{hr}\n{context}\n{hr}\n";
 
     /**
      * Creates this logger.
