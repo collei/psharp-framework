@@ -2,6 +2,7 @@
 namespace PSharp\Log;
 
 use Stringable;
+use DateTime;
 use PSharp\Support\Str;
 
 /**

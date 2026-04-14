@@ -4,9 +4,11 @@ namespace PSharp\Log;
 use PSharp\Core\Application;
 use PSharp\Core\Config;
 use PSharp\Support\Arr;
+use PSharp\Support\Str;
 use Psr\Log\LoggerTrait;
 use Psr\Log\LoggerInterface;
 use Stringable;
+use DateTime;
 use InvalidArgumentException;
 
 class LogManager implements LoggerInterface

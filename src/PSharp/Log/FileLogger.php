@@ -2,6 +2,8 @@
 namespace PSharp\Log;
 
 use Stringable;
+use DateTime;
+use PSharp\Support\Str;
 
 /**
  * Logger that writes to a file.
