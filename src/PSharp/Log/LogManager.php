@@ -95,6 +95,8 @@ class LogManager implements LoggerInterface
                 return $this->startFileLogger($name, $settings);
             case 'email':
                 return $this->startMailLogger($name, $settings);
+            case 'stack':
+                return $this->buildLogStack($settings);
         }
 
         return null;
@@ -131,6 +133,26 @@ class LogManager implements LoggerInterface
         $logger = new MailLogger($name, $conf);
 
         return $logger;
+    }
+
+    /**
+     * Builds a stack logger able to broadcast logs to various channels.
+     * 
+     * @param array $conf
+     * @return Psr\Log\LoggerInterface
+     */
+    protected function buildLogStack(array $conf)
+    {
+        $channels = $conf['channels'] ?? ['daily'];
+
+        return new class($this, $channels) implements LoggerInterface {
+            use LoggerTrait;
+            public function __construct(private LogManager $manager, private array $channels) {}
+            public function log($level, string|Stringable $message, array $context = array()): void
+            {
+                $this->manager->logTo($this->channels, $level, $message, $context);
+            }
+        };
     }
 
     /**
