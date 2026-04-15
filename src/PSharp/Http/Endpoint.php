@@ -283,7 +283,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 * 
 	 * @return array
 	 */
-	public function __debugInfo()
+	public function __debugInfo(): array
 	{
 		return [
 			'name' => $this->getName(),
