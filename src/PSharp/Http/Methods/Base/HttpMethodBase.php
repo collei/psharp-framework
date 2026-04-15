@@ -19,10 +19,29 @@ use PSharp\Http\Methods\HttpTrace;
  */
 abstract class HttpMethodBase implements EndpointInterface
 {
+	/**
+	 * @var string
+	 */
 	private $path = null;
+
+	/**
+	 * @var string
+	 */
 	private $name = null;
+
+	/**
+	 * @var PSharp\Http\Route
+	 */
 	private $route = null;
+
+	/**
+	 * @var string|Closure
+	 */
 	private $action = null;
+
+	/**
+	 * @var string
+	 */
 	private $method = null;
 
 	/**
@@ -94,7 +113,7 @@ abstract class HttpMethodBase implements EndpointInterface
 	/**
 	 * Obtains the action from this endpoint.
 	 * 
-	 * @return string|null
+	 * @return string|Closure|null
 	 */
 	public function getAction()
 	{
@@ -201,5 +220,20 @@ abstract class HttpMethodBase implements EndpointInterface
 	public function __toString()
 	{
 		return $this->asString();
+	}
+
+	/**
+	 * Debug info.
+	 * 
+	 * @return array
+	 */
+	public function __debugInfo(): array
+	{
+		return [
+			'name' => $this->getName(),
+			'method' => $this->getMethod(),
+			'path' => $this->getPath(),
+			'action' => $this->getAction(),
+		];
 	}
 }
