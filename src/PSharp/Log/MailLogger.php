@@ -116,4 +116,23 @@ class MailLogger extends Logger
 
         mail($this->to, $subject, $body, implode("\r\n", $headers));
     }
+
+    /**
+     * Retrieves info for the internal PHP functions.
+     * 
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        $array = parent::__debugInfo();
+
+        return $array + [
+            'from' => $this->from,
+            'to' => $this->to,
+            'cc' => $this->cc,
+            'bcc' => $this->bcc,
+            'subject' => $this->subject,
+            'body' => $this->body,
+        ];
+    }
 }

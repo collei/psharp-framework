@@ -287,11 +287,11 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	{
 		return [
 			'name' => $this->getName(),
-			'path' => $this->getPath(),
-			'action' => $this->getAction(),
 			'method' => $this->getMethod(),
+			'path' => $this->getPath(),
 			'regex' => $this->regex,
 			'parameters' => $this->parameters,
+			'action' => $this->getAction(),
 		];
 	}
 }

@@ -136,4 +136,22 @@ class FileLogger extends Logger
 
         file_put_contents($this->getFilePath(), $contents, FILE_APPEND);
     }
+
+    /**
+     * Retrieves info for the internal PHP functions.
+     * 
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        $array = parent::__debugInfo();
+
+        return $array + [
+            'loggerPath' => $this->loggerPath,
+            'defaultLevel' => $this->defaultLevel,
+            'fileNameFormat' => $this->fileNameFormat,
+            'entryLabel' => $this->entryLabel,
+            'fileNameDateFormat' => $this->fileNameDateFormat,
+        ];
+    }
 }

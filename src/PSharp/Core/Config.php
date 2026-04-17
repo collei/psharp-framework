@@ -74,4 +74,17 @@ class Config
 
         return Arr::get($this->data, $name, $default);
     }
+
+    /**
+     * Retrieves info for the internal PHP functions.
+     * 
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'sourceFile' => $this->configFile,
+            'data' => $this->data,
+        ];
+    }
 }

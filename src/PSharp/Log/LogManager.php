@@ -152,6 +152,13 @@ class LogManager implements LoggerInterface
             {
                 $this->manager->logTo($this->channels, $level, $message, $context);
             }
+            public function __debugInfo()
+            {
+                return [
+                    'manager' => get_instance_id($this->manager),
+                    'channels' => $this->channels,
+                ];
+            }
         };
     }
 
@@ -256,5 +263,21 @@ class LogManager implements LoggerInterface
         }
 
         return null;
+    }
+
+    /**
+     * Retrieves info for the internal PHP functions.
+     * 
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'application' => get_instance_id($this->application),
+            'defaultLevel' => $this->defaultLevel,
+            'defaultChannel' => $this->defaultChannel,
+            'classes' => $this->classes,
+            'channels' => $this->channels,
+        ];
     }
 }

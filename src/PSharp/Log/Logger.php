@@ -110,4 +110,17 @@ class Logger extends AbstractLogger
 
         error_log('['.$now.'] ['.$agent.'] ['.$level.'] '.$message);
     }
+
+    /**
+     * Retrieves info for the internal PHP functions.
+     * 
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'name' => $this->name,
+            'dateLabelFormat' => $this->dateLabelFormat,
+        ];
+    }
 }

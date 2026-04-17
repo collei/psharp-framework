@@ -4,6 +4,8 @@ namespace PSharp\Core;
 use Closure;
 use PSharp\Support\Pipeline;
 use PSharp\Support\Str;
+use PSharp\Auth\AuthenticationException;
+use PSharp\Auth\Access\AuthorizationException;
 use PSharp\Http\{RouteMapper, Router, Request, Response, Session};
 use PSharp\Http\Factories\RequestFactory;
 use PSharp\Http\Actions\ControllerBase;
@@ -501,5 +503,24 @@ final class Application
 
             return $this->router->dispatch($request);
         };
+    }
+
+    /**
+     * Retrieves instance info for the internal functions.
+     * 
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'baseDir' => $this->baseDir,
+            'container' => get_instance_id($this->container),
+            'config' => get_instance_id($this->config),
+            'routeMapper' => get_instance_id($this->routeMapper),
+            'router' => get_instance_id($this->router),
+            'middleware' => $this->middleware,
+            'providers' => $this->providers,
+            'bootedProviders' => $this->bootedProviders,
+        ];
     }
 }
