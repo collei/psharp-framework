@@ -13,7 +13,10 @@
         "psr-4": {
             "PSharp\\": "src/PSharp",
             "App\\": "App"
-        }
+        },
+        "files": [
+            "src/PSharp/helpers.php"
+        ]
     },
     "license": "MIT License",
     "authors": [
