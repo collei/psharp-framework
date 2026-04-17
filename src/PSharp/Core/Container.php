@@ -355,6 +355,11 @@ final class Container
         return $concrete(...$args);
     }
 
+    /**
+     * Retrieves info for the internal PHP functions.
+     * 
+     * @return array
+     */
     public function __debugInfo()
     {
         $instance_as_class = function($inst) {
