@@ -4,6 +4,53 @@
         "description": "App constructed through PSharp evolution.",
         "version": 1
     },
+    "db": {
+        "connections": {
+            "my-app": {
+                "connection-string": "",
+                "type": "sqlsrv",
+                "server": "\\\\myserver",
+                "database": "MyAppDb",
+                "username": "usrMyAppDb",
+                "password": "********"
+            }
+        }
+    },
+    "auth": {
+        "default": "",
+        "guards": [
+            "user"
+        ],
+        "repositories": {
+            "db": {
+                "driver": "database",
+                "connection": "my-app",
+                "table": "users",
+                "fields": {
+                    "username": "username"
+                }
+            },
+            "orm": {
+                "driver": "noelle",
+                "model": "Noelle\\ORM\\Entity"
+            },
+            "file": {
+                "driver": "file",
+                "path": "storage/app/users.txt"
+            },
+            "ldap": {
+                "driver": "ldap"
+            }
+        },
+        "drivers": {
+            "ldap": {
+                "type": "ldap",
+                "server": "ldap://dc.example.com",
+                "root": "CN=Users,DC=example,DC=com",
+                "admin": null
+            }
+        }
+    },
     "logging": {
         "defaultChannel": "single",
         "defaultLevel": "debug",
