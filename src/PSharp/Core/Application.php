@@ -2,6 +2,7 @@
 namespace PSharp\Core;
 
 use Closure;
+use InvalidArgumentException;
 use PSharp\Support\Pipeline;
 use PSharp\Support\Str;
 use PSharp\Auth\AuthenticationException;
@@ -11,6 +12,7 @@ use PSharp\Http\Factories\RequestFactory;
 use PSharp\Http\Actions\ControllerBase;
 use PSharp\Core\Exceptions\ApplicationException;
 use PSharp\Core\Providers\DeferrableProvider;
+use PSharp\Core\Middleware\MiddlewareInterface;
 
 /**
  * The application main class.
@@ -217,6 +219,7 @@ final class Application
      * Register a service provider for later booting.
      * 
      * @param PSharp\Core\Providers\ServiceProvider
+     * @return $this
      */
     public function provide(string $providerClass)
     {
@@ -225,6 +228,8 @@ final class Application
         $provider->register();
 
         $this->providers[$providerClass] = $provider;
+
+        return $this;
     }
 
     /**
@@ -394,6 +399,12 @@ final class Application
         foreach ($middleware as $one) {
             if (! class_exists($one, true)) {
                 throw new ApplicationException("Middleware {$one} not found !");
+            }
+
+            if (! is_a($one, MiddlewareInterface::class, true)) {
+                throw new InvalidArgumentException(
+                    sprintf('%s does not implement the interface %s', $one, MiddlewareInterface::class)
+                );
             }
 
             $this->middleware[] = $this->container->make($one);
