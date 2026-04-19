@@ -1165,4 +1165,25 @@ abstract class Arr
 	{
 		return array_diff($array, ...$arrays);
 	}
+
+	/**
+	 * Selects array elements by their specified keys.
+	 * The resulting array will be number-indexed (from zero) and the same length
+	 * as the number of keys passed. Not found keys will be null.
+	 * Perfect to be used along with list(...) PHP language construct for variable unpacking.
+	 * 
+	 * @param array $source
+	 * @param int|string ...$indexes
+	 * @return array  
+	 */
+	public static function select(array $source, int|string ...$indexes)
+	{
+		$dest = [];
+
+		foreach ($indexes as $key) {
+			$dest[] = $source[$key] ?? null;
+		}
+
+		return $dest;
+	}
 }
