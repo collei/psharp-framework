@@ -106,6 +106,16 @@ final class Application
     }
 
     /**
+     * Retrieves the Application instance from the Container.
+     * 
+     * @return PSharp\Core\Application
+     */
+    public static function getInstance()
+    {
+        return Container::singleton()->make(static::class);
+    }
+
+    /**
      * Initializes the internal instances.
      * 
      * @return void
