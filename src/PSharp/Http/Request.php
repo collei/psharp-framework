@@ -1266,4 +1266,33 @@ class Request implements RequestInterface, ServerRequestInterface
 
 		return $default;
 	}
+
+	/**
+	 * Crafted for the internal PHP functions.
+	 * 
+	 * @return array
+	 */
+	public function __debugInfo()
+	{
+		return [
+			'uri' => $this->uri,
+			'requestTarget' => $this->requestTarget,
+			'format' => $this->format,
+			'mimeType' => $this->mimeType,
+			'method' => $this->method,
+			'overridenMethod' => $this->overridenMethod,
+			'httpVersion' => $this->httpVersion,
+			'headers' => $this->headers,
+			'body' => $this->body,
+			'serverParams' => $this->serverParams,
+			'cookieParams' => $this->cookieParams,
+			'queryStringParams' => $this->queryStringParams,
+			'uploadedFiles' => $this->uploadedFiles,
+			'parsedBodyContent' => $this->parsedBodyContent,
+			'parsedAcceptableContentTypes' => $this->parsedAcceptableContentTypes,
+			'attributes' => $this->attributes,
+			'endpoint' => $this->endpoint,
+			'session' => $this->session,
+		];
+	}
 }

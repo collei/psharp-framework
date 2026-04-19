@@ -565,4 +565,22 @@ class Stream implements StreamInterface
 		//
 		return self::isWritableMode($mode);
 	}
+
+	/**
+	 * Crafted for the internal PHP functions.
+	 * 
+	 * @return array
+	 */
+	public function __debugInfo()
+	{
+		return [
+			'handle' => $this->handle,
+			'uri' => $this->uri,
+			'size' => $this->size,
+			'seekable' => $this->seekable,
+			'readable' => $this->readable,
+			'writable' => $this->writable,
+			'customMetadata' => $this->customMetadata,
+		];
+	}
 }
