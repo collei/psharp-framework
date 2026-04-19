@@ -21,6 +21,11 @@ use PSharp\Core\DI\NotFoundException;
 final class Container
 {
     /**
+     * @var static The singleton Container instance.
+     */
+    private static $instance = null;
+
+    /**
      * Repository of living object instances.
      * 
      * @var array
@@ -65,14 +70,28 @@ final class Container
     ];
 
     /**
-     * Constructor
+     * Constructor for internal use only.
      */
-    public function __construct()
+    private function __construct()
     {
         $this->parameterReaper = new ParameterReaper($this);
 
         $this->setInstance(static::class, $this);
         $this->setInstance(ParameterReaper::class, $this->parameterReaper);
+    }
+
+    /**
+     * Retrieves the singleton instance.
+     * 
+     * @return PSharp\Core\Container
+     */
+    public static function singleton()
+    {
+        if (static::$instance) {
+            return static::$instance;
+        }
+
+        return static::$instance = new static();
     }
 
     /**
