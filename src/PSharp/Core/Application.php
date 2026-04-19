@@ -3,8 +3,7 @@ namespace PSharp\Core;
 
 use Closure;
 use InvalidArgumentException;
-use PSharp\Support\Pipeline;
-use PSharp\Support\Str;
+use PSharp\Support\{Facade, Pipeline, Str};
 use PSharp\Auth\AuthenticationException;
 use PSharp\Auth\Access\AuthorizationException;
 use PSharp\Http\{RouteMapper, Router, Request, Response, Session};
@@ -124,7 +123,9 @@ final class Application
     {
         Session::start();
 
-        $this->container = new Container();
+        Facade::setApplication($this);
+
+        $this->container = Container::singleton();
         $this->container->instance($this);
         $this->container->instance($this->config);
         $this->container->instance(Session::getInstance());
