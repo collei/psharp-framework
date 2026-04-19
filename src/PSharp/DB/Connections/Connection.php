@@ -605,4 +605,23 @@ class Connection
 
         return null;
     }
+
+    /**
+     * Crafts instance display for debugging internals.
+     * 
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'name' => $this->name,
+            'type' => $this->type,
+            'isOpen' => $this->isOpen,
+            'database' => $this->database,
+            'username' => $this->username,
+            'handle' => get_instance_id($this->handle),
+            'logger' => get_instance_id($this->logger),
+            'options' => $this->options,
+        ];
+    }
 }
