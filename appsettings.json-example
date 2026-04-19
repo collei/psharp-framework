@@ -6,13 +6,14 @@
     },
     "db": {
         "connections": {
+            "default": "my-app",
             "my-app": {
-                "connection-string": "",
+                "dsn": "",
                 "type": "sqlsrv",
                 "server": "\\\\myserver",
                 "database": "MyAppDb",
-                "username": "usrMyAppDb",
-                "password": "********"
+                "username": "",
+                "password": ""
             }
         }
     },
