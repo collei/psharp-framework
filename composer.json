@@ -15,7 +15,8 @@
             "App\\": "App"
         },
         "files": [
-            "src/PSharp/helpers.php"
+            "src/helpers.php",
+            "src/facades.php"
         ]
     },
     "license": "MIT License",
