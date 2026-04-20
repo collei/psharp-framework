@@ -1,21 +1,16 @@
 <?php
 namespace PSharp\Http;
 
-use PSharp\Http\Factories\ResponseFactory;
-use PSharp\Container\Container;
 use JsonSerializable;
 use SplFileInfo;
 use Stringable;
-use Zelatus\Interfaces\Support\Renderable;
-use PSharp\Support\Interfaces\Jsonable;
-use PSharp\Support\Interfaces\Arrayable;
+use PSharp\Http\Factories\ResponseFactory;
+use PSharp\Container\Container;
 use PSharp\Support\MimeType;
+use PSharp\Support\Interfaces\{Renderable, Jsonable, Arrayable};
 
 /**
  *	Prepares HTTP response instances based upon generated requests.
- *
- *	@author	alarido <alarido.su@gmail.com>
- *
  */
 class ResponsePreparator
 {
