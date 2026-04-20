@@ -866,7 +866,9 @@ class Response implements ResponseInterface
 	 */
 	protected function sendContent()
 	{
-		echo $contents = $this->getBody()->rewind()->getContents();
+		$stream = $this->getBody();
+		$stream->rewind();
+		echo $contents = $stream->getContents();
 		//
 		return $this;
 	}
