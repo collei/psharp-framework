@@ -232,8 +232,12 @@ final class Application
      * @param PSharp\Core\Providers\ServiceProvider
      * @return $this
      */
-    public function provide(string $providerClass)
+    public function provide(string $providerClass, string $alias = null)
     {
+        if (! empty($alias)) {
+            $this->container->alias($alias, $providerClass);
+        }
+
         $provider = $this->container->make($providerClass);
 
         $provider->register();
