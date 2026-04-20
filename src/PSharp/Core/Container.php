@@ -33,6 +33,13 @@ final class Container
     private $instances = [];
 
     /**
+     * Keep aliases for the classes.
+     * 
+     * @var array
+     */
+    private $aliases = [];
+
+    /**
      * Repository of builder closures.
      * 
      * @var array
@@ -150,6 +157,63 @@ final class Container
         }
 
         throw new ContainerException("Class $class not found !");
+    }
+
+    /**
+     * Creates an alias for a given class.
+     * 
+     * @param string $alias
+     * @param string|object $class
+     * @return void
+     */
+    public function alias(string $alias, $class)
+    {
+        if (is_object($class)) {
+            $class = get_class($class);
+        }
+
+        $this->aliases[$alias] = $class;
+    }
+
+    /**
+     * Check if $class is an alias and also exists.
+     * 
+     * @param string|object $class
+     * @return bool
+     */
+    public function isAlias($class)
+    {
+        if (is_string($class)) {
+            return (strpos($class, '\\') === false) && $this->hasAlias($class);
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if such alias exists.
+     * 
+     * @param string $class
+     * @return bool
+     */
+    public function hasAlias(string $class)
+    {
+        return array_key_exists($class, $this->aliases);
+    }
+
+    /**
+     * Return the class associated to the given alias, if any.
+     * 
+     * @param mixed $alias
+     * @return mixed
+     */
+    public function getAliasedClassIfAlias($alias)
+    {
+        if ($this->isAlias($alias)) {
+            return $this->aliases[$alias];
+        }
+
+        return $alias;
     }
 
     /**
@@ -321,6 +385,8 @@ final class Container
             return $this->buildUsing($concrete);
         }
 
+        $concrete = $this->getAliasedClassIfAlias($concrete);
+
         if (! class_exists($concrete)) {
             if (! interface_exists($concrete)) {
                 throw new ContainerException("There is no Class or Interface named '$concrete'.");
@@ -387,8 +453,9 @@ final class Container
 
         $instances = array_map($instance_as_class, $this->instances);
         $builders = array_map($instance_as_class, $this->builders);
+        $aliases = $this->aliases;
         $interfaces = $this->interfaces;
 
-        return compact('instances','builders','interfaces');
+        return compact('instances','builders','aliases','interfaces');
     }
 }
