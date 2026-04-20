@@ -627,7 +627,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	 */
 	public function getServerParam(string $name, $default = null) : string
 	{
-		return $this->serverParams[$name] ?? $default;
+		return $this->serverParams[$name] ?? $default ?? '';
 	}
 
 	/**
