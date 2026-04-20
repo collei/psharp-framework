@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use PSharp\Support\{Facade, Pipeline, Str};
 use PSharp\Auth\AuthenticationException;
 use PSharp\Auth\Access\AuthorizationException;
-use PSharp\Http\{RouteMapper, Router, Request, Response, Session};
+use PSharp\Http\{RouteMapper, Router, Request, Response, ResponsePreparator, Session};
 use PSharp\Http\Factories\RequestFactory;
 use PSharp\Http\Actions\ControllerBase;
 use PSharp\Core\Exceptions\ApplicationException;
@@ -450,7 +450,7 @@ final class Application
 
         $response = $this->handleRequest($request);
 
-        echo $response;
+        $this->prepareResponse($request, $response)->send();
 
         return $this;
     }
@@ -525,6 +525,20 @@ final class Application
 
             return $this->router->dispatch($request);
         };
+    }
+
+    /**
+     * Prepares a PSharp\Http\Response instance.
+     * 
+     * @param PSharp\Http\Request $request
+     * @param mixed $response
+     * @return PSharp\Http\Response
+     */
+    protected function prepareResponse(Request $request, $response)
+    {
+        return $this->container
+                    ->make(ResponsePreparator::class)
+                    ->prepare($request, $response);
     }
 
     /**
