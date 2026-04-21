@@ -31,4 +31,14 @@ function path(string ...$segments)
     return PSharp\Core\Application::getInstance()->path(...$segments);
 }
 
+/**
+ * Returns the current session instance.
+ * 
+ * @return PSharp\Http\Session
+ */
+function session()
+{
+    return PSharp\Http\Session::getInstance();
+}
+
 /**EOF**/
