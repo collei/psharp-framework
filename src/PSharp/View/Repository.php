@@ -173,14 +173,17 @@ class Repository implements RepositoryInterface
     protected function compileSource($view)
     {
         $source = file_get_contents($view);
-        //
-        $compiledSource = $this->compiler->compile($source)."\r\n".$this->makePathStringInfo($view);
-        //
-        $compiled = $this->compiler->getCompiledPath($view);
-        //
-        file_put_contents($compiled, $compiledSource);
-        //
-        return $compiled;        
+
+        $compiledSource = $this->compiler->compile($source) . PHP_EOL . $this->makePathStringInfo($view);
+        $compiledPath = $this->compiler->getCompiledPath($view);
+
+        if ($dir = dirname($compiledPath)) if (! is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        file_put_contents($compiledPath, $compiledSource);
+
+        return $compiledPath;        
     }
 
     /**
