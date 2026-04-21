@@ -30,5 +30,5 @@ interface ViewInterface extends Renderable
      * @param callable|null $callback
      * @return string
      */
-    public function render(callable $callback = null);
+    public function render(callable $callback = null): string;
 }

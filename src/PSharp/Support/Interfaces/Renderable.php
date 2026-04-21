@@ -7,9 +7,10 @@ namespace PSharp\Support\Interfaces;
 interface Renderable
 {
     /**
-     * Causes the instance to render.
-     * 
+     * Causes the view to render.
+     *
+     * @param callable|null $callback
      * @return string
      */
-    public function render(): string;
+    public function render(callable $callback = null): string;
 }

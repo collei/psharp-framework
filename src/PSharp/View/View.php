@@ -109,7 +109,7 @@ class View implements ViewInterface
      * @param callable|null $callback
      * @return string
      */
-    public function render(callable $callback = null)
+    public function render(callable $callback = null): string
     {
         try {
             $contents = $this->renderContents();
