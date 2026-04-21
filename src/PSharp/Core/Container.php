@@ -11,6 +11,7 @@ use ReflectionNamedType;
 use ReflectionUnionType;
 use ReflectionParameter;
 use ReflectionException;
+use PSharp\Core\Interfaces\Container as ContainerInterface;
 use PSharp\Core\DI\ParameterReaper;
 use PSharp\Core\DI\ContainerException;
 use PSharp\Core\DI\NotFoundException;
@@ -18,7 +19,7 @@ use PSharp\Core\DI\NotFoundException;
 /**
  * Container of all instances shared across the application
  */
-final class Container
+final class Container implements ContainerInterface
 {
     /**
      * @var static The singleton Container instance.
