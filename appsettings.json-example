@@ -1,8 +1,19 @@
 {
-    "info": {
+    "app": {
         "name": "My Test App",
         "description": "App constructed through PSharp evolution.",
-        "version": 1
+        "version": 1,
+        "init": {
+            "provide": [
+                "PSharp\\Log\\LogProvider",
+                "PSharp\\Auth\\AuthProvider",
+                "PSharp\\DB\\DatabaseProvider",
+                "PSharp\\View\\ViewProvider"
+            ],
+            "middleware": [
+                "PSharp\\Auth\\Middleware\\AuthenticatesRequests"
+            ]
+        }
     },
     "db": {
         "connections": {
