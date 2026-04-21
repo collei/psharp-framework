@@ -90,5 +90,13 @@
                 "datetime": "Y-m-d H:i:s.u"
             }
         }
+    },
+    "view": {
+        "default": "vis",
+        "vis": {
+            "compiler": "PSharp\\View\\Compilers\\VisCompiler",
+            "source": "resources/views",
+            "cache": "storage/framework/views"
+        }
     }
 }
