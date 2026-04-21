@@ -1,7 +1,7 @@
 <?php
 namespace PSharp\Core\Providers;
 
-use PSharp\Core\Container;
+use PSharp\Core\{Container, Config};
 use LogicException;
 
 /**
@@ -15,10 +15,12 @@ abstract class ServiceProvider implements ProviderInterface
      * Initializes the provider.
      * 
      * @param PSharp\Core\Container $container
+     * @param PSharp\Core\Config $config
      */
-    public function __construct(Container $container)
+    public function __construct(Container $container, Config $config)
     {
         $this->container = $container;
+        $this->config = $config;
     }
 
     /**
