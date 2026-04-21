@@ -140,6 +140,14 @@ final class Container
             return null;
         }
 
+        if (! class_exists($class, true)) {
+            if (! interface_exists($class, true)) {
+                throw new ContainerException("There is no Class or Interface named '$class'.");
+            }
+
+            $class = $this->getInterfaceImplementor($class);
+        }
+
         if ($this->hasInstance($class)) {
             return $this->getInstance($class);
         }
@@ -323,7 +331,7 @@ final class Container
     public function addInterfaceImplementor(string $class, string ...$interfaces)
     {
         if (! array_key_exists($class, $this->interfaces)) {
-            $this->interfaces[$class] = $interfaces;
+            $this->interfaces[$class] = array_combine($interfaces, $interfaces);
 
             return;
         }
@@ -387,15 +395,15 @@ final class Container
 
         $concrete = $this->getAliasedClassIfAlias($concrete);
 
-        if (! class_exists($concrete)) {
-            if (! interface_exists($concrete)) {
+        if (! class_exists($concrete, true)) {
+            if (! interface_exists($concrete, true)) {
                 throw new ContainerException("There is no Class or Interface named '$concrete'.");
             }
 
             $concrete = $this->getInterfaceImplementor($concrete);
         }
 
-        if (! class_exists($concrete)) {
+        if (! class_exists($concrete, true)) {
             throw new ContainerException("There is no Class named '$concrete'.");
         }
 
