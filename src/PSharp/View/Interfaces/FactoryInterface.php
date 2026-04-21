@@ -1,7 +1,7 @@
 <?php
 namespace PSharp\View\Interfaces;
 
-use PSharp\Interfaces\Container\Container;
+use PSharp\Core\Interfaces\Container;
 use PSharp\View\Interfaces\FactoryInterface;
 use PSharp\View\Interfaces\RepositoryInterface;
 
@@ -105,4 +105,3 @@ interface FactoryInterface
      */
     public function flushStateIfDoneRendering();
 }
-

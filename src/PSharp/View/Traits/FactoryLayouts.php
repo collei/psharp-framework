@@ -221,4 +221,3 @@ trait FactoryLayouts
         $this->sectionStack = [];
     }
 }
-

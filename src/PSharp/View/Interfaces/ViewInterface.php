@@ -1,7 +1,7 @@
 <?php
 namespace PSharp\View\Interfaces;
 
-use PSharp\Interfaces\Support\Renderable;
+use PSharp\Support\Interfaces\Renderable;
 use Throwable;
 
 /**

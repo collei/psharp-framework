@@ -2,7 +2,7 @@
 namespace PSharp\View\Compilers\Traits;
 
 use PSharp\Support\Str;
-use PSharp\Vis\Factory as ViewFactory;
+use PSharp\View\Factory as ViewFactory;
 
 /**
  * Provides capabilities for compiling template layout methods.
