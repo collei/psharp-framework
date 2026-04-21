@@ -15,6 +15,11 @@ trait ProviderTrait
     protected $container;
 
     /**
+     * @var PSharp\Core\Config
+     */
+    protected $config;
+
+    /**
      * @var bool
      */
     private $registered = false;
