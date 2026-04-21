@@ -2,6 +2,7 @@
 /docs/
 /bootstrap/
 /storage/
+/resources/
 /App
 /.env
 /.phpdoc
