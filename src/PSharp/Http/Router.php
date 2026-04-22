@@ -77,7 +77,7 @@ class Router
      */
     protected function matchesEndpoint(Request $request, array &$out = null, Endpoint &$endpoint = null)
     {
-        $requestUri = $request->getUri()->toString();
+        $requestUri = $request->getUri()->getPath();
         $requestMethod = $request->getMethod();
 
         foreach ($this->getEndpoints() as $end) {
