@@ -332,4 +332,14 @@ class Uri implements UriInterface, Stringable
 		//
 		return $result;
 	}
+
+	/**
+	 * For PHP internal debug functions.
+	 * 
+	 * @param array;
+	 */
+	public function __debugInfo()
+	{
+		return $this->parts ?? [];
+	}
 }
