@@ -2,6 +2,7 @@
 /docs/
 /bootstrap/
 /storage/
+/public/
 /resources/
 /App
 /.env
