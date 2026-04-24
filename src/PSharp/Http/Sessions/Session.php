@@ -13,38 +13,37 @@ use PSharp\Support\Arr;
 class Session
 {
 	/**
-	 * @var bool
+	 * @static @var bool
 	 */
 	public const SESSION_STARTED = TRUE;
 	public const SESSION_NOT_STARTED = FALSE;
 
 	/**
-	 * @var array
+	 * @static @var array
 	 */
 	protected const SPECIAL_KEYS = ['_token','_flash','_published'];
 
 	/**
-	 * Session options
-	 *
-	 * @var array
+	 * @static @var array - session options
 	 */
 	private static $options = [
 		'cookie_lifetime' => 86400
 	];
 
 	/**
-	 * Session state
-	 *
-	 * @var array
+	 * @var array - session state
 	 */
 	private $sessionState = self::SESSION_NOT_STARTED;
 
 	/**
-	 * Session singleton
-	 *
-	 * @var array
+	 * @var PSharp\Http\Sessions\Session Session singleton
 	 */
 	private static $instance = null;
+
+	/**
+	 * @var string  Session name
+	 */
+	private static $name = null;
 
 	/**
 	 * Private constructor.
@@ -65,6 +64,19 @@ class Session
 		}
 		//
 		return self::$instance;
+	}
+
+	/**
+	 *	Define the session name.
+	 *
+	 * @param string $name = null
+	 * @return void
+	 */
+	public static function setName(string $name = null)
+	{
+		if ($name) {
+			self::$name = $name;
+		}
 	}
 
 	/**
@@ -92,12 +104,17 @@ class Session
 	/**
 	 *	(Re)starts the session.
 	 *
+	 * @param string $name = null
 	 * @return bool TRUE if the session has been initialized,
 	 * FALSE otherwise.
 	 */
 	public function startSession()
 	{
 		if ($this->sessionState == self::SESSION_NOT_STARTED) {
+			if (self::$name) {
+				session_name(self::$name);
+			}
+			//
 			if ($this->sessionState = session_start(self::$options)) {
 				$this->regenerateToken();
 			}
@@ -381,6 +398,10 @@ class Session
 	public function destroy(bool $removeCookies = false)
 	{
 		if ($this->sessionState == self::SESSION_STARTED) {
+			if (self::$name) {
+				@session_name(self::$name);
+			}
+			//
 			$this->sessionState = !session_destroy();
 			//
 			unset($_SESSION);
