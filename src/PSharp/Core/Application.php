@@ -121,15 +121,11 @@ final class Application
      */
     protected function initialize()
     {
-        Session::setName('psharp');
-        Session::start();
-
         Facade::setApplication($this);
 
         $this->container = Container::singleton();
         $this->container->instance($this);
         $this->container->instance($this->config);
-        $this->container->instance(Session::getInstance());
 
         $this->container->addInterfaceImplementor(CookieFactory::class, CookieFactoryInterface::class);
         $this->container->make(CookieFactoryInterface::class);
