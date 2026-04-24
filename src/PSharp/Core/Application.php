@@ -6,8 +6,8 @@ use InvalidArgumentException;
 use PSharp\Support\{Facade, Pipeline, Str};
 use PSharp\Auth\AuthenticationException;
 use PSharp\Auth\Access\AuthorizationException;
-use PSharp\Http\{RouteMapper, Router, Request, Response, ResponsePreparator, Session};
-use PSharp\Http\Factories\RequestFactory;
+use PSharp\Http\{RouteMapper, Router, Request, Response, ResponsePreparator, Sessions\Session};
+use PSharp\Http\Factories\{RequestFactory, CookieFactory, CookieFactoryInterface};
 use PSharp\Http\Actions\ControllerBase;
 use PSharp\Core\Exceptions\ApplicationException;
 use PSharp\Core\Providers\DeferrableProvider;
@@ -129,6 +129,9 @@ final class Application
         $this->container->instance($this);
         $this->container->instance($this->config);
         $this->container->instance(Session::getInstance());
+
+        $this->container->addInterfaceImplementor(CookieFactory::class, CookieFactoryInterface::class);
+        $this->container->make(CookieFactoryInterface::class);
 
         $this->routeMapper = $this->container->make(RouteMapper::class);
         $this->router = $this->container->make(Router::class);
