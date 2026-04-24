@@ -3,6 +3,7 @@ namespace PSharp\Auth;
 
 use PSharp\Core\{Application, Config};
 use PSharp\Support\{Arr, Str};
+use PSharp\DB\DatabaseManager;
 use Stringable;
 use DateTime;
 use InvalidArgumentException;
@@ -133,7 +134,7 @@ class AuthManager
         if ($driver = $this->drivers[$driverName] ?? null) {
             switch ($driverName) {
                 case 'database':
-                    return 'db';
+                    return $this->repository = $this->createDatabaseRepository($driver, $conf);
                 case 'orm':
                     return 'orm';
                 case 'file':
@@ -169,10 +170,42 @@ class AuthManager
     }
 
     /**
+     * Create the user database repository.
+     * 
+     * @param array $driver
+     * @param array $conf
+     * @return PSharp\Auth\UserRepositoryInterface
+     * @throws RuntimeException for missing connection details.
+     */
+    protected function createDatabaseRepository(array $driver, array $conf)
+    {
+        $connection = $conf['connection'] ?? null;
+        $table = $conf['table'] ?? null;
+        $fields = $conf['fields'] ?? null;
+
+        $database = $this->application->container->make(DatabaseManager::class);
+
+        if (empty($database)) {
+            throw new RuntimeException('No database manager configured.');
+        }
+
+        if ($connection && $table && !empty($fields)) {
+            if ($class = $driver['repository'] ?? null) {
+                return new $class($this->application, $this, $database, $connection, $table, $fields);
+            }
+
+            throw new RuntimeException('Missing driver class for the auth driver \'database\'');
+        }
+
+        throw new RuntimeException('Missing connection, table name or fields for auth driver \'database\'');
+    }
+
+    /**
      * Create the user file repository.
      * 
+     * @param array $driver
      * @param array $conf
-     * @return void
+     * @return PSharp\Auth\UserRepositoryInterface
      * @throws RuntimeException for missing file path.
      */
     protected function createFileRepository(array $driver, array $conf)
@@ -191,8 +224,10 @@ class AuthManager
     /**
      * Create the user session repository.
      * 
+     * @param array $driver
      * @param array $conf
-     * @return void
+     * @return PSharp\Auth\UserRepositoryInterface
+     * @throws RuntimeException
      */
     protected function createSessionRepository(array $driver, array $conf)
     {
