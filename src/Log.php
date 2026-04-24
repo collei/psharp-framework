@@ -1,9 +1,5 @@
 <?php
 /**
- * Facade class.
- */
-
-/**
  * Log facade.
  */
 class Log extends PSharp\Support\Facade

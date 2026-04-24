@@ -1,9 +1,5 @@
 <?php
 /**
- * Facade class.
- */
-
-/**
  * Database facade.
  */
 class DB extends PSharp\Support\Facade
