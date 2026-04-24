@@ -142,8 +142,8 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * Retrieves the request format.
 	 *
-	 * @param	string	$default = 'html'
-	 * @return	string
+	 * @param string $default = 'html'
+	 * @return string
 	 */
 	public function getRequestFormat($default = 'html'): string
 	{
@@ -157,7 +157,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * Sets the request format.
 	 *
-	 * @param	string	$format
+	 * @param string $format
 	 */
 	public function setRequestFormat(string $format)
 	{
@@ -167,7 +167,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * Sets the request format.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getMimeType()
 	{
@@ -177,7 +177,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * Allows to override method on HTML forms by setting a special field.
 	 *
-	 * @return	void
+	 * @return void
 	 */
 	public function enableHttpMethodParameterOverride()
 	{
@@ -278,7 +278,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * Retrieves the unique Session instance.
 	 *
-	 * @return	\PSharp\Http\Session
+	 * @return \PSharp\Http\Session
 	 */
 	public function getSession() : Session
 	{
@@ -288,8 +288,8 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * Checks if the request URI matches a pattern.
 	 *
-	 * @param	string	...$patterns
-	 * @return	bool
+	 * @param string ...$patterns
+	 * @return bool
 	 */
 	public function is(string ...$patterns) : bool
 	{
@@ -307,8 +307,8 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * Checks if the request URI and query string matches a pattern.
 	 *
-	 * @param	string	...$patterns
-	 * @return	bool
+	 * @param string ...$patterns
+	 * @return bool
 	 */
 	public function fullUrlIs(string ...$patterns) : bool
 	{
@@ -855,13 +855,13 @@ class Request implements RequestInterface, ServerRequestInterface
 	 * The information contained in the URI always take precedence
 	 * over the other information (server and parameters).
 	 *
-	 * @param string	$uri		The URI
-	 * @param string	$method		The HTTP method
-	 * @param array		$parameters	The query (GET) or request (POST) parameters
-	 * @param array		$cookies	The request cookies ($_COOKIE)
-	 * @param array		$files		The request files ($_FILES)
-	 * @param array		$server		The server parameters ($_SERVER)
-	 * @param string|resource|null $content	The raw body data
+	 * @param string $uri The URI
+	 * @param string $method The HTTP method
+	 * @param array $parameters The query (GET) or request (POST) parameters
+	 * @param array $cookies The request cookies ($_COOKIE)
+	 * @param array $files The request files ($_FILES)
+	 * @param array $server The server parameters ($_SERVER)
+	 * @param string|resource|null $content The raw body data
 	 * @return PSharp\Http\Request
 	 */
 	public static function create(
