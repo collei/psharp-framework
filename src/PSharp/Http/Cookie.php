@@ -6,90 +6,87 @@ use PSharp\Support\Traits\InteractsWithTime;
 use DateTimeInterface;
 
 /**
- *	Encapsulates a HTTP cookie
- *
- *	@author	alarido <alarido.su@gmail.com>
- *
+ * Encapsulates a HTTP cookie
  */
 class Cookie implements Stringable
 {
 	use InteractsWithTime;
 
 	/**
-	 *	@var string
-	 *	@var string
-	 *	@var string
+	 * @var string
+	 * @var string
+	 * @var string
 	 */
 	public const SAMESITE_NONE = 'None';
 	public const SAMESITE_LAX = 'Lax';
 	public const SAMESITE_STRICT = 'Strict';
 
 	/**
-	 *	@var array
+	 * @var array
 	 */
 	protected const SAMESITE_VALID = ['None', 'Lax', 'Strict'];
 
 	/**
-	 *	@var string $name
+	 * @var string $name
 	 */
 	private $name;
 
 	/**
-	 *	@var string $value
+	 * @var string $value
 	 */
 	private $value;
 
 	/**
-	 *	@var int $expires
+	 * @var int $expires
 	 */
 	private $expires;
 
 	/**
-	 *	@var string $path
+	 * @var string $path
 	 */
 	private $path;
 
 	/**
-	 *	@var string $domain
+	 * @var string $domain
 	 */
 	private $domain;
 
 	/**
-	 *	@var bool $secure
+	 * @var bool $secure
 	 */
 	private $secure;
 
 	/**
-	 *	@var bool $secureDefault
+	 * @var bool $secureDefault
 	 */
 	private $secureDefault = false;
 
 	/**
-	 *	@var bool $httpOnly
+	 * @var bool $httpOnly
 	 */
 	private $httpOnly;
 
 	/**
-	 *	@var string $sameSite
+	 * @var string $sameSite
 	 */
 	private $sameSite;
 
 	/**
-	 *	@var string $raw
+	 * @var string $raw
 	 */
 	private $raw;
 
 	/**
-	 *	Builds a Cookie instance
+	 * Builds a Cookie instance
 	 *
-	 *	@param string $name
-	 *	@param string $value
-	 *	@param int $expires
-	 *	@param string $path
-	 *	@param string $domain
-	 *	@param bool $secure
-	 *	@param bool $httpOnly
-	 *	@param string $sameSite
+	 * @param string $name
+	 * @param string $value
+	 * @param int $expires
+	 * @param string $path
+	 * @param string $domain
+	 * @param bool $secure
+	 * @param bool $httpOnly
+	 * @param string $sameSite
 	 */
 	public function __construct(
 		string $name,
@@ -209,9 +206,9 @@ class Cookie implements Stringable
 	}
 
 	/**
-	 *	Outputs the cookie as HTTP header for the browser
+	 * Outputs the cookie as HTTP header for the browser
 	 *
-	 *	@return	void
+	 * @return void
 	 */
 	public function output()
 	{
@@ -228,9 +225,9 @@ class Cookie implements Stringable
 	}
 
 	/**
-	 *	Performs server-side cookie removal
+	 * Performs server-side cookie removal
 	 *
-	 *	@return	void
+	 * @return void
 	 */
 	public function remove()
 	{
@@ -238,9 +235,9 @@ class Cookie implements Stringable
 	}
 
 	/**
-	 *	Creates a string version of the stored data.
+	 * Creates a string version of the stored data.
 	 *
-	 *	@return	string
+	 * @return string
 	 */
 	public function asString()
 	{
@@ -292,8 +289,8 @@ class Cookie implements Stringable
 	/**
 	 * Publishes properties.
 	 *
-	 * @param	string	$name
-	 * @return	mixed
+	 * @param string $name
+	 * @return mixed
 	 */
 	public function __get($name)
 	{
