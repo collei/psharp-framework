@@ -48,6 +48,12 @@ class SessionRepository implements UserRepositoryInterface
 
         $id = $this->session->get('user_id', null);
 
+        if ($user = $this->session->get('user', null)) {
+            if ($user instanceof Authenticatable) {
+                return $this->userInstance = $user;
+            }
+        }
+
 		$username = $this->session->get('username', null)
             ?? $_SERVER['AUTH_USER']
             ?? $_SERVER['LOGON_USER']
@@ -58,9 +64,12 @@ class SessionRepository implements UserRepositoryInterface
 			list($domain, $username) = explode('\\', $username, 2);
 		}
 
-        return $this->userInstance = new User(
-			$id, $username, null, $this->session->token()
-		);
+        $user = new User(null, $username, null, $this->session->token());
+
+        $this->session->put('user_id', $user->getUserID());
+        $this->session->put('user', $user);
+
+        return $this->userInstance = $user;
     }
 
     /**
@@ -72,7 +81,7 @@ class SessionRepository implements UserRepositoryInterface
     {
         if ($user = $this->user()) {
             $this->session->set('user_id', $user->getUserID());
-            $this->session->set('username', $user->getUserName());
+            $this->session->set('user', $user);
         }
     }
 
@@ -109,7 +118,7 @@ class SessionRepository implements UserRepositoryInterface
 	 */
 	public function retrieveByToken($id, string $token)
     {
-        return $this->user();
+        return new User($id, null, null, $token);
     }
 
 	/**
