@@ -9,8 +9,6 @@ use Psr\Http\Message\UploadedFileInterface;
 
 /**
  *	Represents an uploaded file instance. 
- *
- *	@author	alarido <alarido.su@gmail.com>
  */
 class UploadedFile implements UploadedFileInterface
 {

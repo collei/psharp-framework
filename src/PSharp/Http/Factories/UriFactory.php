@@ -8,8 +8,6 @@ use InvalidArgumentException;
 
 /**
  *	Creates an Uri instance from the URI string.
- *
- *	@author	alarido <alarido.su@gmail.com>
  */
 class UriFactory implements UriFactoryInterface
 {

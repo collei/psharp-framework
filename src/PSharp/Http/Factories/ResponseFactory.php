@@ -11,9 +11,6 @@ use PSharp\Streams\StringStream;
 
 /**
  *	Creates HTTP response instances.
- *
- *	@author	alarido <alarido.su@gmail.com>
- *
  */
 class ResponseFactory implements ResponseFactoryInterface
 {

@@ -6,8 +6,6 @@ use Psr\Http\Message\UriInterface;
 
 /**
  *	Represents a URI (uniform resource identifier). 
- *
- *	@author	alarido <alarido.su@gmail.com>
  */
 class Uri implements UriInterface, Stringable
 {
