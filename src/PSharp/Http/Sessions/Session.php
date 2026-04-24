@@ -1,5 +1,5 @@
 <?php
-namespace PSharp\Http;
+namespace PSharp\Http\Sessions;
 
 use PSharp\Support\Str;
 use PSharp\Support\Arr;

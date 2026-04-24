@@ -5,7 +5,7 @@ namespace PSharp\Http\Sessions;
  * Performs session handling through session file storage.
  *
  */
-class FileSessionHandler implements ISessionHandler
+class FileSessionHandler implements SessionHandlerInterface
 {
 	/**
 	 * @var string
