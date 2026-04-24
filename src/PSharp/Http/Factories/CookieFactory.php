@@ -1,11 +1,10 @@
 <?php
 namespace PSharp\Http\Factories;
 
+use PSharp\Http\Cookie;
+
 /**
  *	Encapsulates a HTTP cookie factory.
- *
- *	@author	alarido <alarido.su@gmail.com>
- *
  */
 class CookieFactory implements CookieFactoryInterface
 {
@@ -204,7 +203,7 @@ class CookieFactory implements CookieFactoryInterface
 		string $path = null, string $domain = null,
 		bool $secure = false, bool $httpOnly = false, string $sameSite = null
 	) {
-		$this->queued[$name] = $cookie = new HttpCookie(
+		$this->queued[$name] = $cookie = new Cookie(
 			$name,
 			$value ?? '',
 			$expires ?? $this->expires,
