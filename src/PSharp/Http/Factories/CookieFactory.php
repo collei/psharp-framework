@@ -56,8 +56,8 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Define the default expiration term, in seconds.
 	 *
-	 *	@param	int	$expires
-	 *	@return	$this
+	 *	@param int $expires
+	 *	@return $this
 	 */
 	public function setDefaultExpiration(int $expires)
 	{
@@ -69,8 +69,8 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Define the default path field.
 	 *
-	 *	@param	string	$path
-	 *	@return	$this
+	 *	@param string $path
+	 *	@return $this
 	 */
 	public function setDefaultPath(string $path)
 	{
@@ -82,8 +82,8 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Define the default cookie domain.
 	 *
-	 *	@param	string	$domain
-	 *	@return	$this
+	 *	@param string $domain
+	 *	@return $this
 	 */
 	public function setDefaultDomain(string $domain)
 	{
@@ -95,8 +95,8 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Define the default value of secure attribute.
 	 *
-	 *	@param	bool	$secure
-	 *	@return	$this
+	 *	@param bool $secure
+	 *	@return $this
 	 */
 	public function setDefaultSecure(bool $secure)
 	{
@@ -108,8 +108,8 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Define the default value of httpOnly attribute.
 	 *
-	 *	@param	bool	$httpOnly
-	 *	@return	$this
+	 *	@param bool $httpOnly
+	 *	@return $this
 	 */
 	public function setDefaultHttpMode(bool $httpOnly)
 	{
@@ -121,8 +121,8 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Define the default value of sameSite attribute.
 	 *
-	 *	@param	string	$sameSite
-	 *	@return	$this
+	 *	@param string $sameSite
+	 *	@return $this
 	 */
 	public function setDefaultSameSite(string $sameSite)
 	{
@@ -134,9 +134,9 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Define the default cookie domain.
 	 *
-	 *	@param	string	$path
-	 *	@param	string	$domain
-	 *	@return	$this
+	 *	@param string $path
+	 *	@param string $domain
+	 *	@return $this
 	 */
 	public function setDefaultPathAndDomain(string $path, string $domain)
 	{
@@ -148,10 +148,10 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Define the default value of cookie safety attributes.
 	 *
-	 *	@param	bool	$secure
-	 *	@param	bool	$httpOnly
-	 *	@param	string	$sameSite
-	 *	@return	$this
+	 *	@param bool $secure
+	 *	@param bool $httpOnly
+	 *	@param string $sameSite
+	 *	@return $this
 	 */
 	public function setDefaultSafetyValues(bool $secure, bool $httpOnly, string $sameSite)
 	{
@@ -163,8 +163,8 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Publishes the default values.
 	 *
-	 *	@param	string	$name
-	 *	@return	mixed
+	 *	@param string $name
+	 *	@return mixed
 	 */
 	public function __get($name)
 	{
@@ -178,7 +178,7 @@ class CookieFactory implements CookieFactoryInterface
 	/**
 	 *	Returns the list of all created cookies.
 	 *
-	 *	@return	array
+	 *	@return array
 	 */
 	public function getCookies()
 	{
@@ -196,7 +196,7 @@ class CookieFactory implements CookieFactoryInterface
 	 *	@param bool $secure
 	 *	@param bool $httpOnly
 	 *	@param string $sameSite
-	 *	@return	\PSharp\Http\Cookie
+	 *	@return \PSharp\Http\Cookie
 	 */
 	public function make(
 		$name, string $value = null, int $expires = null,
@@ -227,7 +227,7 @@ class CookieFactory implements CookieFactoryInterface
 	 *	@param bool $secure
 	 *	@param bool $httpOnly
 	 *	@param string $sameSite
-	 *	@return	\PSharp\Http\Cookie
+	 *	@return \PSharp\Http\Cookie
 	 */
 	public function forever(
 		$name, string $value = null, string $path = null, string $domain = null,
