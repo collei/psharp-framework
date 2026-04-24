@@ -393,11 +393,11 @@ abstract class Arr
 	/**
 	 * Returns an array with a $thing inserted at $where index
 	 *
-	 *	@static
-	 *	@param mixed $thing
-	 *	@param array $original
-	 *	@param int $where
-	 *	@return array
+	 * @static
+	 * @param mixed $thing
+	 * @param array $original
+	 * @param int $where
+	 * @return array
 	 */
 	public static function insert($thing, array $original, int $where)
 	{
@@ -441,10 +441,10 @@ abstract class Arr
 	/**
 	 * Excludes values from $array by their $keys
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@param array $keys
-	 *	@return array
+	 * @static
+	 * @param array $array
+	 * @param array $keys
+	 * @return array
 	 */
 	public static function except(array $array, array $keys)
 	{
@@ -456,10 +456,10 @@ abstract class Arr
 	/**
 	 * Filters an array by their keys
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@param array $keys
-	 *	@return array
+	 * @static
+	 * @param array $array
+	 * @param array $keys
+	 * @return array
 	 */
 	public static function exceptKeys(array $array, array $keys)
 	{
@@ -469,9 +469,9 @@ abstract class Arr
 	/**
 	 * Returns an array with the keys as values, ignoring any of original values
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@return array
+	 * @static
+	 * @param array $array
+	 * @return array
 	 */
 	public static function keys(array $array)
 	{
@@ -481,9 +481,9 @@ abstract class Arr
 	/**
 	 * Returns an array with the values only
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@return array
+	 * @static
+	 * @param array $array
+	 * @return array
 	 */
 	public static function values(array $array)
 	{
@@ -494,10 +494,10 @@ abstract class Arr
 	 * Returns an array with the same count of elements of the given array, but
 	 * with the $value as the value of every key
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@param string $value
-	 *	@return array
+	 * @static
+	 * @param array $array
+	 * @param string $value
+	 * @return array
 	 */
 	public static function repeats(array $array, string $value)
 	{
@@ -513,11 +513,11 @@ abstract class Arr
 	/**
 	 * Interlaces associative arrays in a string, with both keys and values
 	 *
-	 *	@static
-	 *	@param string $glue
-	 *	@param array $array
-	 *	@param string $symbol
-	 *	@return mixed
+	 * @static
+	 * @param string $glue
+	 * @param array $array
+	 * @param string $symbol
+	 * @return mixed
 	 */
 	public static function join(string $glue, array $array, string $symbol = null)
 	{
@@ -537,10 +537,10 @@ abstract class Arr
 	/**
 	 * Joins the array keys only, discarding any values
 	 *
-	 *	@static
-	 *	@param string $glue
-	 *	@param array $array
-	 *	@return string
+	 * @static
+	 * @param string $glue
+	 * @param array $array
+	 * @return string
 	 */
 	public static function joinKeys(string $glue, array $array)
 	{
@@ -550,11 +550,11 @@ abstract class Arr
 	/**
 	 * Transform an associative array in a string through a bit more complex way
 	 *
-	 *	@static
-	 *	@param string $glue
-	 *	@param array $array
-	 *	@param mixed $holder
-	 *	@return string
+	 * @static
+	 * @param string $glue
+	 * @param array $array
+	 * @param mixed $holder
+	 * @return string
 	 */
 	public static function joinKeyHolders(string $glue, array $array, $holder)
 	{
@@ -578,11 +578,11 @@ abstract class Arr
 	/**
 	 * Transform an associative array in a string through a bit more complex way, part II
 	 *
-	 *	@static
-	 *	@param string $glue
-	 *	@param array $array
-	 *	@param mixed $holder
-	 *	@return string
+	 * @static
+	 * @param string $glue
+	 * @param array $array
+	 * @param mixed $holder
+	 * @return string
 	 */
 	public static function joinKeyValueHolders(
 		string $glue, array $array, $holder
@@ -615,10 +615,10 @@ abstract class Arr
 	 * joinCollapsed('/',$array):
 	 *				/food/cereals/rice/fine-grained
 	 *
-	 *	@static
-	 *	@param string $glue
-	 *	@param array $array
-	 *	@return mixed
+	 * @static
+	 * @param string $glue
+	 * @param array $array
+	 * @return mixed
 	 */
 	public static function joinCollapsed(string $glue, array $array)
 	{
@@ -649,10 +649,10 @@ abstract class Arr
 	 * joinEnclosed('<li>','</li>',$array):
 	 *			<li>apple</li><li>orange</li><li>strawberry</li><li>grape</li>
 	 *
-	 *	@static
-	 *	@param string $glue
-	 *	@param array $array
-	 *	@return mixed
+	 * @static
+	 * @param string $glue
+	 * @param array $array
+	 * @return mixed
 	 */
 	public static function joinEnclosed(
 		string $prefixGlue, string $suffixGlue, array $array
@@ -665,9 +665,9 @@ abstract class Arr
 	/**
 	 * Scan the values to define their types
 	 *
-	 *	@static
-	 *	@param array $line
-	 *	@return array
+	 * @static
+	 * @param array $line
+	 * @return array
 	 */
 	public static function prospectTypes(array $line)
 	{
@@ -683,10 +683,10 @@ abstract class Arr
 	/**
 	 * Checks if the array lines are type-consistent
 	 *
-	 *	@static
-	 *	@param array $line
-	 *	@param array $types
-	 *	@return bool
+	 * @static
+	 * @param array $line
+	 * @param array $types
+	 * @return bool
 	 */
 	public static function isTypeConsistent(array $line, array $types)
 	{
@@ -712,10 +712,10 @@ abstract class Arr
 	/**
 	 * Checks if the given array has such keys
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@param string ...$keys
-	 *	@return bool
+	 * @static
+	 * @param array $array
+	 * @param string ...$keys
+	 * @return bool
 	 */
 	public static function hasKeys(array $array, string ...$keys)
 	{
@@ -731,9 +731,9 @@ abstract class Arr
 	/**
 	 * Checks if the given array has sub-arrays in a table manner
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@return bool
+	 * @static
+	 * @param array $array
+	 * @return bool
 	 */
 	public static function hasLines(array $array)
 	{
@@ -768,11 +768,11 @@ abstract class Arr
 	 * the value as argument. Return true to include it in the returned array.
 	 * If resulting $array is empty, $default is returned. 
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@param callable $filter
-	 *	@param mixed $default
-	 *	@return mixed
+	 * @static
+	 * @param array $array
+	 * @param callable $filter
+	 * @param mixed $default
+	 * @return mixed
 	 */
 	public static function first(array $array, callable $filter = null, $default = null)
 	{
@@ -790,11 +790,11 @@ abstract class Arr
 	 * Return true to include it in the returned array.
 	 * If resulting $array is empty, $default is returned. 
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@param callable $filter
-	 *	@param mixed $default
-	 *	@return mixed
+	 * @static
+	 * @param array $array
+	 * @param callable $filter
+	 * @param mixed $default
+	 * @return mixed
 	 */
 	public static function firstBoth(array $array, callable $filter = null, $default = null)
 	{
@@ -808,9 +808,9 @@ abstract class Arr
 	/**
 	 * Returns the last element
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@return mixed
+	 * @static
+	 * @param array $array
+	 * @return mixed
 	 */
 	public static function last(array $array)
 	{
@@ -820,10 +820,10 @@ abstract class Arr
 	/**
 	 * Re-key arrays according transformations implemented by the Closure
 	 *
-	 *	@static
-	 *	@param array $array
-	 *	@param \Closure $transform
-	 *	@return array
+	 * @static
+	 * @param array $array
+	 * @param \Closure $transform
+	 * @return array
 	 */
 	public static function rekey(array $array, Closure $transform)
 	{
@@ -850,9 +850,9 @@ abstract class Arr
 	/**
 	 * Sort arrays
 	 *
-	 *	@static
-	 *	@param array ...$values
-	 *	@return array
+	 * @static
+	 * @param array ...$values
+	 * @return array
 	 */
 	public static function sorted(...$values)
 	{
@@ -863,10 +863,10 @@ abstract class Arr
 	/**
 	 * Filter array elements by key
 	 *
-	 *	@static
-	 *	@param array $source
-	 *	@param array $keys
-	 *	@return array
+	 * @static
+	 * @param array $source
+	 * @param array $keys
+	 * @return array
 	 */
 	public static function filterByKey(array $source, array $keys)
 	{
@@ -880,10 +880,10 @@ abstract class Arr
 	/**
 	 * Filter array elements by value
 	 *
-	 *	@static
-	 *	@param array $source
-	 *	@param array $value
-	 *	@return array
+	 * @static
+	 * @param array $source
+	 * @param array $value
+	 * @return array
 	 */
 	public static function filterByValue(array $source, array $values)
 	{
@@ -897,10 +897,10 @@ abstract class Arr
 	/**
 	 * Filter array elements by key and value
 	 *
-	 *	@static
-	 *	@param array $source
-	 *	@param Closure $filter
-	 *	@return array
+	 * @static
+	 * @param array $source
+	 * @param Closure $filter
+	 * @return array
 	 */
 	public static function filterByCustom(array $source, Closure $filter)
 	{
@@ -911,9 +911,9 @@ abstract class Arr
 	 * Create an associative array with the given strings as keys
 	 * in the same order you give them 
 	 *
-	 *	@static
-	 *	@param string ...$keys
-	 *	@return array
+	 * @static
+	 * @param string ...$keys
+	 * @return array
 	 */
 	public static function create(string ...$keys)
 	{
@@ -934,9 +934,9 @@ abstract class Arr
 	 * Returns false if $column does not exist OR it is unreachable
 	 *	(e.g., an object private property)
 	 *
-	 *	@param array $items
-	 *	@param string $column
-	 *	@return array|false
+	 * @param array $items
+	 * @param string $column
+	 * @return array|false
 	 */
 	public static function column(array $items, string $column)
 	{
@@ -963,8 +963,8 @@ abstract class Arr
 	 * to
 	 *		"star: 'sun', planet: {name: 'earth', satellites: 1}"
 	 *
-	 *	@param array $items
-	 *	@return string
+	 * @param array $items
+	 * @return string
 	 */
 	public static function describe(array $items)
 	{
@@ -1014,8 +1014,8 @@ abstract class Arr
 	/**
 	 * Wraps the given $thing into an array if needed
 	 *
-	 *	@param mixed $thing
-	 *	@return array
+	 * @param mixed $thing
+	 * @return array
 	 */
 	public static function wrap($thing)
 	{
@@ -1025,10 +1025,10 @@ abstract class Arr
 	/**
 	 * Modifies the given array's leafs using the given closure
 	 *
-	 *	@param array	&$target
-	 *	@param \Closure $callback
-	 *	@param bool $unsetNulls = false
-	 *	@return void
+	 * @param array	&$target
+	 * @param \Closure $callback
+	 * @param bool $unsetNulls = false
+	 * @return void
 	 */
 	public static function treeMapLeafs(array &$target, Closure $callback, bool $unsetNulls = false)
 	{

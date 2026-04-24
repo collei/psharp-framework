@@ -7,26 +7,26 @@ use PSharp\Support\Arr;
 /**
  * Manages HTTP user sessions.
  *
- *	@author linblow AT hotmail DOT fr
- *	@see https://www.php.net/manual/pt_BR/function.session-start.php#102460 <accessed 2021-10-31 GMT-3>
+ * @author linblow AT hotmail DOT fr
+ * @see https://www.php.net/manual/pt_BR/function.session-start.php#102460 <accessed 2021-10-31 GMT-3>
  */
 class Session
 {
 	/**
-	 *	@var bool
+	 * @var bool
 	 */
 	public const SESSION_STARTED = TRUE;
 	public const SESSION_NOT_STARTED = FALSE;
 
 	/**
-	 *	@var array
+	 * @var array
 	 */
 	protected const SPECIAL_KEYS = ['_token','_flash','_published'];
 
 	/**
 	 * Session options
 	 *
-	 *	@var array
+	 * @var array
 	 */
 	private static $options = [
 		'cookie_lifetime' => 86400
@@ -35,28 +35,28 @@ class Session
 	/**
 	 * Session state
 	 *
-	 *	@var array
+	 * @var array
 	 */
 	private $sessionState = self::SESSION_NOT_STARTED;
 
 	/**
 	 * Session singleton
 	 *
-	 *	@var array
+	 * @var array
 	 */
 	private static $instance = null;
 
 	/**
 	 * Private constructor.
 	 *
-	 *	@return void
+	 * @return void
 	 */
 	private function __construct() {}
 
 	/**
 	 * Returns THE instance of 'Session'.
 	 *
-	 *	@return static
+	 * @return static
 	 */
 	public static function getInstance()
 	{
@@ -70,7 +70,7 @@ class Session
 	/**
 	 *	(Re)starts the session.
 	 *
-	 *	@return bool TRUE if the session has been initialized,
+	 * @return bool TRUE if the session has been initialized,
 	 * FALSE otherwise.
 	 */
 	public static function start()
@@ -81,8 +81,8 @@ class Session
 	/**
 	 * Set session lifetime.
 	 *
-	 *	@param int $lifetime
-	 *	@return void
+	 * @param int $lifetime
+	 * @return void
 	 */
 	public function setLifetime(int $lifetime)
 	{
@@ -92,7 +92,7 @@ class Session
 	/**
 	 *	(Re)starts the session.
 	 *
-	 *	@return bool TRUE if the session has been initialized,
+	 * @return bool TRUE if the session has been initialized,
 	 * FALSE otherwise.
 	 */
 	public function startSession()
@@ -115,7 +115,7 @@ class Session
 	/**
 	 * Regenerates token
 	 *
-	 *	@return string
+	 * @return string
 	 */
 	public function regenerateToken()
 	{
@@ -129,7 +129,7 @@ class Session
 	/**
 	 * Erases discardables
 	 *
-	 *	@return void
+	 * @return void
 	 */
 	public function eraseDiscardables()
 	{
@@ -139,9 +139,9 @@ class Session
 	/**
 	 * Stores datum in the session.
 	 *
-	 *	@param string $name
-	 *	@param mixed $value
-	 *	@return void
+	 * @param string $name
+	 * @param mixed $value
+	 * @return void
 	 */
 	public function __set(string $name, $value)
 	{
@@ -153,8 +153,8 @@ class Session
 	/**
 	 * Gets datum from the session.
 	 *
-	 *	@param string $name
-	 *	@return mixed
+	 * @param string $name
+	 * @return mixed
 	 */
 	public function __get(string $name)
 	{
@@ -170,8 +170,8 @@ class Session
 	/**
 	 * Checks if $name is defined in the session.
 	 *
-	 *	@param string $name
-	 *	@return mixed
+	 * @param string $name
+	 * @return mixed
 	 */
 	public function __isset($name)
 	{
@@ -181,8 +181,8 @@ class Session
 	/**
 	 * Removes $name from the session.
 	 *
-	 *	@param string $name
-	 *	@return mixed
+	 * @param string $name
+	 * @return mixed
 	 */
 	public function __unset($name)
 	{
@@ -194,8 +194,8 @@ class Session
 	/**
 	 * Prints debug info on session data.
 	 *
-	 *	@param string $name
-	 *	@return mixed
+	 * @param string $name
+	 * @return mixed
 	 */
 	public function __debugInfo()
 	{
@@ -214,8 +214,8 @@ class Session
 	/**
 	 * Checks if a given $name exists..
 	 *
-	 *	@param $name string
-	 *	@return bool	
+	 * @param $name string
+	 * @return bool	
 	 */
 	public function has(string $name)
 	{
@@ -225,9 +225,9 @@ class Session
 	/**
 	 * Returns a value.
 	 *
-	 *	@param string $name
-	 *	@param mixed $default = null
-	 *	@return mixed
+	 * @param string $name
+	 * @param mixed $default = null
+	 * @return mixed
 	 */
 	public function get(string $name, $default = null)
 	{
@@ -237,9 +237,9 @@ class Session
 	/**
 	 * Sets a value to the session. Returns the old value
 	 *
-	 *	@param $name string
-	 *	@param $value mixed
-	 *	@return mixed
+	 * @param $name string
+	 * @param $value mixed
+	 * @return mixed
 	 */
 	public function set(string $name, $value)
 	{
@@ -251,9 +251,9 @@ class Session
 	/**
 	 * Returns a value and then removes it.
 	 *
-	 *	@param $name string the name of session variable
-	 *	@param $subName string a specific index in such session variable (if array)
-	 *	@return string|array if $name holds an array value
+	 * @param $name string the name of session variable
+	 * @param $subName string a specific index in such session variable (if array)
+	 * @return string|array if $name holds an array value
 	 */
 	public function pull(string $name, $default = null)
 	{
@@ -267,9 +267,9 @@ class Session
 	/**
 	 * Sets a value to the session.
 	 *
-	 *	@param $name string
-	 *	@param $value mixed
-	 *	@return void
+	 * @param $name string
+	 * @param $value mixed
+	 * @return void
 	 */
 	public function put(string $name, $value)
 	{
@@ -279,8 +279,8 @@ class Session
 	/**
 	 * Removes the $name attribute from the session.
 	 *
-	 *	@param string $name
-	 *	@return bool
+	 * @param string $name
+	 * @return bool
 	 */
 	public function remove(string $name)
 	{
@@ -296,9 +296,9 @@ class Session
 	/**
 	 * Set a message to last just for the next session
 	 *
-	 *	@param string $name
-	 *	@param mixed $value
-	 *	@return void
+	 * @param string $name
+	 * @param mixed $value
+	 * @return void
 	 */
 	public function flash(string $name, $value)
 	{
@@ -310,9 +310,9 @@ class Session
 	/**
 	 * Set a variable to be published into views
 	 *
-	 *	@param string $name
-	 *	@param mixed $value
-	 *	@return void
+	 * @param string $name
+	 * @param mixed $value
+	 * @return void
 	 */
 	public function publish(string $name, $value)
 	{
@@ -325,9 +325,9 @@ class Session
 	 * If $name is specified, behaves like pull() among the flashed values.
 	 * If not, returns an array of flash messages and erases them from the session.
 	 *
-	 *	@param string|null $name = null
-	 *	@param mixed $default = null
-	 *	@return string|array
+	 * @param string|null $name = null
+	 * @param mixed $default = null
+	 * @return string|array
 	 */
 	public function flashed(string $name = null, $default = null)
 	{
@@ -351,7 +351,7 @@ class Session
 	/**
 	 * Return an array of the published variables
 	 *
-	 *	@return array
+	 * @return array
 	 */
 	public function published()
 	{
@@ -365,7 +365,7 @@ class Session
 	/**
 	 * Retrieves the session token.
 	 *
-	 *	@return string|null
+	 * @return string|null
 	 */
 	public function token()
 	{
@@ -375,8 +375,8 @@ class Session
 	/**
 	 * Destroys the current session.
 	 *
-	 *	@param bool $removeCookies True to remove the session cookies
-	 *	@return bool TRUE is session has been deleted, else FALSE.
+	 * @param bool $removeCookies True to remove the session cookies
+	 * @return bool TRUE is session has been deleted, else FALSE.
 	 */
 	public function destroy(bool $removeCookies = false)
 	{
@@ -398,7 +398,7 @@ class Session
 	/**
 	 * Destroys the current session AND starts a new fresh one.
 	 *
-	 *	@return void
+	 * @return void
 	 */
 	public function closeCurrent()
 	{

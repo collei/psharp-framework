@@ -117,11 +117,11 @@ class Connection
 	/**
 	 * Initializes a new instance
 	 *
-	 *	@param string $type
-	 *	@param mixed $dsn
-	 *	@param string $database
-	 *	@param string $username
-	 *	@param string $password
+	 * @param string $type
+	 * @param mixed $dsn
+	 * @param string $database
+	 * @param string $username
+	 * @param string $password
 	 */
 	public function __construct(string $type, $dsn = '', string $database = '', string $username = '', string $password = '')
 	{
@@ -275,11 +275,11 @@ class Connection
 	/**
 	 * Opens the connection if not yet open.
 	 *
-	 *	@param mixed $dsn
-	 *	@param string $user
-	 *	@param string $pass
-	 *	@param array $options
-	 *	@return $this
+	 * @param mixed $dsn
+	 * @param string $user
+	 * @param string $pass
+	 * @param array $options
+	 * @return $this
 	 */
 	protected function openHandle($dsn, string $user = '', string $pass = '', array $options = [])
 	{
@@ -313,7 +313,7 @@ class Connection
 	/**
 	 * Closes the connection
 	 *
-	 *	@return $this
+	 * @return $this
 	 */
 	protected function closeHandle()
 	{
@@ -356,7 +356,7 @@ class Connection
 	/**
 	 * returns the underlying PDO connection
 	 *
-	 *	@return void
+	 * @return void
 	 */
 	public function getHandle()
 	{

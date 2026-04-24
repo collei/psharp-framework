@@ -4,19 +4,19 @@ namespace PSharp\Support;
 /**
  * Emulates an Optional object instance value.
  *
- *	@author alarido <alarido.su@gmail.com>
+ * @author alarido <alarido.su@gmail.com>
  */
 class Optional
 {
 	/**
-	 *	@var mixed $value
+	 * @var mixed $value
 	 */
 	private $value;
 
 	/**
 	 * Creates a new Optional
 	 *
-	 *	@param mixed $value
+	 * @param mixed $value
 	 */
 	public function __construct($value = null)
 	{
@@ -24,8 +24,8 @@ class Optional
 	}
 
 	/**
-	 *	@param string $name
-	 *	@return mixed
+	 * @param string $name
+	 * @return mixed
 	 */
 	public function __get(string $name)
 	{
@@ -37,9 +37,9 @@ class Optional
 	}
 
 	/**
-	 *	@param string $name
-	 *	@param mixed $value
-	 *	@return void
+	 * @param string $name
+	 * @param mixed $value
+	 * @return void
 	 */
 	public function __set(string $name, $value)
 	{
@@ -51,9 +51,9 @@ class Optional
 	}
 
 	/**
-	 *	@param string $name
-	 *	@param mixed $value
-	 *	@return void
+	 * @param string $name
+	 * @param mixed $value
+	 * @return void
 	 */
 	public function __call(string $name, array $arguments)
 	{
@@ -67,7 +67,7 @@ class Optional
 	/**
 	 * For PHP internal use
 	 *
-	 *	@return array
+	 * @return array
 	 */
 	public function __debugInfo()
 	{
@@ -80,7 +80,7 @@ class Optional
 	/**
 	 * Tells if is there any value.
 	 *
-	 *	@return bool
+	 * @return bool
 	 */
 	public function isPresent()
 	{
@@ -90,7 +90,7 @@ class Optional
 	/**
 	 * Returns the value.
 	 *
-	 *	@return mixed
+	 * @return mixed
 	 */
 	public function getValue()
 	{
@@ -100,7 +100,7 @@ class Optional
 	/**
 	 * Returns true if the given value is same as the inner value.
 	 *
-	 *	@return bool
+	 * @return bool
 	 */
 	public function equals($anotherObject)
 	{
@@ -118,7 +118,7 @@ class Optional
 	/**
 	 * Returns true if the Optional contains an instance of the given class name.
 	 *
-	 *	@return bool
+	 * @return bool
 	 */
 	public function is($className)
 	{
@@ -128,9 +128,9 @@ class Optional
 	/**
 	 * Creates a new Optional for the value.
 	 *
-	 *	@static
-	 *	@param mixed $value
-	 *	@return \Zelatus\Support\Optionals\Optional
+	 * @static
+	 * @param mixed $value
+	 * @return \Zelatus\Support\Optionals\Optional
 	 */
 	public static function for($value)
 	{

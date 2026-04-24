@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * Reunites string helper functions
  *
- *	@author alarido <alarido.su@gmail.com>
+ * @author alarido <alarido.su@gmail.com>
  *
  */
 abstract class Str
@@ -15,8 +15,8 @@ abstract class Str
 	/**
 	 * Pluralizer schema for English nouns.
 	 *
-	 *	@var array
-	 *	@link https://www.grammarly.com/blog/plural-nouns/
+	 * @var array
+	 * @link https://www.grammarly.com/blog/plural-nouns/
 	 *
 	 */
 	protected const EN_PLURALIZE = [
@@ -59,28 +59,28 @@ abstract class Str
 	/**
 	 * Keep cache of resolved plurals.
 	 *
-	 *	@var array
+	 * @var array
 	 */
 	protected static $EN_PLURAL_CACHE = [];
 
 	/**
 	 * Keep cache of resolved snake_case transforms.
 	 *
-	 *	@var array
+	 * @var array
 	 */
 	protected static $delimitedCache = [];
 
 	/**
 	 * Keep cache of resolved PascalCase transforms.
 	 *
-	 *	@var array
+	 * @var array
 	 */
 	protected static $pascalCache = [];
 
 	/**
 	 * Keep cache of resolved camelCase transforms.
 	 *
-	 *	@var array
+	 * @var array
 	 */
 	protected static $camelCache = [];
 
@@ -94,14 +94,14 @@ abstract class Str
 	 * For PHP 7, random_int is a PHP core function
 	 * For PHP 5.x, depends on https://github.com/paragonie/random_compat
 	 * 
-	 *	@author Scott Arciszewski
-	 *	@link https://stackoverflow.com/users/2224584/scott-arciszewski
+	 * @author Scott Arciszewski
+	 * @link https://stackoverflow.com/users/2224584/scott-arciszewski
 	 *
-	 *	@link https://stackoverflow.com/questions/4356289/php-random-string-generator/31107425#31107425 (viewed 2021-11-02)
+	 * @link https://stackoverflow.com/questions/4356289/php-random-string-generator/31107425#31107425 (viewed 2021-11-02)
 	 *
-	 *	@param int $length How many characters do we want?
-	 *	@param string $keyspace A string of all possible characters to select from
-	 *	@return string
+	 * @param int $length How many characters do we want?
+	 * @param string $keyspace A string of all possible characters to select from
+	 * @return string
 	 */
 	public static function random(
 		int $length = 64,
@@ -125,9 +125,9 @@ abstract class Str
 	/**
 	 * Alias of Str::random() 
 	 *
-	 *	@param int $length How many characters do we want?
-	 *	@param string $keyspace A string of all possible characters to select from
-	 *	@return string
+	 * @param int $length How many characters do we want?
+	 * @param string $keyspace A string of all possible characters to select from
+	 * @return string
 	 */
 	public static function randomize(
 		int $length = 64,
@@ -139,8 +139,8 @@ abstract class Str
 	/**
 	 * Tells if thisComplexName is in camelCase
 	 *
-	 *	@param string $camel
-	 *	@return bool
+	 * @param string $camel
+	 * @return bool
 	 */
 	public static function isCamel(string $camel)
 	{
@@ -153,8 +153,8 @@ abstract class Str
 	/**
 	 * Converts this_complex_name to thisComplexName
 	 *
-	 *	@param string $snake
-	 *	@return string
+	 * @param string $snake
+	 * @return string
 	 */
 	public static function toCamel(string $snake)
 	{
@@ -173,8 +173,8 @@ abstract class Str
 	/**
 	 * Tells if this_complex_name is in snake format
 	 *
-	 *	@param string $snake
-	 *	@return bool
+	 * @param string $snake
+	 * @return bool
 	 */
 	public static function isSnake(string $snake)
 	{
@@ -184,8 +184,8 @@ abstract class Str
 	/**
 	 * Tells if this-complex-name is in kebab format
 	 *
-	 *	@param string $kebab
-	 *	@return bool
+	 * @param string $kebab
+	 * @return bool
 	 */
 	public static function isKebab(string $kebab)
 	{
@@ -195,9 +195,9 @@ abstract class Str
 	/**
 	 * Converts thisComplexName to this_complex_name
 	 *
-	 *	@param string $camel
-	 *	@param string $delimiter = '_'
-	 *	@return string
+	 * @param string $camel
+	 * @param string $delimiter = '_'
+	 * @return string
 	 */
 	public static function toSnake(string $camel, string $delimiter = '_')
 	{
@@ -207,8 +207,8 @@ abstract class Str
 	/**
 	 * Converts thisComplexName to this-complex-name
 	 *
-	 *	@param string $camel
-	 *	@return string
+	 * @param string $camel
+	 * @return string
 	 */
 	public static function toKebab(string $camel)
 	{
@@ -218,9 +218,9 @@ abstract class Str
 	/**
 	 * Returns if the $str is quoted or not. Supported types: (") (')
 	 *
-	 *	@param string $str the string
-	 *	@param string $quoteType which types to consider (empty = all)
-	 *	@return bool
+	 * @param string $str the string
+	 * @param string $quoteType which types to consider (empty = all)
+	 * @return bool
 	 */
 	public static function isQuoted(string $str, string $quoteType = null)
 	{
@@ -242,8 +242,8 @@ abstract class Str
 	/**
 	 * Returns if the $str is quoted with '' or not.
 	 *
-	 *	@param string $str the string
-	 *	@return bool
+	 * @param string $str the string
+	 * @return bool
 	 */
 	public static function isSingleQuoted(string $str)
 	{
@@ -253,8 +253,8 @@ abstract class Str
 	/**
 	 * Returns if the $str is quoted with "" or not.
 	 *
-	 *	@param string $str the string
-	 *	@return bool
+	 * @param string $str the string
+	 * @return bool
 	 */
 	public static function isDoubleQuoted(string $str)
 	{
@@ -266,9 +266,9 @@ abstract class Str
 	 * curly brackets etc.
 	 * supported types: () [] {} <> «»
 	 *
-	 *	@param string $str the string
-	 *	@param string ...$with which types to consider (empty = all)
-	 *	@return bool
+	 * @param string $str the string
+	 * @param string ...$with which types to consider (empty = all)
+	 * @return bool
 	 */
 	public static function isClosed(string $str, string ...$with)
 	{
@@ -304,9 +304,9 @@ abstract class Str
 	/**
 	 * Tells if the string starts with $prefix
 	 *
-	 *	@param string $str
-	 *	@param string $prefix
-	 *	@return bool
+	 * @param string $str
+	 * @param string $prefix
+	 * @return bool
 	 */
 	public static function startsWith(string $str, $prefix)
 	{
@@ -326,9 +326,9 @@ abstract class Str
 	/**
 	 * Tells if the string ends with $suffix
 	 *
-	 *	@param string $str
-	 *	@param string $suffix
-	 *	@return bool
+	 * @param string $str
+	 * @param string $suffix
+	 * @return bool
 	 */
 	public static function endsWith(string $str, string $suffix)
 	{
@@ -338,9 +338,9 @@ abstract class Str
 	/**
 	 * Tells if something is inside the string
 	 *
-	 *	@param string $needle
-	 *	@param string $haystack
-	 *	@return bool
+	 * @param string $needle
+	 * @param string $haystack
+	 * @return bool
 	 */
 	public static function has(string $needle, string $haystack)
 	{
@@ -350,9 +350,9 @@ abstract class Str
 	/**
 	 * Splits a string using the delimiter as knife
 	 *
-	 *	@param string $knife
-	 *	@param string $beefsteak
-	 *	@return array
+	 * @param string $knife
+	 * @param string $beefsteak
+	 * @return array
 	 */
 	public static function explode(string $knife, string $beefsteak)
 	{
@@ -362,10 +362,10 @@ abstract class Str
 	/**
 	 * String replacement
 	 *
-	 *	@param string|array $search
-	 *	@param string|array $replacement
-	 *	@param string $subject
-	 *	@return string
+	 * @param string|array $search
+	 * @param string|array $replacement
+	 * @param string $subject
+	 * @return string
 	 */
 	public static function replace($search, $replacement, string $subject)
 	{
@@ -383,8 +383,8 @@ abstract class Str
 	/**
 	 * Returns the unquoted version of the given $str if it has quotes
 	 *
-	 *	@param string $str the string
-	 *	@return string
+	 * @param string $str the string
+	 * @return string
 	 */
 	public static function unquote(string $str)
 	{
@@ -407,8 +407,8 @@ abstract class Str
 	 * Returns the unclosed version of the given $str if it has parenthesis,
 	 * curly brackets etc.
 	 *
-	 *	@param string $str the string
-	 *	@return string
+	 * @param string $str the string
+	 * @return string
 	 */
 	public static function unclose(string $str)
 	{
@@ -440,11 +440,11 @@ abstract class Str
 	 * Returns the common string that is both the suffix of $front
 	 * and the prefix of $rear. If none, empty string is returned.
 	 *
-	 *	@author Almir J.	<alarido.su@gmail.com>
+	 * @author Almir J.	<alarido.su@gmail.com>
 	 *
-	 *	@param string $front
-	 *	@param string $rear
-	 *	@return string
+	 * @param string $front
+	 * @param string $rear
+	 * @return string
 	 */
 	public static function collision(string $front, string $rear)
 	{
@@ -504,11 +504,11 @@ abstract class Str
 	 * Returns whether is there a collision, i.e., a common string that is both
 	 * the suffix of $front and the prefix of $rear.
 	 *
-	 *	@author Almir J.	<alarido.su@gmail.com>
+	 * @author Almir J.	<alarido.su@gmail.com>
 	 *
-	 *	@param string $front
-	 *	@param string $rear
-	 *	@return bool true if a the collision exists, false otherwise		
+	 * @param string $front
+	 * @param string $rear
+	 * @return bool true if a the collision exists, false otherwise		
 	 */
 	public static function collided(string $front, string $rear)
 	{
@@ -519,11 +519,11 @@ abstract class Str
 	 * Join two strings - $front and $rear - ignoring the collision,
 	 * i.e., it does not get repeated in the middle of the resulting string
 	 *
-	 *	@author Almir J.	<alarido.su@gmail.com>
+	 * @author Almir J.	<alarido.su@gmail.com>
 	 *
-	 *	@param string $front
-	 *	@param string $rear
-	 *	@return bool true if a the collision exists, false otherwise		
+	 * @param string $front
+	 * @param string $rear
+	 * @return bool true if a the collision exists, false otherwise		
 	 */
 	public static function collapse(string $front, string $rear)
 	{
@@ -539,9 +539,9 @@ abstract class Str
 	/**
 	 * Detect and return the common prefix (if any) between two strings.
 	 *	
-	 *	@param string $one
-	 *	@param string $another
-	 *	@return string
+	 * @param string $one
+	 * @param string $another
+	 * @return string
 	 */
 	public static function commonPrefix(string $one, string $another)
 	{
@@ -569,9 +569,9 @@ abstract class Str
 	/**
 	 * Detect and return the common suffix (if any) between two strings.
 	 *	
-	 *	@param string $one
-	 *	@param string $another
-	 *	@return string
+	 * @param string $one
+	 * @param string $another
+	 * @return string
 	 */
 	public static function commonSuffix(string $one, string $another)
 	{
@@ -600,8 +600,8 @@ abstract class Str
 	 * Tokenize lines by spaces, except that tokens wrapped by "..." or '...'
 	 * will remain a single token, no matter how may spaces may exist inside
 	 *
-	 *	@param string $str the string to be tokenized	
-	 *	@return array
+	 * @param string $str the string to be tokenized	
+	 * @return array
 	 */
 	public static function tokenize(string $str)
 	{
@@ -654,9 +654,9 @@ abstract class Str
 	/**
 	 * splits $str in two through $chars and removes just the first part	
 	 *
-	 *	@param string $str
-	 *	@param string $chars
-	 *	@return string	
+	 * @param string $str
+	 * @param string $chars
+	 * @return string	
 	 */
 	public static function stripAfter(string $str, string $chars)
 	{
@@ -668,10 +668,10 @@ abstract class Str
 	/**
 	 * checks if a string is in the list
 	 *
-	 *	@param string $str
-	 *	@param array $strings
-	 *	@param bool $ignoreCase true to case insensitive, false otherwise
-	 *	@return bool
+	 * @param string $str
+	 * @param array $strings
+	 * @param bool $ignoreCase true to case insensitive, false otherwise
+	 * @return bool
 	 */
 	public static function in(string $str, array $strings, bool $ignoreCase = true)
 	{
@@ -690,8 +690,8 @@ abstract class Str
 	/**
 	 * transform a string with line separators into an array with such lines
 	 *
-	 *	@param string $str
-	 *	@return array
+	 * @param string $str
+	 * @return array
 	 */
 	public static function linesToArray(string $str)
 	{
@@ -750,8 +750,8 @@ abstract class Str
 	/**
 	 * removes diacritics from string
 	 *
-	 *	@param string $input
-	 *	@return string
+	 * @param string $input
+	 * @return string
 	 */
 	public static function cleanDiacritics(string $input)
 	{
@@ -767,8 +767,8 @@ abstract class Str
 	/**
 	 * insert line numbers at the start of each line in the given string
 	 *
-	 *	@param string $input
-	 *	@return string
+	 * @param string $input
+	 * @return string
 	 */
 	public static function withLineNumbers(string $input)
 	{
@@ -785,9 +785,9 @@ abstract class Str
 	/**
 	 * Returns the string with the prefix, even repeated, removed
 	 *
-	 *	@param string $input
-	 *	@param string $prefix
-	 *	@return string
+	 * @param string $input
+	 * @param string $prefix
+	 * @return string
 	 */
 	public static function trimPrefix(string $str, string $prefix)
 	{
@@ -801,9 +801,9 @@ abstract class Str
 	/**
 	 * Returns the string with the prefix removed
 	 *
-	 *	@param string $input
-	 *	@param string $prefix
-	 *	@return string
+	 * @param string $input
+	 * @param string $prefix
+	 * @return string
 	 */
 	public static function trimPrefixOnce(string $str, string $prefix)
 	{
@@ -817,9 +817,9 @@ abstract class Str
 	/**
 	 * Returns the string with the suffix, even repeated, removed
 	 *
-	 *	@param string $input
-	 *	@param string $suffix
-	 *	@return string
+	 * @param string $input
+	 * @param string $suffix
+	 * @return string
 	 */
 	public static function trimSuffix(string $str, string $suffix)
 	{
@@ -833,9 +833,9 @@ abstract class Str
 	/**
 	 * Returns the string with the suffix removed once
 	 *
-	 *	@param string $input
-	 *	@param string $suffix
-	 *	@return string
+	 * @param string $input
+	 * @param string $suffix
+	 * @return string
 	 */
 	public static function trimSuffixOnce(string $str, string $suffix)
 	{
@@ -849,10 +849,10 @@ abstract class Str
 	/**
 	 * Returns the string with both prefix and suffix removed
 	 *
-	 *	@param string $input
-	 *	@param string $prefix
-	 *	@param string $suffix
-	 *	@return string
+	 * @param string $input
+	 * @param string $prefix
+	 * @param string $suffix
+	 * @return string
 	 */
 	public static function trimBoth(string $str, string $prefix, string $suffix)
 	{
@@ -876,11 +876,11 @@ abstract class Str
 	 * $name = Str::getNamedArg($str, 2, '%');
 	 *			-> dessert
 	 *
-	 *	@param string $str
-	 *	@param int $index
-	 *	@param mixed $begin
-	 *	@param mixed $end = null
-	 *	@return string
+	 * @param string $str
+	 * @param int $index
+	 * @param mixed $begin
+	 * @param mixed $end = null
+	 * @return string
 	 */
 	public static function getNamedArg(
 		string $str, int $index, $begin, $end = null
@@ -1021,9 +1021,9 @@ abstract class Str
 	 * $limit is the last character index of the string.
 	 * If $limit is omitted, the whole $text is considered.
 	 *
-	 *	@param string $text
-	 *	@param int $limit
-	 *	@return int
+	 * @param string $text
+	 * @param int $limit
+	 * @return int
 	 */
 	public static function countLines(string $text, int $limit = null)
 	{
@@ -1042,8 +1042,8 @@ abstract class Str
 	 * inside a quoted argument (e.g., " \" " or ' \' '),
 	 * depending on which quote is used.
 	 *
-	 *	@param string $thing
-	 *	@return array
+	 * @param string $thing
+	 * @return array
 	 */
 	public static function parseArguments(string $thing)
 	{
@@ -1096,11 +1096,11 @@ abstract class Str
 	/**
 	 * Returns a padded version of the string.
 	 *
-	 *	@param string $str
-	 *	@param int $size
-	 *	@param int $alignment = -1		(-1:left, 0:center, 1:right)
-	 *	@param string $padWith = ' '	(uses only the first char of $padWith)
-	 *	@return string
+	 * @param string $str
+	 * @param int $size
+	 * @param int $alignment = -1		(-1:left, 0:center, 1:right)
+	 * @param string $padWith = ' '	(uses only the first char of $padWith)
+	 * @return string
 	 */
 	public static function pad(
 		string $str,
@@ -1155,8 +1155,8 @@ abstract class Str
 	/**
 	 * Returns a string formed by the repeated char.
 	 *
-	 *	@param string $char
-	 *	@param int $size
+	 * @param string $char
+	 * @param int $size
 	 */
 	public static function repeat(string $char, int $size)
 	{
@@ -1166,9 +1166,9 @@ abstract class Str
 	/**
 	 * Converts a wildcarded string to its regex version.
 	 *
-	 *	@param string $wildcarded
-	 *	@param string $delimiter = null
-	 *	@return string
+	 * @param string $wildcarded
+	 * @param string $delimiter = null
+	 * @return string
 	 */
 	public static function wildcardToRegex(string $wildcarded, string $delimiter = null)
 	{
@@ -1389,8 +1389,8 @@ abstract class Str
 	/**
 	 * Returns a full-lowercased string.
 	 *
-	 *	@param string $string
-	 *	@return string
+	 * @param string $string
+	 * @return string
 	 */
 	public static function lower(string $string)
 	{
@@ -1400,8 +1400,8 @@ abstract class Str
 	/**
 	 * Returns the pluralized version of English nouns.
 	 *
-	 *	@param string $singular
-	 *	@return string
+	 * @param string $singular
+	 * @return string
 	 */
 	public static function pluralize(string $singular): string
 	{
@@ -1455,9 +1455,9 @@ abstract class Str
 	/**
 	 * Normalize path for the current OS. 
 	 *
-	 *	@param string|array $path
-	 *	@param bool $trim = false
-	 *	@return string
+	 * @param string|array $path
+	 * @param bool $trim = false
+	 * @return string
 	 */
 	public static function normalizePath($path, bool $trim = false)
 	{
@@ -1475,9 +1475,9 @@ abstract class Str
 	/**
 	 * Normalize URI. 
 	 *
-	 *	@param string|array $relative
-	 *	@param bool $trim = false
-	 *	@return string
+	 * @param string|array $relative
+	 * @param bool $trim = false
+	 * @return string
 	 */
 	public static function normalizeUri(
 		$relative, bool $trimLeft = true, bool $trimRight = true
@@ -1503,8 +1503,8 @@ abstract class Str
 	/**
 	 * Strip parentheses.
 	 *
-	 *	@param string $string
-	 *	@return string
+	 * @param string $string
+	 * @return string
 	 */
 	public static function stripParentheses(string $string)
 	{
