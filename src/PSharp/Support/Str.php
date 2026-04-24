@@ -1545,6 +1545,23 @@ abstract class Str
 	}
 
 	/**
+	 * Generate a v4 uuid string.
+	 * 
+	 * @return string
+	 */
+	public static function uuid4()
+	{
+		// Random bytes
+		$data = random_bytes(16);  
+		// Define versão 4
+		$data[6] = chr(ord($data[6]) & 0x0f | 0x40);
+		// Define variante RFC 4122
+		$data[8] = chr(ord($data[8]) & 0x3f | 0x80);
+		
+		return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+	}
+
+	/**
 	 * Transliterate a UTF-8 value to ASCII.
 	 *
 	 * @param  string  $value
