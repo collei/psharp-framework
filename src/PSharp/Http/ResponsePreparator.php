@@ -10,7 +10,7 @@ use PSharp\Support\MimeType;
 use PSharp\Support\Interfaces\{Renderable, Jsonable, Arrayable};
 
 /**
- *	Prepares HTTP response instances based upon generated requests.
+ * Prepares HTTP response instances based upon generated requests.
  */
 class ResponsePreparator
 {

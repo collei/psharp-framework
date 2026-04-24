@@ -10,7 +10,7 @@ use PSharp\Streams\StreamFactory;
 use PSharp\Streams\StringStream;
 
 /**
- *	Creates HTTP response instances.
+ * Creates HTTP response instances.
  */
 class ResponseFactory implements ResponseFactoryInterface
 {

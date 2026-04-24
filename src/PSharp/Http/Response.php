@@ -15,20 +15,20 @@ use InvalidArgumentException;
  * and/or part of the implementation inside such methods of this class.
  * Most of these methods are:
  *
- *	isInvalid()
- *	isInformational()
- *	isSuccessful()
- *	isRedirection()
- *	isClientError()
- *	isServerError()
- *	isOk()
- *	isForbidden()
- *	isNotFound()
- *	isRedirect()
- *	isEmpty()
- *	setProtocolVersion()
- *	send()
- *	closeOutputBuffers()
+ * isInvalid()
+ * isInformational()
+ * isSuccessful()
+ * isRedirection()
+ * isClientError()
+ * isServerError()
+ * isOk()
+ * isForbidden()
+ * isNotFound()
+ * isRedirect()
+ * isEmpty()
+ * setProtocolVersion()
+ * send()
+ * closeOutputBuffers()
  *
  * -------------------------------------------------------------------
  * Copyright (c) 2004-2021 Fabien Potencier
@@ -430,8 +430,8 @@ class Response implements ResponseInterface
 	 *
 	 * @param string $name Case-insensitive header field name.
 	 * @return string[] An array of string values as provided for the given
-	 *	header. If the header does not appear in the message, this method MUST
-	 *	return an empty array.
+	 * header. If the header does not appear in the message, this method MUST
+	 * return an empty array.
 	 */
 	public function getHeader($name) : array
 	{
@@ -453,8 +453,8 @@ class Response implements ResponseInterface
 	 *
 	 * @param string $name Case-insensitive header field name.
 	 * @return string A string of values as provided for the given header
-	 *	concatenated together using a comma. If the header does not appear in
-	 *	the message, this method MUST return an empty string.
+	 * concatenated together using a comma. If the header does not appear in
+	 * the message, this method MUST return an empty string.
 	 */
 	public function getHeaderLine(string $name) : string
 	{

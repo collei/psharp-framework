@@ -8,7 +8,7 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
 /**
- *	Represents an uploaded file instance. 
+ * Represents an uploaded file instance. 
  */
 class UploadedFile implements UploadedFileInterface
 {

@@ -5,7 +5,7 @@ use PSharp\Support\Str;
 use PSharp\Support\Arr;
 
 /**
- *	Manages HTTP user sessions.
+ * Manages HTTP user sessions.
  *
  *	@author linblow AT hotmail DOT fr
  *	@see https://www.php.net/manual/pt_BR/function.session-start.php#102460 <accessed 2021-10-31 GMT-3>
@@ -24,7 +24,7 @@ class Session
 	protected const SPECIAL_KEYS = ['_token','_flash','_published'];
 
 	/**
-	 *	Session options
+	 * Session options
 	 *
 	 *	@var array
 	 */
@@ -33,28 +33,28 @@ class Session
 	];
 
 	/**
-	 *	Session state
+	 * Session state
 	 *
 	 *	@var array
 	 */
 	private $sessionState = self::SESSION_NOT_STARTED;
 
 	/**
-	 *	Session singleton
+	 * Session singleton
 	 *
 	 *	@var array
 	 */
 	private static $instance = null;
 
 	/**
-	 *	Private constructor.
+	 * Private constructor.
 	 *
 	 *	@return void
 	 */
 	private function __construct() {}
 
 	/**
-	 *	Returns THE instance of 'Session'.
+	 * Returns THE instance of 'Session'.
 	 *
 	 *	@return static
 	 */
@@ -71,7 +71,7 @@ class Session
 	 *	(Re)starts the session.
 	 *
 	 *	@return bool TRUE if the session has been initialized,
-	 *					FALSE otherwise.
+	 * FALSE otherwise.
 	 */
 	public static function start()
 	{
@@ -79,7 +79,7 @@ class Session
 	}
 
 	/**
-	 *	Set session lifetime.
+	 * Set session lifetime.
 	 *
 	 *	@param int $lifetime
 	 *	@return void
@@ -93,7 +93,7 @@ class Session
 	 *	(Re)starts the session.
 	 *
 	 *	@return bool TRUE if the session has been initialized,
-	 *					FALSE otherwise.
+	 * FALSE otherwise.
 	 */
 	public function startSession()
 	{
@@ -113,7 +113,7 @@ class Session
 	}
 
 	/**
-	 *	Regenerates token
+	 * Regenerates token
 	 *
 	 *	@return string
 	 */
@@ -127,7 +127,7 @@ class Session
 	}
 
 	/**
-	 *	Erases discardables
+	 * Erases discardables
 	 *
 	 *	@return void
 	 */
@@ -137,7 +137,7 @@ class Session
 	}
 
 	/**
-	 *	Stores datum in the session.
+	 * Stores datum in the session.
 	 *
 	 *	@param string $name
 	 *	@param mixed $value
@@ -151,7 +151,7 @@ class Session
 	}
 
 	/**
-	 *	Gets datum from the session.
+	 * Gets datum from the session.
 	 *
 	 *	@param string $name
 	 *	@return mixed
@@ -168,7 +168,7 @@ class Session
 	}
 
 	/**
-	 *	Checks if $name is defined in the session.
+	 * Checks if $name is defined in the session.
 	 *
 	 *	@param string $name
 	 *	@return mixed
@@ -179,7 +179,7 @@ class Session
 	}
 
 	/**
-	 *	Removes $name from the session.
+	 * Removes $name from the session.
 	 *
 	 *	@param string $name
 	 *	@return mixed
@@ -192,7 +192,7 @@ class Session
 	}
 
 	/**
-	 *	Prints debug info on session data.
+	 * Prints debug info on session data.
 	 *
 	 *	@param string $name
 	 *	@return mixed
@@ -212,7 +212,7 @@ class Session
 	}
 
 	/**
-	 *	Checks if a given $name exists..
+	 * Checks if a given $name exists..
 	 *
 	 *	@param $name string
 	 *	@return bool	
@@ -223,7 +223,7 @@ class Session
 	}
 
 	/**
-	 *	Returns a value.
+	 * Returns a value.
 	 *
 	 *	@param string $name
 	 *	@param mixed $default = null
@@ -235,7 +235,7 @@ class Session
 	}
 
 	/**
-	 *	Sets a value to the session. Returns the old value
+	 * Sets a value to the session. Returns the old value
 	 *
 	 *	@param $name string
 	 *	@param $value mixed
@@ -249,7 +249,7 @@ class Session
 	}
 
 	/**
-	 *	Returns a value and then removes it.
+	 * Returns a value and then removes it.
 	 *
 	 *	@param $name string the name of session variable
 	 *	@param $subName string a specific index in such session variable (if array)
@@ -265,7 +265,7 @@ class Session
 	}
 
 	/**
-	 *	Sets a value to the session.
+	 * Sets a value to the session.
 	 *
 	 *	@param $name string
 	 *	@param $value mixed
@@ -277,7 +277,7 @@ class Session
 	}
 
 	/**
-	 *	Removes the $name attribute from the session.
+	 * Removes the $name attribute from the session.
 	 *
 	 *	@param string $name
 	 *	@return bool
@@ -294,7 +294,7 @@ class Session
 	}
 
 	/**
-	 *	Set a message to last just for the next session
+	 * Set a message to last just for the next session
 	 *
 	 *	@param string $name
 	 *	@param mixed $value
@@ -308,7 +308,7 @@ class Session
 	}
 
 	/**
-	 *	Set a variable to be published into views
+	 * Set a variable to be published into views
 	 *
 	 *	@param string $name
 	 *	@param mixed $value
@@ -322,8 +322,8 @@ class Session
 	}
 
 	/**
-	 *	If $name is specified, behaves like pull() among the flashed values.
-	 *	If not, returns an array of flash messages and erases them from the session.
+	 * If $name is specified, behaves like pull() among the flashed values.
+	 * If not, returns an array of flash messages and erases them from the session.
 	 *
 	 *	@param string|null $name = null
 	 *	@param mixed $default = null
@@ -349,7 +349,7 @@ class Session
 	}
 
 	/**
-	 *	Return an array of the published variables
+	 * Return an array of the published variables
 	 *
 	 *	@return array
 	 */
@@ -363,7 +363,7 @@ class Session
 	}
 
 	/**
-	 *	Retrieves the session token.
+	 * Retrieves the session token.
 	 *
 	 *	@return string|null
 	 */
@@ -373,7 +373,7 @@ class Session
 	}
 
 	/**
-	 *	Destroys the current session.
+	 * Destroys the current session.
 	 *
 	 *	@param bool $removeCookies True to remove the session cookies
 	 *	@return bool TRUE is session has been deleted, else FALSE.
@@ -396,7 +396,7 @@ class Session
 	}
 
 	/**
-	 *	Destroys the current session AND starts a new fresh one.
+	 * Destroys the current session AND starts a new fresh one.
 	 *
 	 *	@return void
 	 */

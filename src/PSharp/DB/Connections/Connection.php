@@ -115,7 +115,7 @@ class Connection
 	];
 
 	/**
-	 *	Initializes a new instance
+	 * Initializes a new instance
 	 *
 	 *	@param string $type
 	 *	@param mixed $dsn
@@ -273,7 +273,7 @@ class Connection
     }
 
 	/**
-	 *	Opens the connection if not yet open.
+	 * Opens the connection if not yet open.
 	 *
 	 *	@param mixed $dsn
 	 *	@param string $user
@@ -311,7 +311,7 @@ class Connection
 	}
 
 	/**
-	 *	Closes the connection
+	 * Closes the connection
 	 *
 	 *	@return $this
 	 */
@@ -354,7 +354,7 @@ class Connection
     }
 
 	/**
-	 *	returns the underlying PDO connection
+	 * returns the underlying PDO connection
 	 *
 	 *	@return void
 	 */

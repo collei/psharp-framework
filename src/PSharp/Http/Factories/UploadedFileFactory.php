@@ -9,7 +9,7 @@ use PSharp\Streams\Stream;
 use PSharp\Streams\StreamFactory;
 
 /**
- *	Creates an UploadedFile instance from PHP POST request. 
+ * Creates an UploadedFile instance from PHP POST request. 
  */
 class UploadedFileFactory implements UploadedFileFactoryInterface
 {

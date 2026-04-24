@@ -431,8 +431,8 @@ class Request implements RequestInterface, ServerRequestInterface
 	 *
 	 * @param string $name Case-insensitive header field name.
 	 * @return string[] An array of string values as provided for the given
-	 *	header. If the header does not appear in the message, this method MUST
-	 *	return an empty array.
+	 * header. If the header does not appear in the message, this method MUST
+	 * return an empty array.
 	 */
 	public function getHeader(string $name) : array
 	{
@@ -454,8 +454,8 @@ class Request implements RequestInterface, ServerRequestInterface
 	 *
 	 * @param string $name Case-insensitive header field name.
 	 * @return string A string of values as provided for the given header
-	 *	concatenated together using a comma. If the header does not appear in
-	 *	the message, this method MUST return an empty string.
+	 * concatenated together using a comma. If the header does not appear in
+	 * the message, this method MUST return an empty string.
 	 */
 	public function getHeaderLine(string $name) : string
 	{

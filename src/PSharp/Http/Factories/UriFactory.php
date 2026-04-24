@@ -7,7 +7,7 @@ use Psr\Http\Message\UriFactoryInterface;
 use InvalidArgumentException;
 
 /**
- *	Creates an Uri instance from the URI string.
+ * Creates an Uri instance from the URI string.
  */
 class UriFactory implements UriFactoryInterface
 {

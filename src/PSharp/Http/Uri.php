@@ -5,7 +5,7 @@ use Stringable;
 use Psr\Http\Message\UriInterface;
 
 /**
- *	Represents a URI (uniform resource identifier). 
+ * Represents a URI (uniform resource identifier). 
  */
 class Uri implements UriInterface, Stringable
 {

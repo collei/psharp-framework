@@ -2,7 +2,7 @@
 namespace PSharp\Support;
 
 /**
- *	Emulates an Optional object instance value.
+ * Emulates an Optional object instance value.
  *
  *	@author alarido <alarido.su@gmail.com>
  */
@@ -14,7 +14,7 @@ class Optional
 	private $value;
 
 	/**
-	 *	Creates a new Optional
+	 * Creates a new Optional
 	 *
 	 *	@param mixed $value
 	 */
@@ -65,7 +65,7 @@ class Optional
 	}
 
 	/**
-	 *	For PHP internal use
+	 * For PHP internal use
 	 *
 	 *	@return array
 	 */
@@ -78,7 +78,7 @@ class Optional
 	}
 
 	/**
-	 *	Tells if is there any value.
+	 * Tells if is there any value.
 	 *
 	 *	@return bool
 	 */
@@ -88,7 +88,7 @@ class Optional
 	}
 
 	/**
-	 *	Returns the value.
+	 * Returns the value.
 	 *
 	 *	@return mixed
 	 */
@@ -98,7 +98,7 @@ class Optional
 	}
 
 	/**
-	 *	Returns true if the given value is same as the inner value.
+	 * Returns true if the given value is same as the inner value.
 	 *
 	 *	@return bool
 	 */
@@ -116,7 +116,7 @@ class Optional
 	}
 
 	/**
-	 *	Returns true if the Optional contains an instance of the given class name.
+	 * Returns true if the Optional contains an instance of the given class name.
 	 *
 	 *	@return bool
 	 */
@@ -126,7 +126,7 @@ class Optional
 	}
 
 	/**
-	 *	Creates a new Optional for the value.
+	 * Creates a new Optional for the value.
 	 *
 	 *	@static
 	 *	@param mixed $value

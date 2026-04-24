@@ -2,12 +2,12 @@
 namespace PSharp\Http\Factories;
 
 /**
- *	Encapsulates a HTTP cookie factory.
+ * Encapsulates a HTTP cookie factory.
  */
 interface CookieFactoryInterface
 {
 	/**
-	 *	Define the default expiration term, in seconds.
+	 * Define the default expiration term, in seconds.
 	 *
 	 *	@param int $expires
 	 *	@return $this
@@ -15,7 +15,7 @@ interface CookieFactoryInterface
 	public function setDefaultExpiration(int $expires);
 
 	/**
-	 *	Define the default path field.
+	 * Define the default path field.
 	 *
 	 *	@param string $path
 	 *	@return $this
@@ -23,7 +23,7 @@ interface CookieFactoryInterface
 	public function setDefaultPath(string $path);
 
 	/**
-	 *	Define the default cookie domain.
+	 * Define the default cookie domain.
 	 *
 	 *	@param string $domain
 	 *	@return $this
@@ -31,7 +31,7 @@ interface CookieFactoryInterface
 	public function setDefaultDomain(string $domain);
 
 	/**
-	 *	Define the default value of secure attribute.
+	 * Define the default value of secure attribute.
 	 *
 	 *	@param bool $secure
 	 *	@return $this
@@ -39,7 +39,7 @@ interface CookieFactoryInterface
 	public function setDefaultSecure(bool $secure);
 
 	/**
-	 *	Define the default value of httpOnly attribute.
+	 * Define the default value of httpOnly attribute.
 	 *
 	 *	@param bool $httpOnly
 	 *	@return $this
@@ -47,7 +47,7 @@ interface CookieFactoryInterface
 	public function setDefaultHttpMode(bool $httpOnly);
 
 	/**
-	 *	Define the default value of sameSite attribute.
+	 * Define the default value of sameSite attribute.
 	 *
 	 *	@param string $sameSite
 	 *	@return $this
@@ -55,7 +55,7 @@ interface CookieFactoryInterface
 	public function setDefaultSameSite(string $sameSite);
 
 	/**
-	 *	Define the default cookie domain.
+	 * Define the default cookie domain.
 	 *
 	 *	@param string $path
 	 *	@param string $domain
@@ -64,7 +64,7 @@ interface CookieFactoryInterface
 	public function setDefaultPathAndDomain(string $path, string $domain);
 
 	/**
-	 *	Define the default value of cookie safety attributes.
+	 * Define the default value of cookie safety attributes.
 	 *
 	 *	@param bool $secure
 	 *	@param bool $httpOnly
@@ -74,7 +74,7 @@ interface CookieFactoryInterface
 	public function setDefaultSafetyValues(bool $secure, bool $httpOnly, string $sameSite);
 
 	/**
-	 *	Publishes the default values.
+	 * Publishes the default values.
 	 *
 	 *	@param string $name
 	 *	@return mixed
@@ -82,14 +82,14 @@ interface CookieFactoryInterface
 	public function __get($name);
 
 	/**
-	 *	Returns the list of all created cookies.
+	 * Returns the list of all created cookies.
 	 *
 	 *	@return array
 	 */
 	public function getCookies();
 
 	/**
-	 *	Creates a new Cookie instance
+	 * Creates a new Cookie instance
 	 *
 	 *	@param string $name
 	 *	@param string $value
@@ -108,7 +108,7 @@ interface CookieFactoryInterface
 	);
 
 	/**
-	 *	Creates a new Cookie instance
+	 * Creates a new Cookie instance
 	 *
 	 *	@param string $name
 	 *	@param string $value
@@ -125,7 +125,7 @@ interface CookieFactoryInterface
 	);
 
 	/**
-	 *	Creates a new Cookie instance
+	 * Creates a new Cookie instance
 	 *
 	 *	@param string $name
 	 *	@param string $path

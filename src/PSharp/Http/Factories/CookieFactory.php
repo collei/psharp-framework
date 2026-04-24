@@ -4,7 +4,7 @@ namespace PSharp\Http\Factories;
 use PSharp\Http\Cookie;
 
 /**
- *	Encapsulates a HTTP cookie factory.
+ * Encapsulates a HTTP cookie factory.
  */
 class CookieFactory implements CookieFactoryInterface
 {
@@ -54,7 +54,7 @@ class CookieFactory implements CookieFactoryInterface
 	private $sameSite = 'Lax';
 
 	/**
-	 *	Define the default expiration term, in seconds.
+	 * Define the default expiration term, in seconds.
 	 *
 	 *	@param int $expires
 	 *	@return $this
@@ -67,7 +67,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Define the default path field.
+	 * Define the default path field.
 	 *
 	 *	@param string $path
 	 *	@return $this
@@ -80,7 +80,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Define the default cookie domain.
+	 * Define the default cookie domain.
 	 *
 	 *	@param string $domain
 	 *	@return $this
@@ -93,7 +93,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Define the default value of secure attribute.
+	 * Define the default value of secure attribute.
 	 *
 	 *	@param bool $secure
 	 *	@return $this
@@ -106,7 +106,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Define the default value of httpOnly attribute.
+	 * Define the default value of httpOnly attribute.
 	 *
 	 *	@param bool $httpOnly
 	 *	@return $this
@@ -119,7 +119,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Define the default value of sameSite attribute.
+	 * Define the default value of sameSite attribute.
 	 *
 	 *	@param string $sameSite
 	 *	@return $this
@@ -132,7 +132,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Define the default cookie domain.
+	 * Define the default cookie domain.
 	 *
 	 *	@param string $path
 	 *	@param string $domain
@@ -146,7 +146,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Define the default value of cookie safety attributes.
+	 * Define the default value of cookie safety attributes.
 	 *
 	 *	@param bool $secure
 	 *	@param bool $httpOnly
@@ -161,7 +161,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Publishes the default values.
+	 * Publishes the default values.
 	 *
 	 *	@param string $name
 	 *	@return mixed
@@ -176,7 +176,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Returns the list of all created cookies.
+	 * Returns the list of all created cookies.
 	 *
 	 *	@return array
 	 */
@@ -186,7 +186,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Creates a new Cookie instance
+	 * Creates a new Cookie instance
 	 *
 	 *	@param string $name
 	 *	@param string $value
@@ -218,7 +218,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Creates a new Cookie instance
+	 * Creates a new Cookie instance
 	 *
 	 *	@param string $name
 	 *	@param string $value
@@ -239,7 +239,7 @@ class CookieFactory implements CookieFactoryInterface
 	}
 
 	/**
-	 *	Creates a new Cookie instance
+	 * Creates a new Cookie instance
 	 *
 	 *	@param string $name
 	 *	@param string $path

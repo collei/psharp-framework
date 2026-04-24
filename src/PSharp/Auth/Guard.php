@@ -2,7 +2,7 @@
 namespace PSharp\Auth;
 
 /**
- *	Embodies authorization capabilities.
+ * Embodies authorization capabilities.
  */
 class Guard
 {

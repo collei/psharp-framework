@@ -2,8 +2,8 @@
 namespace PSharp\Auth;
 
 /**
- *	Holds an user repository, i.e., the data storage in which information
- *	about users lives.
+ * Holds an user repository, i.e., the data storage in which information
+ * about users lives.
  */
 interface UserRepositoryInterface
 {

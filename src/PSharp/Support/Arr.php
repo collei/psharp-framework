@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use Closure;
 
 /**
- *	Reunites array helper functions
+ * Reunites array helper functions
  */
 abstract class Arr
 {
@@ -391,7 +391,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Returns an array with a $thing inserted at $where index
+	 * Returns an array with a $thing inserted at $where index
 	 *
 	 *	@static
 	 *	@param mixed $thing
@@ -439,7 +439,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Excludes values from $array by their $keys
+	 * Excludes values from $array by their $keys
 	 *
 	 *	@static
 	 *	@param array $array
@@ -454,7 +454,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Filters an array by their keys
+	 * Filters an array by their keys
 	 *
 	 *	@static
 	 *	@param array $array
@@ -467,7 +467,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Returns an array with the keys as values, ignoring any of original values
+	 * Returns an array with the keys as values, ignoring any of original values
 	 *
 	 *	@static
 	 *	@param array $array
@@ -479,7 +479,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Returns an array with the values only
+	 * Returns an array with the values only
 	 *
 	 *	@static
 	 *	@param array $array
@@ -491,8 +491,8 @@ abstract class Arr
 	}
 
 	/**
-	 *	Returns an array with the same count of elements of the given array, but
-	 *	with the $value as the value of every key
+	 * Returns an array with the same count of elements of the given array, but
+	 * with the $value as the value of every key
 	 *
 	 *	@static
 	 *	@param array $array
@@ -511,7 +511,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Interlaces associative arrays in a string, with both keys and values
+	 * Interlaces associative arrays in a string, with both keys and values
 	 *
 	 *	@static
 	 *	@param string $glue
@@ -535,7 +535,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Joins the array keys only, discarding any values
+	 * Joins the array keys only, discarding any values
 	 *
 	 *	@static
 	 *	@param string $glue
@@ -548,7 +548,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Transform an associative array in a string through a bit more complex way
+	 * Transform an associative array in a string through a bit more complex way
 	 *
 	 *	@static
 	 *	@param string $glue
@@ -576,7 +576,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Transform an associative array in a string through a bit more complex way, part II
+	 * Transform an associative array in a string through a bit more complex way, part II
 	 *
 	 *	@static
 	 *	@param string $glue
@@ -607,12 +607,12 @@ abstract class Arr
 	}
 
 	/**
-	 *	Join array values in a string with glue collapse
+	 * Join array values in a string with glue collapse
 	 *
-	 *		$array = ['/food/','/cereals','rice/','fine-grained']
-	 *		PHP's implode('/',$array):
+	 * $array = ['/food/','/cereals','rice/','fine-grained']
+	 * PHP's implode('/',$array):
 	 *				/food///cereals/rice//fine-grained
-	 *		joinCollapsed('/',$array):
+	 * joinCollapsed('/',$array):
 	 *				/food/cereals/rice/fine-grained
 	 *
 	 *	@static
@@ -642,11 +642,11 @@ abstract class Arr
 	}
 
 	/**
-	 *	Join array values in a string with a couple glues, like opening and
-	 *	closing HTML tags
+	 * Join array values in a string with a couple glues, like opening and
+	 * closing HTML tags
 	 *
-	 *		$array = ['apple','orange','strawberry','grape']
-	 *		joinEnclosed('<li>','</li>',$array):
+	 * $array = ['apple','orange','strawberry','grape']
+	 * joinEnclosed('<li>','</li>',$array):
 	 *			<li>apple</li><li>orange</li><li>strawberry</li><li>grape</li>
 	 *
 	 *	@static
@@ -663,7 +663,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Scan the values to define their types
+	 * Scan the values to define their types
 	 *
 	 *	@static
 	 *	@param array $line
@@ -681,7 +681,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Checks if the array lines are type-consistent
+	 * Checks if the array lines are type-consistent
 	 *
 	 *	@static
 	 *	@param array $line
@@ -710,7 +710,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Checks if the given array has such keys
+	 * Checks if the given array has such keys
 	 *
 	 *	@static
 	 *	@param array $array
@@ -729,7 +729,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Checks if the given array has sub-arrays in a table manner
+	 * Checks if the given array has sub-arrays in a table manner
 	 *
 	 *	@static
 	 *	@param array $array
@@ -763,10 +763,10 @@ abstract class Arr
 	}
 
 	/**
-	 *	Returns the first element.
-	 *	If $callback is supplied, $array is filtered first. $filter will receive
-	 *	the value as argument. Return true to include it in the returned array.
-	 *	If resulting $array is empty, $default is returned. 
+	 * Returns the first element.
+	 * If $callback is supplied, $array is filtered first. $filter will receive
+	 * the value as argument. Return true to include it in the returned array.
+	 * If resulting $array is empty, $default is returned. 
 	 *
 	 *	@static
 	 *	@param array $array
@@ -784,11 +784,11 @@ abstract class Arr
 	}
 
 	/**
-	 *	Returns the first element.
-	 *	If $callback is supplied, $array is filtered first. $filter will receive
-	 *	the value as first argument and the key as the second.
-	 *	Return true to include it in the returned array.
-	 *	If resulting $array is empty, $default is returned. 
+	 * Returns the first element.
+	 * If $callback is supplied, $array is filtered first. $filter will receive
+	 * the value as first argument and the key as the second.
+	 * Return true to include it in the returned array.
+	 * If resulting $array is empty, $default is returned. 
 	 *
 	 *	@static
 	 *	@param array $array
@@ -806,7 +806,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Returns the last element
+	 * Returns the last element
 	 *
 	 *	@static
 	 *	@param array $array
@@ -818,7 +818,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Re-key arrays according transformations implemented by the Closure
+	 * Re-key arrays according transformations implemented by the Closure
 	 *
 	 *	@static
 	 *	@param array $array
@@ -848,7 +848,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Sort arrays
+	 * Sort arrays
 	 *
 	 *	@static
 	 *	@param array ...$values
@@ -861,7 +861,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Filter array elements by key
+	 * Filter array elements by key
 	 *
 	 *	@static
 	 *	@param array $source
@@ -878,7 +878,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Filter array elements by value
+	 * Filter array elements by value
 	 *
 	 *	@static
 	 *	@param array $source
@@ -895,7 +895,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Filter array elements by key and value
+	 * Filter array elements by key and value
 	 *
 	 *	@static
 	 *	@param array $source
@@ -908,8 +908,8 @@ abstract class Arr
 	}
 
 	/**
-	 *	Create an associative array with the given strings as keys
-	 *	in the same order you give them 
+	 * Create an associative array with the given strings as keys
+	 * in the same order you give them 
 	 *
 	 *	@static
 	 *	@param string ...$keys
@@ -930,8 +930,8 @@ abstract class Arr
 	}
 
 	/**
-	 *	Gets an array of objects OR arrays and returns a specific field.
-	 *	Returns false if $column does not exist OR it is unreachable
+	 * Gets an array of objects OR arrays and returns a specific field.
+	 * Returns false if $column does not exist OR it is unreachable
 	 *	(e.g., an object private property)
 	 *
 	 *	@param array $items
@@ -958,9 +958,9 @@ abstract class Arr
 	}
 
 	/**
-	 *	Converts an associative array to a description of labeled values, i.e.:
+	 * Converts an associative array to a description of labeled values, i.e.:
 	 *		['star'=>'sun', 'planet'=>['name'=>'earth', 'satellites'=>1]]
-	 *	to
+	 * to
 	 *		"star: 'sun', planet: {name: 'earth', satellites: 1}"
 	 *
 	 *	@param array $items
@@ -1012,7 +1012,7 @@ abstract class Arr
 
 
 	/**
-	 *	Wraps the given $thing into an array if needed
+	 * Wraps the given $thing into an array if needed
 	 *
 	 *	@param mixed $thing
 	 *	@return array
@@ -1023,7 +1023,7 @@ abstract class Arr
 	}
 
 	/**
-	 *	Modifies the given array's leafs using the given closure
+	 * Modifies the given array's leafs using the given closure
 	 *
 	 *	@param array	&$target
 	 *	@param \Closure $callback

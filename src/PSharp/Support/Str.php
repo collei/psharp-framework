@@ -5,7 +5,7 @@ use RangeException;
 use InvalidArgumentException;
 
 /**
- *	Reunites string helper functions
+ * Reunites string helper functions
  *
  *	@author alarido <alarido.su@gmail.com>
  *
@@ -13,7 +13,7 @@ use InvalidArgumentException;
 abstract class Str
 {
 	/**
-	 *	Pluralizer schema for English nouns.
+	 * Pluralizer schema for English nouns.
 	 *
 	 *	@var array
 	 *	@link https://www.grammarly.com/blog/plural-nouns/
@@ -57,28 +57,28 @@ abstract class Str
 	];
 
 	/**
-	 *	Keep cache of resolved plurals.
+	 * Keep cache of resolved plurals.
 	 *
 	 *	@var array
 	 */
 	protected static $EN_PLURAL_CACHE = [];
 
 	/**
-	 *	Keep cache of resolved snake_case transforms.
+	 * Keep cache of resolved snake_case transforms.
 	 *
 	 *	@var array
 	 */
 	protected static $delimitedCache = [];
 
 	/**
-	 *	Keep cache of resolved PascalCase transforms.
+	 * Keep cache of resolved PascalCase transforms.
 	 *
 	 *	@var array
 	 */
 	protected static $pascalCache = [];
 
 	/**
-	 *	Keep cache of resolved camelCase transforms.
+	 * Keep cache of resolved camelCase transforms.
 	 *
 	 *	@var array
 	 */
@@ -123,7 +123,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Alias of Str::random() 
+	 * Alias of Str::random() 
 	 *
 	 *	@param int $length How many characters do we want?
 	 *	@param string $keyspace A string of all possible characters to select from
@@ -137,7 +137,7 @@ abstract class Str
 	} 
 
 	/**
-	 *	Tells if thisComplexName is in camelCase
+	 * Tells if thisComplexName is in camelCase
 	 *
 	 *	@param string $camel
 	 *	@return bool
@@ -151,7 +151,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Converts this_complex_name to thisComplexName
+	 * Converts this_complex_name to thisComplexName
 	 *
 	 *	@param string $snake
 	 *	@return string
@@ -171,7 +171,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Tells if this_complex_name is in snake format
+	 * Tells if this_complex_name is in snake format
 	 *
 	 *	@param string $snake
 	 *	@return bool
@@ -182,7 +182,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Tells if this-complex-name is in kebab format
+	 * Tells if this-complex-name is in kebab format
 	 *
 	 *	@param string $kebab
 	 *	@return bool
@@ -193,7 +193,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Converts thisComplexName to this_complex_name
+	 * Converts thisComplexName to this_complex_name
 	 *
 	 *	@param string $camel
 	 *	@param string $delimiter = '_'
@@ -205,7 +205,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Converts thisComplexName to this-complex-name
+	 * Converts thisComplexName to this-complex-name
 	 *
 	 *	@param string $camel
 	 *	@return string
@@ -216,7 +216,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns if the $str is quoted or not. Supported types: (") (')
+	 * Returns if the $str is quoted or not. Supported types: (") (')
 	 *
 	 *	@param string $str the string
 	 *	@param string $quoteType which types to consider (empty = all)
@@ -240,7 +240,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns if the $str is quoted with '' or not.
+	 * Returns if the $str is quoted with '' or not.
 	 *
 	 *	@param string $str the string
 	 *	@return bool
@@ -251,7 +251,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns if the $str is quoted with "" or not.
+	 * Returns if the $str is quoted with "" or not.
 	 *
 	 *	@param string $str the string
 	 *	@return bool
@@ -262,9 +262,9 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the unclosed version of the given $str if it has parenthesis,
-	 *	curly brackets etc.
-	 *	supported types: () [] {} <> «»
+	 * Returns the unclosed version of the given $str if it has parenthesis,
+	 * curly brackets etc.
+	 * supported types: () [] {} <> «»
 	 *
 	 *	@param string $str the string
 	 *	@param string ...$with which types to consider (empty = all)
@@ -302,7 +302,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Tells if the string starts with $prefix
+	 * Tells if the string starts with $prefix
 	 *
 	 *	@param string $str
 	 *	@param string $prefix
@@ -324,7 +324,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Tells if the string ends with $suffix
+	 * Tells if the string ends with $suffix
 	 *
 	 *	@param string $str
 	 *	@param string $suffix
@@ -336,7 +336,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Tells if something is inside the string
+	 * Tells if something is inside the string
 	 *
 	 *	@param string $needle
 	 *	@param string $haystack
@@ -348,7 +348,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Splits a string using the delimiter as knife
+	 * Splits a string using the delimiter as knife
 	 *
 	 *	@param string $knife
 	 *	@param string $beefsteak
@@ -360,7 +360,7 @@ abstract class Str
 	}
 
 	/**
-	 *	String replacement
+	 * String replacement
 	 *
 	 *	@param string|array $search
 	 *	@param string|array $replacement
@@ -381,7 +381,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the unquoted version of the given $str if it has quotes
+	 * Returns the unquoted version of the given $str if it has quotes
 	 *
 	 *	@param string $str the string
 	 *	@return string
@@ -404,8 +404,8 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the unclosed version of the given $str if it has parenthesis,
-	 *	curly brackets etc.
+	 * Returns the unclosed version of the given $str if it has parenthesis,
+	 * curly brackets etc.
 	 *
 	 *	@param string $str the string
 	 *	@return string
@@ -437,8 +437,8 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the common string that is both the suffix of $front
-	 *	and the prefix of $rear. If none, empty string is returned.
+	 * Returns the common string that is both the suffix of $front
+	 * and the prefix of $rear. If none, empty string is returned.
 	 *
 	 *	@author Almir J.	<alarido.su@gmail.com>
 	 *
@@ -501,8 +501,8 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns whether is there a collision, i.e., a common string that is both
-	 *	the suffix of $front and the prefix of $rear.
+	 * Returns whether is there a collision, i.e., a common string that is both
+	 * the suffix of $front and the prefix of $rear.
 	 *
 	 *	@author Almir J.	<alarido.su@gmail.com>
 	 *
@@ -516,8 +516,8 @@ abstract class Str
 	}
 
 	/**
-	 *	Join two strings - $front and $rear - ignoring the collision,
-	 *	i.e., it does not get repeated in the middle of the resulting string
+	 * Join two strings - $front and $rear - ignoring the collision,
+	 * i.e., it does not get repeated in the middle of the resulting string
 	 *
 	 *	@author Almir J.	<alarido.su@gmail.com>
 	 *
@@ -537,7 +537,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Detect and return the common prefix (if any) between two strings.
+	 * Detect and return the common prefix (if any) between two strings.
 	 *	
 	 *	@param string $one
 	 *	@param string $another
@@ -567,7 +567,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Detect and return the common suffix (if any) between two strings.
+	 * Detect and return the common suffix (if any) between two strings.
 	 *	
 	 *	@param string $one
 	 *	@param string $another
@@ -597,8 +597,8 @@ abstract class Str
 	}
 
 	/**
-	 *	Tokenize lines by spaces, except that tokens wrapped by "..." or '...'
-	 *	will remain a single token, no matter how may spaces may exist inside
+	 * Tokenize lines by spaces, except that tokens wrapped by "..." or '...'
+	 * will remain a single token, no matter how may spaces may exist inside
 	 *
 	 *	@param string $str the string to be tokenized	
 	 *	@return array
@@ -652,7 +652,7 @@ abstract class Str
 	}
 
 	/**
-	 *	splits $str in two through $chars and removes just the first part	
+	 * splits $str in two through $chars and removes just the first part	
 	 *
 	 *	@param string $str
 	 *	@param string $chars
@@ -666,7 +666,7 @@ abstract class Str
 	}
 
 	/**
-	 *	checks if a string is in the list
+	 * checks if a string is in the list
 	 *
 	 *	@param string $str
 	 *	@param array $strings
@@ -688,7 +688,7 @@ abstract class Str
 	}
 
 	/**
-	 *	transform a string with line separators into an array with such lines
+	 * transform a string with line separators into an array with such lines
 	 *
 	 *	@param string $str
 	 *	@return array
@@ -748,7 +748,7 @@ abstract class Str
 	];
 
 	/**
-	 *	removes diacritics from string
+	 * removes diacritics from string
 	 *
 	 *	@param string $input
 	 *	@return string
@@ -765,7 +765,7 @@ abstract class Str
 	}
 
 	/**
-	 *	insert line numbers at the start of each line in the given string
+	 * insert line numbers at the start of each line in the given string
 	 *
 	 *	@param string $input
 	 *	@return string
@@ -783,7 +783,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the string with the prefix, even repeated, removed
+	 * Returns the string with the prefix, even repeated, removed
 	 *
 	 *	@param string $input
 	 *	@param string $prefix
@@ -799,7 +799,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the string with the prefix removed
+	 * Returns the string with the prefix removed
 	 *
 	 *	@param string $input
 	 *	@param string $prefix
@@ -815,7 +815,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the string with the suffix, even repeated, removed
+	 * Returns the string with the suffix, even repeated, removed
 	 *
 	 *	@param string $input
 	 *	@param string $suffix
@@ -831,7 +831,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the string with the suffix removed once
+	 * Returns the string with the suffix removed once
 	 *
 	 *	@param string $input
 	 *	@param string $suffix
@@ -847,7 +847,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the string with both prefix and suffix removed
+	 * Returns the string with both prefix and suffix removed
 	 *
 	 *	@param string $input
 	 *	@param string $prefix
@@ -862,18 +862,18 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the nth named variable argument in the string, path, etc
+	 * Returns the nth named variable argument in the string, path, etc
 	 *
-	 *		$str = "I want a {type} {flavor} {dessert}.";
-	 *		$name = Str::getNamedArg($str, 1, '{', '}');
+	 * $str = "I want a {type} {flavor} {dessert}.";
+	 * $name = Str::getNamedArg($str, 1, '{', '}');
 	 *			-> type
-	 *		$name = Str::getNamedArg($str, 2, '{', '}');
+	 * $name = Str::getNamedArg($str, 2, '{', '}');
 	 *			-> flavor
 	 *
-	 *		$str = "I want a %type% {flavor} %dessert%.";
-	 *		$name = Str::getNamedArg($str, 1, '%');
+	 * $str = "I want a %type% {flavor} %dessert%.";
+	 * $name = Str::getNamedArg($str, 1, '%');
 	 *			-> type
-	 *		$name = Str::getNamedArg($str, 2, '%');
+	 * $name = Str::getNamedArg($str, 2, '%');
 	 *			-> dessert
 	 *
 	 *	@param string $str
@@ -1017,9 +1017,9 @@ abstract class Str
 	}
 
 	/**
-	 *	Counts the number of lines up to the specified $limit, where
-	 *	$limit is the last character index of the string.
-	 *	If $limit is omitted, the whole $text is considered.
+	 * Counts the number of lines up to the specified $limit, where
+	 * $limit is the last character index of the string.
+	 * If $limit is omitted, the whole $text is considered.
 	 *
 	 *	@param string $text
 	 *	@param int $limit
@@ -1037,10 +1037,10 @@ abstract class Str
 	}
 
 	/**
-	 *	Parses command-line argument lines into pieces.
-	 *	Supports escaping the delimiter quote with a backslash
-	 *	inside a quoted argument (e.g., " \" " or ' \' '),
-	 *	depending on which quote is used.
+	 * Parses command-line argument lines into pieces.
+	 * Supports escaping the delimiter quote with a backslash
+	 * inside a quoted argument (e.g., " \" " or ' \' '),
+	 * depending on which quote is used.
 	 *
 	 *	@param string $thing
 	 *	@return array
@@ -1094,7 +1094,7 @@ abstract class Str
 	public const PADDING_ALIGN_RIGHT = 1;
 
 	/**
-	 *	Returns a padded version of the string.
+	 * Returns a padded version of the string.
 	 *
 	 *	@param string $str
 	 *	@param int $size
@@ -1153,7 +1153,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns a string formed by the repeated char.
+	 * Returns a string formed by the repeated char.
 	 *
 	 *	@param string $char
 	 *	@param int $size
@@ -1164,7 +1164,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Converts a wildcarded string to its regex version.
+	 * Converts a wildcarded string to its regex version.
 	 *
 	 *	@param string $wildcarded
 	 *	@param string $delimiter = null
@@ -1286,7 +1286,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Executes a str_replace with preserving certain sequences.
+	 * Executes a str_replace with preserving certain sequences.
 	 *
 	 * @param  string  $search
 	 * @param  string  $replace
@@ -1387,7 +1387,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns a full-lowercased string.
+	 * Returns a full-lowercased string.
 	 *
 	 *	@param string $string
 	 *	@return string
@@ -1398,7 +1398,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Returns the pluralized version of English nouns.
+	 * Returns the pluralized version of English nouns.
 	 *
 	 *	@param string $singular
 	 *	@return string
@@ -1453,7 +1453,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Normalize path for the current OS. 
+	 * Normalize path for the current OS. 
 	 *
 	 *	@param string|array $path
 	 *	@param bool $trim = false
@@ -1473,7 +1473,7 @@ abstract class Str
 	}
 
 	/**
-	 *	Normalize URI. 
+	 * Normalize URI. 
 	 *
 	 *	@param string|array $relative
 	 *	@param bool $trim = false
@@ -1501,7 +1501,7 @@ abstract class Str
 
 
 	/**
-	 *	Strip parentheses.
+	 * Strip parentheses.
 	 *
 	 *	@param string $string
 	 *	@return string
