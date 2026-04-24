@@ -121,6 +121,7 @@ final class Application
      */
     protected function initialize()
     {
+        Session::setName('psharp');
         Session::start();
 
         Facade::setApplication($this);
