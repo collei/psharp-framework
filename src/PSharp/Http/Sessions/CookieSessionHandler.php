@@ -30,12 +30,14 @@ class CookieSessionHandler implements SessionHandlerInterface
 	/**
 	 * Create a new cookie-based session handler instance.
 	 *
-	 * @param	\PSharp\Http\Factories\CookieFactoryInterface	$factory
-	 * @param	int	$minutes
+	 * @param \PSharp\Http\Factories\CookieFactoryInterface $factory
+	 * @param \PSharp\Http\Request $request
+	 * @param int $minutes
 	 */
-	public function __construct(CookieFactoryInterface $factory, $minutes)
+	public function __construct(CookieFactoryInterface $factory, Request $request, $minutes)
 	{
 		$this->cookieFactory = $factory;
+		$this->request = $request;
 		$this->minutes = $minutes;
 	}
 
@@ -103,8 +105,8 @@ class CookieSessionHandler implements SessionHandlerInterface
 	/**
 	 * Define the Request being worked.
 	 *
-	 * @param	\PSharp\Http\Request	$request
-	 * @return	void
+	 * @param \PSharp\Http\Request $request
+	 * @return void
 	 */
 	public function setRequest(Request $request)
 	{

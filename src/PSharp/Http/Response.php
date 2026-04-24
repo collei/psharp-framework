@@ -893,8 +893,8 @@ class Response implements ResponseInterface
 	 *
 	 * Resulting level can be greater than target level if a non-removable buffer has been encountered.
 	 *
-	 * @param	int		$targetLevel
-	 * @param	bool	$flush
+	 * @param int $targetLevel
+	 * @param bool $flush
 	 * @return void
 	 */
 	public static function closeOutputBuffers(int $targetLevel, bool $flush): void

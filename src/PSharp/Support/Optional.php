@@ -16,7 +16,7 @@ class Optional
 	/**
 	 *	Creates a new Optional
 	 *
-	 *	@param	mixed	$value
+	 *	@param mixed $value
 	 */
 	public function __construct($value = null)
 	{
@@ -67,7 +67,7 @@ class Optional
 	/**
 	 *	For PHP internal use
 	 *
-	 *	@return	array
+	 *	@return array
 	 */
 	public function __debugInfo()
 	{
@@ -80,7 +80,7 @@ class Optional
 	/**
 	 *	Tells if is there any value.
 	 *
-	 *	@return	bool
+	 *	@return bool
 	 */
 	public function isPresent()
 	{
@@ -90,7 +90,7 @@ class Optional
 	/**
 	 *	Returns the value.
 	 *
-	 *	@return	mixed
+	 *	@return mixed
 	 */
 	public function getValue()
 	{
@@ -100,7 +100,7 @@ class Optional
 	/**
 	 *	Returns true if the given value is same as the inner value.
 	 *
-	 *	@return	bool
+	 *	@return bool
 	 */
 	public function equals($anotherObject)
 	{
@@ -118,7 +118,7 @@ class Optional
 	/**
 	 *	Returns true if the Optional contains an instance of the given class name.
 	 *
-	 *	@return	bool
+	 *	@return bool
 	 */
 	public function is($className)
 	{
@@ -129,8 +129,8 @@ class Optional
 	 *	Creates a new Optional for the value.
 	 *
 	 *	@static
-	 *	@param	mixed	$value
-	 *	@return	\Zelatus\Support\Optionals\Optional
+	 *	@param mixed $value
+	 *	@return \Zelatus\Support\Optionals\Optional
 	 */
 	public static function for($value)
 	{

@@ -152,8 +152,8 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	 * Thenks to Mrten <https://gist.github.com/Mrten> (see link below)
 	 * @link https://gist.github.com/umidjons/9893735?permalink_comment_id=3495051#gistcomment-3495051
 	 *
-	 * @param	array	$files	The uploaded file tree to process. Usually, the $_FILES global
-	 * @return	array
+	 * @param array $files The uploaded file tree to process. Usually, the $_FILES global
+	 * @return array
 	 */
 	protected function fetchNormalizedUploaded(array $files) {
 		$out = [];
@@ -241,13 +241,13 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	 * The information contained in the URI always take precedence
 	 * over the other information (server and parameters).
 	 *
-	 * @param string	$uri		The URI
-	 * @param string	$method		The HTTP method
-	 * @param array		$parameters	The query (GET) or request (POST) parameters
-	 * @param array		$cookies	The request cookies ($_COOKIE)
-	 * @param array		$files		The request files ($_FILES)
-	 * @param array		$server		The server parameters ($_SERVER)
-	 * @param string|resource|null $content	The raw body data
+	 * @param string $uri The URI
+	 * @param string $method The HTTP method
+	 * @param array $parameters The query (GET) or request (POST) parameters
+	 * @param array $cookies The request cookies ($_COOKIE)
+	 * @param array $files The request files ($_FILES)
+	 * @param array $server The server parameters ($_SERVER)
+	 * @param string|resource|null $content The raw body data
 	 * @return \PSharp\Http\Request
 	 */
 	public function createFromParts(

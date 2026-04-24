@@ -75,9 +75,9 @@ class Stream implements StreamInterface
 	/**
 	 * This constructor accepts an associative array of custom metadata.
 	 *
-	 * @param resource	$stream		Stream resource to wrap.
-	 * @param int|null	$size		Declared size of the stream, in bytes. 
-	 * @param array		$metadata	Associative array of custom metadata.
+	 * @param resource $stream Stream resource to wrap.
+	 * @param int|null $size Declared size of the stream, in bytes. 
+	 * @param array $metadata Associative array of custom metadata.
 	 *
 	 * @throws \InvalidArgumentException if the stream is not a stream resource
 	 */
@@ -198,8 +198,8 @@ class Stream implements StreamInterface
 	 *
 	 * @see __construct
 	 *
-	 * @param resource	$stream		Stream resource to assign.
-	 * @param int|null	$size		Declared size of the stream, in bytes. 
+	 * @param resource $stream Stream resource to assign.
+	 * @param int|null $size Declared size of the stream, in bytes. 
 	 *
 	 * @throws \InvalidArgumentException if the stream is not a stream resource
 	 */

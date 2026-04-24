@@ -79,8 +79,8 @@ class SessionRepository implements UserRepositoryInterface
 	/**
 	 * Retrieves an user by $id 
 	 *
-	 * @param	mixed	$id
-	 * @return	\PSharp\Auth\Authenticatable|null
+	 * @param mixed $id
+	 * @return \PSharp\Auth\Authenticatable|null
 	 */
 	public function retrieveById($id)
     {
@@ -92,8 +92,8 @@ class SessionRepository implements UserRepositoryInterface
 	 * Keys must holder the field names and values must hold the
 	 * desired values to check against. 
 	 *
-	 * @param	array	$fields
-	 * @return	\PSharp\Auth\Authenticatable|null
+	 * @param array $fields
+	 * @return \PSharp\Auth\Authenticatable|null
 	 */
 	public function retrieveByFields(array $fields)
     {
@@ -103,9 +103,9 @@ class SessionRepository implements UserRepositoryInterface
 	/**
 	 * Retrieves an user by $token 
 	 *
-	 * @param	mixed	$id
-	 * @param	string	$token
-	 * @return	\PSharp\Auth\Authenticatable|null
+	 * @param mixed $id
+	 * @param string $token
+	 * @return \PSharp\Auth\Authenticatable|null
 	 */
 	public function retrieveByToken($id, string $token)
     {
@@ -115,9 +115,9 @@ class SessionRepository implements UserRepositoryInterface
 	/**
 	 * Updates the $user's $token. 
 	 *
-	 * @param	\PSharp\Auth\Authenticatable	$user
-	 * @param	string	$token
-	 * @return	void
+	 * @param \PSharp\Auth\Authenticatable $user
+	 * @param string $token
+	 * @return void
 	 */
 	public function updateToken(Authenticatable $user, string $token)
     {
@@ -129,8 +129,8 @@ class SessionRepository implements UserRepositoryInterface
 	/**
 	 * Retrieves an user by $credentials
 	 *
-	 * @param	array	$credentials
-	 * @return	\PSharp\Auth\Authenticatable
+	 * @param array $credentials
+	 * @return \PSharp\Auth\Authenticatable
 	 */
 	public function retrieveByCredentials(array $credentials)
     {
@@ -140,9 +140,9 @@ class SessionRepository implements UserRepositoryInterface
 	/**
 	 * Validates $user against $credentials 
 	 *
-	 * @param	\PSharp\Auth\Authenticatable	$user
-	 * @param	array	$credentials
-	 * @return	bool
+	 * @param \PSharp\Auth\Authenticatable $user
+	 * @param array $credentials
+	 * @return bool
 	 */
 	public function validateCredentials(Authenticatable $user, array $credentials)
     {
@@ -157,7 +157,7 @@ class SessionRepository implements UserRepositoryInterface
 	/**
 	 * Retrieves a reference to the authentication manager.
 	 *
-	 * @return	\Zelatus\Interfaces\Auth\AuthManager
+	 * @return \Zelatus\Interfaces\Auth\AuthManager
 	 */
 	public function getManager()
     {

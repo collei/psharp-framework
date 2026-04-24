@@ -75,9 +75,9 @@ if (! function_exists('e')) {
 	/**
 	 * Encodes HTML special characters. 
 	 *
-	 * @param	\Zelatus\Interfaces\Support\Htmlable|string	$value
-	 * @param	bool	$doubleEncode = false
-	 * @return	string
+	 * @param \Zelatus\Interfaces\Support\Htmlable|string $value
+	 * @param bool $doubleEncode = false
+	 * @return string
 	 */
 	function e($value, bool $doubleEncode = false)
 	{

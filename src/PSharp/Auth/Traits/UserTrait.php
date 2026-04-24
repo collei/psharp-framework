@@ -30,7 +30,7 @@ trait UserTrait
 	/**
 	 * Serializes data.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function __serialize(): array
 	{
@@ -45,8 +45,8 @@ trait UserTrait
 	/**
 	 * Unserializes data.
 	 *
-	 * @param	array	$data
-	 * @return	void
+	 * @param array $data
+	 * @return void
 	 */
 	public function __unserialize(array $data)
 	{
@@ -59,8 +59,8 @@ trait UserTrait
 	/**
 	 * Retrieves the field values.
 	 *
-	 * @param	string	$name
-	 * @return	mixed
+	 * @param string $name
+	 * @return mixed
 	 */
 	public function __get($name)
 	{
@@ -72,9 +72,9 @@ trait UserTrait
 	/**
 	 * Sets the field values.
 	 *
-	 * @param	string	$name
-	 * @param	mixed	$value
-	 * @return	$this
+	 * @param string $name
+	 * @param mixed $value
+	 * @return $this
 	 */
 	public function set($name, $value)
 	{

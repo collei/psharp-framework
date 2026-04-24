@@ -29,7 +29,7 @@ trait AuthenticatableTrait
 	/**
 	 * Retrieves the user identifier field value.
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getUserID()
 	{
@@ -41,7 +41,7 @@ trait AuthenticatableTrait
 	/**
 	 * Retrieves the user identifier field name.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getUserIDField()
 	{
@@ -51,7 +51,7 @@ trait AuthenticatableTrait
 	/**
 	 * Retrieves the username value.
 	 *
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function getUserName()
 	{
@@ -63,7 +63,7 @@ trait AuthenticatableTrait
 	/**
 	 * Retrieves the username field name.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getUserNameField()
 	{
@@ -73,7 +73,7 @@ trait AuthenticatableTrait
 	/**
 	 * Retrieves the user password.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getUserPassword()
 	{
@@ -85,7 +85,7 @@ trait AuthenticatableTrait
 	/**
 	 * Retrieves the user password field name.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getUserPasswordField()
 	{
@@ -95,7 +95,7 @@ trait AuthenticatableTrait
 	/**
 	 * Retrieves the user remember token field value.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getUserToken()
 	{
@@ -107,7 +107,7 @@ trait AuthenticatableTrait
 	/**
 	 * Retrieves the user remember token field name.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function getUserTokenField()
 	{
@@ -117,7 +117,7 @@ trait AuthenticatableTrait
 	/**
 	 * Defines the user remember token field value.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function setUserToken(string $token = null)
 	{

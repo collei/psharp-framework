@@ -15,7 +15,7 @@ class NullStream extends Stream
 	/**
 	 * This constructor accepts an associative array of custom metadata.
 	 *
-	 * @param array		$metadata	Associative array of custom metadata.
+	 * @param array $metadata Associative array of custom metadata.
 	 */
 	public function __construct(array $metadata = [])
 	{
@@ -69,8 +69,8 @@ class NullStream extends Stream
 	 *
 	 * @see __construct
 	 *
-	 * @param resource	$stream		Stream resource to assign.
-	 * @param int|null	$size		Declared size of the stream, in bytes.
+	 * @param resource $stream Stream resource to assign.
+	 * @param int|null $size Declared size of the stream, in bytes.
 	 * @return never
 	 * @throws \LogicException upon call 
 	 */

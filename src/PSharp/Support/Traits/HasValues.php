@@ -11,9 +11,9 @@ trait HasValues
 	/**
 	 * Gets the given value.
 	 *
-	 * @param	string	$name
-	 * @param	mixed	$default
-	 * @return	mixed
+	 * @param string $name
+	 * @param mixed $default
+	 * @return mixed
 	 */
 	public function getValue(string $name, $default = null)
 	{
@@ -23,9 +23,9 @@ trait HasValues
 	/**
 	 * Sets the given value.
 	 *
-	 * @param	string	$name
-	 * @param	mixed	$value
-	 * @return	$this
+	 * @param string $name
+	 * @param mixed $value
+	 * @return $this
 	 */
 	public function setValue(string $name, $value = null)
 	{
@@ -37,8 +37,8 @@ trait HasValues
 	/**
 	 * Adds a bunch of values to the custom values.
 	 *
-	 * @param	array	$values
-	 * @return	$this
+	 * @param array $values
+	 * @return $this
 	 */
 	public function addValues(array $values)
 	{
@@ -50,8 +50,8 @@ trait HasValues
 	/**
 	 * Removes the given name and value.
 	 *
-	 * @param	string	$name
-	 * @return	$this
+	 * @param string $name
+	 * @return $this
 	 */
 	public function forgetValue(string $name)
 	{
@@ -63,7 +63,7 @@ trait HasValues
 	/**
 	 * Returns all current values.
 	 *
-	 * @return	array
+	 * @return array
 	 */
 	public function getValues()
 	{

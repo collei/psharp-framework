@@ -24,9 +24,9 @@ class Guard
 	/**
 	 * Instantiate me.
 	 *
-	 * @param	string	$name
-	 * @param	\PSharp\Auth\UserRepositoryInterface	$repository
-	 * @return	void
+	 * @param string $name
+	 * @param \PSharp\Auth\UserRepositoryInterface $repository
+	 * @return void
 	 */
 	public function __construct($name, UserRepositoryInterface $repository)
 	{
@@ -37,7 +37,7 @@ class Guard
 	/**
 	 * Returns user name.
 	 *
-	 * @return	string
+	 * @return string
 	 */
 	public function name()
 	{
@@ -47,7 +47,7 @@ class Guard
 	/**
 	 * Returns whether this user is logged.
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public function check()
 	{
@@ -57,7 +57,7 @@ class Guard
 	/**
 	 * Returns whether this user is not logged.
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public function guest()
 	{
@@ -67,7 +67,7 @@ class Guard
 	/**
 	 * Retrieves the user instance.
 	 *
-	 * @return	\PSharp\Auth\Authenticatable
+	 * @return \PSharp\Auth\Authenticatable
 	 */
 	public function user()
 	{
@@ -77,7 +77,7 @@ class Guard
 	/**
 	 * Retrieves the user's id.
 	 *
-	 * @return	int|string|null
+	 * @return int|string|null
 	 */
 	public function id()
 	{
@@ -89,7 +89,7 @@ class Guard
 	/**
 	 * Validates the user against $credentials.
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	public function validate(array $credentials = [])
 	{
@@ -103,8 +103,8 @@ class Guard
 	/**
 	 * Sets the user instance.
 	 *
-	 * @param	\PSharp\Auth\Authenticatable	$user
-	 * @return	void
+	 * @param \PSharp\Auth\Authenticatable $user
+	 * @return void
 	 */
 	public function setUser(Authenticatable $user)
 	{
@@ -114,8 +114,8 @@ class Guard
 	/**
 	 * Logon the user on this guard.
 	 *
-	 * @param	\PSharp\Auth\Authenticatable	$user
-	 * @return	void
+	 * @param \PSharp\Auth\Authenticatable $user
+	 * @return void
 	 */
 	public function logon(Authenticatable $user)
 	{
@@ -125,7 +125,7 @@ class Guard
 	/**
 	 * Logoff this guard.
 	 *
-	 * @return	void
+	 * @return void
 	 */
 	public function logoff()
 	{

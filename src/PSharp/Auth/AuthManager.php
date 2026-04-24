@@ -326,8 +326,8 @@ class AuthManager
 	 * NOT including the default guard -- returns true,
 	 * false otherwise.
 	 *
-	 * @param	string|null	...$names
-	 * @return	bool
+	 * @param string|null ...$names
+	 * @return bool
 	 */
 	public function authorizes(...$names)
 	{
@@ -347,8 +347,8 @@ class AuthManager
 	 * the default guard -- returns true,
 	 * false otherwise.
 	 *
-	 * @param	string|null	...$names
-	 * @return	bool
+	 * @param string|null ...$names
+	 * @return bool
 	 */
 	public function authorizesWithDefault(...$names)
 	{
