@@ -5,6 +5,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 use PSharp\Http\Response;
+use PSharp\Http\Factories\CookieFactoryInterface;
 use PSharp\Streams\StreamFactory;
 use PSharp\Streams\StringStream;
 
@@ -17,18 +18,12 @@ use PSharp\Streams\StringStream;
 class ResponseFactory implements ResponseFactoryInterface
 {
 	/**
-	 * @var \PSharp\Streams\StreamFactory
-	 */
-	protected $streamFactory;
-
-	/**
 	 * Initializes factories and stuff
 	 *
+	 * @var \PSharp\Streams\StreamFactory
+	 * @var \PSharp\Http\Factories\CookieFactoryInterface
 	 */
-	public function __construct()
-	{
-		$this->streamFactory = new StreamFactory;
-	}
+	public function __construct(protected StreamFactory $streamFactory, protected CookieFactoryInterface $cookieFactory) {}
 
 	/**
 	 * Create a new response.
@@ -53,9 +48,9 @@ class ResponseFactory implements ResponseFactoryInterface
 	 */
 	public function create(string $body, int $statusCode = 200, array $headers = null)
 	{
-		return new Response(
+		return (new Response(
 			new StringStream($body), $statusCode, $headers
-		);
+		))->setCookieFactory($this->cookieFactory);
 	}
 
 	/**
@@ -68,7 +63,9 @@ class ResponseFactory implements ResponseFactoryInterface
 	 */
 	public function json($body, int $statusCode = 200, array $headers = null)
 	{
-		return new JsonResponse($body, $statusCode, $headers);
+		return (new JsonResponse(
+			$body, $statusCode, $headers
+		))->setCookieFactory($this->cookieFactory);
 	}
 
 	/**
@@ -86,9 +83,9 @@ class ResponseFactory implements ResponseFactoryInterface
 			'Content-type' => 'image',
 		]);
 		//
-		return new Response(
+		return (new Response(
 			(new StreamFactory)->createStreamFromFile($fileName), 200, $headers
-		);
+		))->setCookieFactory($this->cookieFactory);
 	}
 
 	/**
@@ -112,8 +109,8 @@ class ResponseFactory implements ResponseFactoryInterface
 			'Content-Length' => ('' . filesize($fileName)),
 		]);
 		//
-		return new Response(
+		return (new Response(
 			(new StreamFactory)->createStreamFromFile($fileName), 200, $headers
-		);
+		))->setCookieFactory($this->cookieFactory);
 	}
 }
