@@ -39,11 +39,35 @@ if (! function_exists('session')) {
     /**
      * Returns the current session instance.
      * 
-     * @return PSharp\Http\Session
+     * @return PSharp\Http\Sessions\Session
      */
     function session()
     {
-        return PSharp\Http\Session::getInstance();
+        return PSharp\Http\Sessions\Session::getInstance();
+    }
+}
+
+if (! function_exists('app')) {
+    /**
+     * Returns the app instance.
+     * 
+     * @return PSharp\Core\Application
+     */
+    function app()
+    {
+        return PSharp\Core\Application::getInstance();
+    }
+}
+
+if (! function_exists('auth')) {
+    /**
+     * Returns the auth manager instance.
+     * 
+     * @return PSharp\Auth\AuthManager
+     */
+    function auth()
+    {
+        return app()->container()->get(PSharp\Auth\AuthManager::class);
     }
 }
 
