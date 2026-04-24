@@ -2,11 +2,12 @@
 namespace PSharp\Core\Interfaces;
 
 use Closure;
+use Psr\Container\ContainerInterface;
 
 /**
  * Container of all instances shared across the application
  */
-interface Container
+interface Container extends ContainerInterface
 {
     /**
      * Returns the corresponding instance, crafting it if not yet found.
