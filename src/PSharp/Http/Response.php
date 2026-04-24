@@ -4,7 +4,7 @@ namespace PSharp\Http;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\ResponseInterface;
-use PSharp\Http\Factories\CookieFactory;
+use PSharp\Http\Factories\CookieFactoryInterface;
 use PSharp\Streams\StringStream;
 use InvalidArgumentException;
 
@@ -153,19 +153,19 @@ class Response implements ResponseInterface
 	protected $headers = [];
 
 	/**
-	 * @var \Psr\Http\Message\StreamInterface
+	 * @var Psr\Http\Message\StreamInterface
 	 */
 	protected $body = '';
 
 	/**
-	 * @var \PSharp\Http\Cookie[]
+	 * @var PSharp\Http\Cookie[]
 	 */
 	protected $cookies = [];
 
 	/**
-	 * @var \PSharp\Http\CookieFactory
+	 * @var PSharp\Http\Factories\CookieFactoryInterface
 	 */
-	protected $cookieFactory;
+	protected $cookieFactory = null;
 
 	/**
 	 * Creates an instance with the specified body, status code and, optionally, headers.
@@ -215,8 +215,19 @@ class Response implements ResponseInterface
 				$this->addHeader($name, $value);
 			}
 		}
-		//
-		$this->cookieFactory = new CookieFactory;
+	}
+
+	/**
+	 * Attaches a cookie factory.
+	 * 
+	 * @param PSharp\Http\Factories\CookieFactoryInterface $cookieFactory
+	 * @return $this
+	 */
+	public function setCookieFactory(CookieFactoryInterface $ookieFactory)
+	{
+		$this->cookieFactory = $ookieFactory;
+
+		return $this;
 	}
 
 	/**
@@ -769,7 +780,11 @@ class Response implements ResponseInterface
 	 */
 	public function getCookies() : array
 	{
-		return array_merge($this->cookies, $this->cookieFactory->getCookies());
+		if ($this->cookieFactory) {
+			return array_merge($this->cookies, $this->cookieFactory->getCookies());
+		}
+
+		return $this->cookies;
 	}
 
 	/**
