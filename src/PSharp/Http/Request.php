@@ -8,7 +8,7 @@ use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-use PSharp\Http\Session;
+use PSharp\Http\Sessions\Session;
 use PSharp\Http\Factories\UriFactory;
 use PSharp\Support\Arr;
 use PSharp\Support\Str;
