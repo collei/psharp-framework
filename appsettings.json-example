@@ -29,7 +29,11 @@
         }
     },
     "auth": {
-        "default": "",
+        "default": {
+            "repository": "file",
+            "guest": "guest",
+            "guard": "guest"
+        },
         "guards": [
             "user"
         ],
