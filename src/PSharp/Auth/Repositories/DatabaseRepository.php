@@ -79,7 +79,7 @@ class DatabaseRepository implements UserRepositoryInterface
         if ($this->connection) {
             $fields = $this->tableFields;
 
-            $sql = sprintf('select * from %s where %s.%s = :id', $this->tableName, $this->tableName, $fields['username']);
+            $sql = sprintf('select * from %s where %s.%s = :id', $this->tableName, $this->tableName, $fields['id']);
 
             if ($result = $this->connection->select($sql, compact('id'))) {
                 $result = $result[0];
