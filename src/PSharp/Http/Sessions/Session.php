@@ -402,7 +402,7 @@ class Session
 				@session_name(self::$name);
 			}
 			//
-			$this->sessionState = !session_destroy();
+			$this->sessionState = !@session_destroy();
 			//
 			unset($_SESSION);
 			//
