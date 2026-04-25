@@ -99,18 +99,24 @@ class AuthManager
     {
         $default = $this->config['default']['repository'] ?? 'file';
         $found = false;
+        $driver = '[none]';
 
         foreach ($this->config['repositories'] as $name => $conf) {
             $found = ($default == $name);
             
             if ($found) {
-                $this->initializeRepository($default, $conf);
+                $driver = $conf['driver'] ?? null;
+                $this->repository = $this->initializeRepository($default, $conf);
                 break;
             }
         }
 
         if (! $found) {
             throw new RuntimeException(sprintf('Auth user repository not found: %s', $default));
+        }
+
+        if (empty($this->repository)) {
+            throw new RuntimeException(sprintf('Missing Auth user repository driver: %s', $driver));
         }
     }
 
@@ -134,15 +140,15 @@ class AuthManager
         if ($driver = $this->drivers[$driverName] ?? null) {
             switch ($driverName) {
                 case 'database':
-                    return $this->repository = $this->createDatabaseRepository($driver, $conf);
+                    return $this->createDatabaseRepository($driver, $conf);
                 case 'orm':
-                    return 'orm';
+                    return null;
                 case 'file':
-                    return $this->repository = $this->createFileRepository($driver, $conf);
+                    return $this->createFileRepository($driver, $conf);
                 case 'session':
-                    return $this->repository = $this->createSessionRepository($driver, $conf);
+                    return $this->createSessionRepository($driver, $conf);
                 case 'ldap':
-                    return 'ldap';
+                    return null;
             }
         }
 
