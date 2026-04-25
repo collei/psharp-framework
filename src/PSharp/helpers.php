@@ -1,4 +1,7 @@
 <?php
+/**
+ * Helper functions through the framework.
+ */
 
 if (! function_exists('get_instance_id')) {
     /**
@@ -87,6 +90,42 @@ if (! function_exists('e')) {
 		//
 		return htmlspecialchars($value, ENT_QUOTES, 'UTF-8', $doubleEncode);
 	}
+}
+
+if (! function_exists('view')) {
+    /**
+     * Returns the view OR the view factory instance.
+     * 
+     * @param string|null $view
+     * @param array|Arrayable $data
+     * @param array $mergeData
+     * @return PSharp\View\View|PSharp\View\ViewFactory
+     */
+    function view(string $view = null, $data = [], array $mergeData = [])
+    {
+        $factory = app()->container()->get(PSharp\View\Factory::class);
+
+        if (is_null($view)) {
+            return $factory;
+        }
+
+        return $factory->make($view, $data, $mergeData);
+    }
+}
+
+if (! function_exists('db')) {
+    /**
+     * Returns the auth manager instance.
+     * 
+     * @param string|null $connectionName
+     * @return PSharp\DB\Connection
+     */
+    function db(string $connectionName = null)
+    {
+        return app()->container()
+                    ->get(PSharp\DB\DatabaseManager::class)
+                    ->connection($connectionName);
+    }
 }
 
 /**EOF**/
