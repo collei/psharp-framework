@@ -17,7 +17,32 @@ class SessionProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerSession();
         $this->startSession();
+    }
+
+    /**
+     * Register the session.
+     * 
+     * @return void
+     */
+    protected function registerSession()
+    {
+        $name = $this->config->get('session.name', 'psharp_session');
+        $path = path('storage','framework','sessions');
+
+        $this->container->configureBuilder(Session::class, function(SessionHandlerInterface $handler) use ($name) {
+            session_set_save_handler($handler, true);
+            Session::setname($name);
+            Session::start();
+            return Session::getInstance();
+        });
+
+        $this->container->configureBuilder(FileSessionHandler::class, function() use ($path, $name) {
+            return new FileSessionHandler($path, $name);
+        });
+
+        $this->container->addInterfaceImplementor(FileSessionHandler::class, SessionHandlerInterface::class);
     }
 
     /**
@@ -27,14 +52,6 @@ class SessionProvider extends ServiceProvider
      */
     protected function startSession()
     {
-        $name = $this->config->get('session.name', 'psharp_session');
-
-        $this->container->configureBuilder(Session::class, function() use ($name) {
-            Session::setname($name);
-            Session::start();
-            return Session::getInstance();
-        });
-
         $this->container->make(Session::class);
     }
 
