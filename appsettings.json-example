@@ -15,14 +15,23 @@
             ]
         }
     },
+    "session": {
+        "driver": "cookie",
+        "name": "psharp_session",
+        "path": "/",
+        "domain": null,
+        "secure": false,
+        "http_only": true,
+        "same_site": null
+    },
     "db": {
         "connections": {
             "default": "my-app",
             "my-app": {
                 "dsn": "",
                 "type": "sqlsrv",
-                "server": "\\\\myserver",
-                "database": "MyAppDb",
+                "server": "",
+                "database": "",
                 "username": "",
                 "password": ""
             }
@@ -30,12 +39,14 @@
     },
     "auth": {
         "default": {
-            "repository": "file",
+            "repository": "db",
             "guest": "guest",
             "guard": "guest"
         },
         "guards": [
-            "user"
+            "guest",
+            "user",
+            "admin"
         ],
         "repositories": {
             "db": {
@@ -43,32 +54,51 @@
                 "connection": "my-app",
                 "table": "users",
                 "fields": {
-                    "username": "username"
+                    "id": "user_id",
+                    "username": "uname",
+                    "password": "pwd",
+                    "token": "token"
                 }
             },
             "orm": {
                 "driver": "noelle",
-                "model": "Noelle\\ORM\\Entity"
+                "model": "App\\Models\\User"
             },
             "file": {
                 "driver": "file",
                 "path": "storage/app/users.txt"
             },
+            "session": {
+                "driver": "session"
+            },
             "ldap": {
-                "driver": "ldap"
+                "driver": "ldap",
+                "server": "",
+                "root": "",
+                "admin": null
             }
         },
         "drivers": {
+            "file": {
+                "repository": "PSharp\\Auth\\Repositories\\FileRepository",
+                "user": "PSharp\\Auth\\Repositories\\User"
+            },
+            "session": {
+                "repository": "PSharp\\Auth\\Repositories\\SessionRepository",
+                "user": "PSharp\\Auth\\Repositories\\User"
+            },
+            "database": {
+                "repository": "PSharp\\Auth\\Repositories\\DatabaseRepository",
+                "user": "PSharp\\Auth\\Repositories\\User"
+            },
             "ldap": {
-                "type": "ldap",
-                "server": "ldap://dc.example.com",
-                "root": "CN=Users,DC=example,DC=com",
-                "admin": null
+                "repository": "PSharp\\Auth\\Repositories\\LdapRepository",
+                "user": "PSharp\\Auth\\Repositories\\User"
             }
         }
     },
     "logging": {
-        "defaultChannel": "single",
+        "defaultChannel": "stack",
         "defaultLevel": "debug",
         "channels": {
             "stack": {
@@ -96,8 +126,9 @@
             "email": {
                 "type": "email",
                 "class": "PSharp\\Log\\MailLogger",
-                "to": "webmaster@domain",
-                "cc": [],
+                "from": "webmaster@localhost",
+                "to": "alarido.su@gmail.com",
+                "cc": ["alarido.su@gmail.com"],
                 "bcc": [],
                 "subject": "[{level}] [{datetime}] An error occurred right now!",
                 "body": "{hr}\nError Report\n{hr}\nTime: {datetime}\nLevel: {level}\nDescription: {error}\n{hr}\n{context}\n{hr}\n",
