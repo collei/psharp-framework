@@ -305,11 +305,15 @@ abstract class Str
 	 * Tells if the string starts with $prefix
 	 *
 	 * @param string $str
-	 * @param string $prefix
+	 * @param string|array $prefix
 	 * @return bool
 	 */
 	public static function startsWith(string $str, $prefix)
 	{
+		if (empty($prefix)) {
+			return false;
+		}
+
 		if (is_array($prefix)) {
 			$results = false;
 			//
@@ -319,7 +323,7 @@ abstract class Str
 			//
 			return $results;
 		}
-		//
+
 		return \str_starts_with($str, $prefix);
 	}
 
