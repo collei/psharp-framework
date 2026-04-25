@@ -4,6 +4,7 @@ namespace PSharp\Http;
 use JsonSerializable;
 use SplFileInfo;
 use Stringable;
+use RuntimeException;
 use PSharp\Http\Factories\ResponseFactory;
 use PSharp\Container\Container;
 use PSharp\Support\MimeType;
@@ -56,7 +57,14 @@ class ResponsePreparator
 		) {
 			$response = new JsonResponse($response);
 		}
-		//
+
+		if (is_null($response)) {
+			throw new RuntimeException(
+				'Tried to issue a NULL response (possibly due to a missing \'return\' statement'.
+				' - please double-check if the controller method returns something)'
+			);
+		}
+
 		return $this->finalPreparations($request, $response);
 	}
 
