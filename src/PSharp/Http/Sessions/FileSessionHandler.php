@@ -7,27 +7,35 @@ namespace PSharp\Http\Sessions;
 class FileSessionHandler implements SessionHandlerInterface
 {
 	/**
-	 * @var string
+	 * Create a new cookie-based session handler instance.
+	 *
+	 * @param string $path
+	 * @param string $name
 	 */
-	private $path;
-
-	/**
-	 * @var string
-	 */
-	private $name;
+	public function __construct(private string $path, private string $name)
+	{
+		if (!is_dir($this->path)) {
+			mkdir($this->path, 0777, true);
+		}
+	}
 
 	/**
 	 * @inheritdoc
 	 */
 	public function open($path, $sessionName): bool
 	{
-		$this->path = $path;
-		$this->name = $sessionName;
-		//
-		if (!is_dir($this->path)) {
-			mkdir($this->path, 0777);
+		if (! empty($path)) {
+			$this->path = $path;
 		}
-		//
+
+		if (! empty($sessionName)) {
+			$this->name = $sessionName;
+		}
+
+		if (!is_dir($this->path)) {
+			mkdir($this->path, 0777, true);
+		}
+
 		return true;
 	}
 
@@ -95,6 +103,6 @@ class FileSessionHandler implements SessionHandlerInterface
 	 */
 	protected function sessionFile($id)
 	{
-		return $this->path.'/sess_'.$id;
+		return $this->path.'/'.$this->name.'_'.$id;
 	}
 }
