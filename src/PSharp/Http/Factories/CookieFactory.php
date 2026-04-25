@@ -249,4 +249,21 @@ class CookieFactory implements CookieFactoryInterface
 	{
 		return $this->make($name, null, self::FORGET, $path, $domain);
 	}
+
+	/**
+	 * For PHP internal debugging functions
+	 * 
+	 * @return array
+	 */
+	public function __debugInfo()
+	{
+		return [
+			'expires' => $this->expires,
+			'path' => $this->path,
+			'domain' => $this->domain,
+			'secure' => $this->secure,
+			'httpOnly' => $this->httpOnly,
+			'sameSite' => $this->sameSite,
+		];
+	} 
 }
