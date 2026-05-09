@@ -22,6 +22,17 @@ abstract class Arr
 	}
 
 	/**
+	 * Determine whether the given value is array accessible.
+	 *
+	 * @param mixed value
+	 * @return bool
+	 */
+	public static function accessible($value)
+	{
+		return static::isArrayAccessible($value);
+	}
+
+	/**
 	 * Determine if the given key exists in the provided array.
 	 *
 	 * @param  \ArrayAccess|array  $array
@@ -280,54 +291,48 @@ abstract class Arr
 		return array_keys($keys) !== $keys;
 	}
 
-	/**
-	 * Get an item from an array or object using "dot" notation.
-	 *
-	 * @param  mixed  $target
-	 * @param  string|array|int|null  $key
-	 * @param  mixed  $default
-	 * @return mixed
-	 */
-	public static function get($target, $key, $default = null)
-	{
-		if (is_null($key)) {
-			return $target;
-		}
-		//
-		$key = is_array($key) ? $key : explode('.', $key);
-		//
-		foreach ($key as $i => $segment) {
-			unset($key[$i]);
-			//
-			if (is_null($segment)) {
-				return $target;
-			}
-			//
-			if ($segment === '*') {
-				if (! is_array($target)) {
-					return self::value($default);
-				}
-				//
-				$result = [];
-				//
-				foreach ($target as $item) {
-					$result[] = self::get($item, $key);
-				}
-				//
-				return in_array('*', $key) ? array_collapse($result) : $result;
-			}
-			//
-			if (self::isArrayAccessible($target) && self::keyExists($target, $segment)) {
-				$target = $target[$segment];
-			} elseif (is_object($target) && isset($target->{$segment})) {
-				$target = $target->{$segment};
-			} else {
-				return self::value($default);
-			}
-		}
-		//
-		return $target;
-	}
+    /**
+     * Get an item from an array using "dot" notation.
+     *
+     * @param  \ArrayAccess|array  $array
+     * @param  string|int|null  $key
+     * @param  mixed  $default
+     * @return mixed
+     */
+    public static function get($array, $key, $default = null)
+    {
+        if (! static::accessible($array)) {
+            return static::value($default);
+        }
+
+        if (is_null($key)) {
+            return $array;
+        }
+
+        if (static::exists($array, $key)) {
+            return $array[$key];
+        }
+
+        if (! str_contains($key, '.')) {
+            return static::value($default);
+        }
+
+        foreach (explode('.', $key) as $segment) {
+            if ('*' === $segment) {
+                return $array;
+            }
+
+            if (static::accessible($array) && static::exists($array, $segment)) {
+                $array = $array[$segment];
+			} elseif (is_object($array) && isset($array->{$segment})) {
+				$array = $array->{$segment};
+            } else {
+                return static::value($default);
+            }
+        }
+
+        return $array;
+    }
 
 	/**
 	 * Set an item on an array or object using dot notation.
@@ -1087,11 +1092,12 @@ abstract class Arr
 
 		$value = is_string($value) ? explode('.', $value) : $value;
 
-		$key = is_null($key) || is_array($key) ? $key : explode('.', $key);
+		$key = is_null($key) || is_array($key) || ($key instanceof Closure) ? $key : explode('.', $key);
 
 		foreach ($array as $item) {
-			//** @todo remove it */ $itemValue = data_get($item, $value);
-			$itemValue = Arr::get($item, $value);
+			$itemValue = ($value instanceof Closure)
+                ? $value($item)
+                : Arr::get($item, $value);
 
 			// If the key is "null", we will just append the value to the array and keep
 			// looping. Otherwise we will key the array using the value of the key we
@@ -1099,7 +1105,9 @@ abstract class Arr
 			if (is_null($key)) {
 				$results[] = $itemValue;
 			} else {
-				$itemKey =  Arr::get($item, $key);
+				$itemKey = ($key instanceof Closure)
+                    ? $key($item)
+                    : Arr::get($item, $key);
 
 				if (is_object($itemKey) && method_exists($itemKey, '__toString')) {
 					$itemKey = (string) $itemKey;
@@ -1186,4 +1194,261 @@ abstract class Arr
 
 		return $dest;
 	}
+
+    /**
+     * Pick random item(s) from array using random_int() inside a generator.
+     * 
+     * @param array $items
+     * @param int $number = 1
+     * @param bool $preserveKeys = false
+     * @return array
+     */
+    public static function random(array $items, int $number = 1, bool $preserveKeys = false)
+    {
+        $picked = [];
+
+        $generator = function(int $maxItemCount) use ($items) {
+            $max = count($items);
+
+            while ($maxItemCount > 0) {
+                [$current, $target, $chosen] = [0, random_int(0, $max), null];
+
+                foreach ($items as $key => $value) {
+                    if ($current < $target) {
+                        $current++;
+                        continue;
+                    }
+
+                    $chosen = [$key, $value];
+                    unset($items[$key]);
+                    --$max;
+                    --$maxItemCount;
+
+                    break;
+                }
+
+                list($key, $value) = $chosen;
+
+                yield $key => $value;
+            }
+        };
+
+        foreach ($generator($number) as $key => $item) {
+            $picked[$key] = $item;
+        }
+
+        if (! $preserveKeys) {
+            return array_values($picked);
+        }
+
+        return $picked;
+    }
+
+    /**
+     * Shuffles the array within a generator by using random_int().
+     * 
+     * @param array $items
+     * @return array
+     */
+    public static function shuffle(array $items)
+    {
+        $generator = function() use ($items) {
+            $max = count($items);
+
+            while ($max > 0) {
+                [$current, $target, $chosen] = [0, random_int(0, $max), null];
+
+                foreach ($items as $key => $value) {
+                    if ($current < $target) {
+                        ++$current;
+                        continue;
+                    }
+
+                    $chosen = [$key, $value];
+                    unset($items[$key]);
+                    --$max;
+
+                    break;
+                }
+
+                list($key, $value) = $chosen;
+
+                yield $key => $value;
+            }
+        };
+
+        return iterator_to_array($generator, true);
+    }
+
+    /**
+     * Retrieves an array from the argument or wrap it on array.
+     * 
+     * @param mixed $items
+     * @return array 
+     */
+    public static function getArrayableItems($items)
+    {
+        return (is_null($items) || is_scalar($items) || is_enum($items))
+            ? static::wrap($items)
+            : static::from($items);
+    }
+
+    /**
+     * Retrieves an array from a iterable/countable/generator/collection.
+     * 
+     * @param mixed $items
+     * @return array
+     * @throws InvalidArgumentException for scalar values and other non-array-convertibles
+     */
+    public static function from($items)
+    {
+        if (is_array($items)) {
+            return $items;
+        }
+
+        if ($items instanceof CollectionInterface) {
+            return $items->all();
+        }
+
+        if ($items instanceof Arrayable) {
+            return $items->toArray();
+        }
+
+        if ($items instanceof WeakMap) {
+            return iterator_to_array($items, false);
+        }
+
+        if ($items instanceof Traversable) {
+            return iterator_to_array($items);
+        }
+
+        if ($items instanceof Jsonable) {
+            return json_decode($items, true);
+        }
+
+        if ($items instanceof JsonSerializable) {
+            return (array) $items->jsonSerialize();
+        }
+
+        if (is_object($items)) {
+            return (array) $items;
+        }
+
+        throw new InvalidArgumentException('Items cannot be represented by a scalar value');
+    }
+
+    /**
+     * Performs a crossJoin operation with passed arrays,
+     * returning all possible cominations.
+     * 
+     * @param array ...$arrays
+     * @return array
+     */
+    public static function crossJoin(array ...$arrays)
+    {
+        $results = [[]];
+
+        foreach ($arrays as $index => $array) {
+            $append = [];
+
+            foreach ($results as $product) {
+                foreach ($array as $key => $item) {
+                    $product[$index] = $item;
+
+                    $append[] = $product;
+                }
+            }
+
+            $results = $append;
+        }
+
+        return $results;
+    }
+
+    /**
+     * Performs a crossJoin operation with passed arrays,
+     * saving keys while returning all possible cominations.
+     * 
+     * Every item is returned as a KeyedValue instance.
+     * 
+     * @param array ...$arrays
+     * @return array
+     */
+    public static function crossJoinSavingKeys(array ...$arrays)
+    {
+        $results = [[]];
+
+        foreach ($arrays as $index => $array) {
+            $append = [];
+
+            foreach ($results as $product) {
+                foreach ($array as $key => $item) {
+                    $product[$index] = new KeyedValue($item, $key);
+
+                    $append[] = $product;
+                }
+            }
+
+            $results = $append;
+        }
+
+        return $results;
+    }
+
+    /**
+     * Performs a crossJoin operation with passed arrays,
+     * saving keys while returning all possible cominations.
+     * 
+     * Every item is returned as a array of format [$key => $value].
+     * 
+     * @param array ...$arrays
+     * @return array
+     */
+    public static function crossJoinWithKeys(array ...$arrays)
+    {
+        $results = [[]];
+
+        foreach ($arrays as $index => $array) {
+            $append = [];
+
+            foreach ($results as $product) {
+                foreach ($array as $key => $item) {
+                    $product[$index] = [$key => $item];
+
+                    $append[] = $product;
+                }
+            }
+
+            $results = $append;
+        }
+
+        return $results;
+    }
+
+    /**
+     * Turn a value and key in a pair (i.e., array with a single value
+     * indexed by the key).
+     * 
+     * @param int|string $key
+     * @param mixed $value
+     * @return array
+     */
+    public static function pair(int|string $key, $value)
+    {
+        return [$key => $value];
+    }
+
+    /**
+     * Turn a pair (i.e., array with a single value indexed by the key)
+     * in a two-element array.
+     * 
+     * @param array $pair
+     * @return array
+     */
+    public static function unpair(array $pair)
+    {
+        $value = reset($pair);
+
+        return [key($pair), $value];
+    }
 }
