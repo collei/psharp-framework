@@ -412,7 +412,9 @@ class Connection
             if ($this->isOpen()) {
                 $stmt = $this->getPrepared($sql);
                 $stmt->execute($data);
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $stmt->closeCursor();
+                return $result;
             }
 
             throw new DatabaseException($sql, sprintf('Connection %s not open!', $this->name));
