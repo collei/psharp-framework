@@ -5,7 +5,8 @@ use PDO;
 use PDOException;
 use DateTime;
 use PSharp\DB\DatabaseException;
-use PSharp\Support\{Arr, Str};
+use PSharp\Support\Arr;
+use PSharp\Support\Str;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
