@@ -430,6 +430,43 @@ class Connection
 	}
 
 	/**
+	 * Executes the select statement. Returns results as a generator.
+	 * On fail, the third argument holds an object describing the error ocurred.
+	 *
+	 * @param string $sql
+     * @param array|null $data
+     * @param mixed &$errors
+	 * @return Generator|null
+	 */
+	public function lazySelect(string $sql, array $data = null, &$errors = null)
+	{
+		try {
+            if ($this->isOpen()) {
+                $stmt = $this->getPrepared($sql);
+                $stmt->execute($data);
+
+                return function() use ($stmt) {
+                    while ($row = $stmt->fetch()) {
+                        yield $row; 
+                    }
+
+                    $stmt->closeCursor();
+                };
+            }
+
+            throw new DatabaseException($sql, sprintf('Connection %s not open!', $this->name));
+			//
+		} catch (PDOException $exception) {
+            $errors = $this->processException($exception, $sql);
+			//
+		} catch (Throwable $exception) {
+            $errors = $this->processException($exception, $sql);
+		}
+
+        return null;
+	}
+
+	/**
 	 * Executes a insert statement that return the inserted ID, if any.
 	 * On fail, returns -1 and the third argument holds an object
      * describing the error ocurred.
