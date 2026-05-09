@@ -84,6 +84,10 @@ class Router
             if ($end->matchesUri($requestUri, $out) && $end->matchesMethod($requestMethod)) {
                 $endpoint = $end;
 
+                foreach ($out as $k => $v) {
+                    $out[$k] = urldecode($v);
+                }
+
                 return true;
             }
         }
