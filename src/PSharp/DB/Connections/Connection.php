@@ -1,6 +1,7 @@
 <?php
 namespace PSharp\DB\Connections;
 
+use DB;
 use PDO;
 use PDOException;
 use DateTime;
@@ -440,6 +441,30 @@ class Connection
 	 */
 	public function lazySelect(string $sql, array $data = null, &$errors = null)
 	{
+        if (! $this->isOpen()) {
+            return null;
+        }
+
+        $connection = $this;
+
+        return function() use ($connection, $sql, $data, &$errors) {
+    		$lazy = $connection->performLazySelect($sql, $data, $errors);
+
+            yield from $lazy();
+        };
+    }
+
+	/**
+	 * Executes the select statement. Returns results as a generator.
+	 * On fail, the third argument holds an object describing the error ocurred.
+	 *
+	 * @param string $sql
+     * @param array|null $data
+     * @param mixed &$errors
+	 * @return Generator|null
+	 */
+	protected function performLazySelect(string $sql, array $data = null, &$errors = null)
+	{
 		try {
             if ($this->isOpen()) {
                 $stmt = $this->getPrepared($sql);
@@ -463,7 +488,7 @@ class Connection
             $errors = $this->processException($exception, $sql);
 		}
 
-        return null;
+        return function() { yield null; };
 	}
 
 	/**
