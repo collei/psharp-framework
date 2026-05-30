@@ -2,6 +2,7 @@
 namespace PSharp\Core;
 
 use Closure;
+use Throwable;
 use InvalidArgumentException;
 use PSharp\Support\{Facade, Pipeline, Str};
 use PSharp\Auth\AuthenticationException;
@@ -496,11 +497,19 @@ final class Application
         try {
             return $this->sendThroughRouter($request);
             //
-        } catch (Throwable $t) {
-            echo '<div>EXCEPTION: <hr>'.print_r($t,true).'<hr></div>';
-        }
+        } catch (Throwable $e) {
+            $trace = array_map(function ($trace) { unset($trace['args']); return $trace; }, $e->getTrace());
 
-        return '<div><b>algum erro ocorreu</b></div>';
+            $exception = [
+                'message' => $e->getMessage(),
+                'exception' => get_class($e),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $trace,
+            ];
+
+            return view('layout.error', compact('exception'));
+        }
     }
 
     /**
