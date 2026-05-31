@@ -128,7 +128,7 @@ if (! function_exists('db')) {
     }
 }
 
-if (function_exists('route')) {
+if (! function_exists('route')) {
 	/**
 	 * Retrieves the route path, with replaced parameters when given.
 	 * 
@@ -148,7 +148,7 @@ if (function_exists('route')) {
 	}
 }
 
-if (function_exists('coalesce')) {
+if (! function_exists('coalesce')) {
 	/**
 	 * Retrieves the first non-null argument, or null if all are null.
 	 * 
