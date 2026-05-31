@@ -30,6 +30,21 @@ trait ProviderTrait
     private $booted = false;
 
     /**
+     * For use of PHP debug functions.
+     * 
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'container' => get_instance_id($this->container),
+            'config' => get_instance_id($this->config),
+            'registered' => ($this->registered ? 'yes' : 'no'),
+            'booted' => ($this->booted ? 'yes' : 'no'),
+        ];
+    }
+
+    /**
      * Tells if the services were registered.
      * 
      * @return bool
