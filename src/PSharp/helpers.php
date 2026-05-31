@@ -128,6 +128,43 @@ if (! function_exists('db')) {
     }
 }
 
+if (function_exists('route')) {
+	/**
+	 * Retrieves the route path, with replaced parameters when given.
+	 * 
+	 * @param string $name
+	 * @param array $parameters = []
+	 * @return string|null
+	 */
+	function route(string $name, array $parameters = [])
+	{
+		foreach (app()->router()->getEndpoints() as $endpoint) {
+			if ($endpoint->getName() == $name) {
+				return PSharp\Support\Str::replaceVariables($endpoint->getPath(), $parameters);
+			}
+		}
+
+		return null;
+	}
+}
+
+if (function_exists('coalesce')) {
+	/**
+	 * Retrieves the first non-null argument, or null if all are null.
+	 * 
+	 * @param mixed ...$arguments
+	 * @return mixed
+	 */
+	function coalesce(...$arguments)
+	{
+		foreach ($arguments as $argument) if (! is_null($argument)) {
+			return $argument;
+		}
+
+		return null;
+	}
+}
+
 if (! function_exists('pretty_dump')) {
     /**
      * Dumps variable and formats dump content in a browseable manner
