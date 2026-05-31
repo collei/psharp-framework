@@ -138,9 +138,13 @@ if (! function_exists('route')) {
 	 */
 	function route(string $name, array $parameters = [])
 	{
-		foreach (app()->router()->getEndpoints() as $endpoint) {
+        $app = app();
+
+		foreach ($app->router()->getEndpoints() as $endpoint) {
 			if ($endpoint->getName() == $name) {
-				return PSharp\Support\Str::replaceVariables($endpoint->getPath(), $parameters);
+                $path = PSharp\Support\Str::replaceVariables($endpoint->getPath(), $parameters);
+
+				return rtrim($app->prefix(), '/') . $path;
 			}
 		}
 
