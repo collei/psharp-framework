@@ -171,6 +171,8 @@ class RouteMapper
 		$methodName = $reflect->getName();
 
 		$action = "{$className}::{$methodName}";
+
+		$isDefault = count($reflect->getAttributes(NotFound::class)) === 1;
 		
 		foreach ($reflect->getAttributes() as $methodAttr) {
 			$methodAttrName = $methodAttr->getName();
@@ -181,6 +183,10 @@ class RouteMapper
 			}
 
 			$endpoint = $methodAttr->newInstance();
+
+			if ($isDefault) {
+				$endpoint->setAsDefaultWhenNotFound();
+			}
 
 			// If name is omitted, take the method name in kebab case
 			if (empty($endpoint->getSimpleName())) {

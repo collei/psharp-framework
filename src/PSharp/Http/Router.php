@@ -52,6 +52,16 @@ class Router
     }
 
     /**
+     * Returns if is there any default route endpoints.
+     * 
+     * @return array
+     */
+    public function hasDefaultRoutes()
+    {
+        return $this->hasDefaultEndpoints($endpoint);
+    }
+
+    /**
      * Dispatch the request through the application stack.
      * 
      * @param PSharp\Http\Request $request
@@ -62,6 +72,10 @@ class Router
     {
         if ($this->matchesEndpoint($request, $uriParameters, $endpoint)) {
             return $this->dispatchToController($endpoint, $request, $uriParameters);
+        }
+
+        if ($this->hasDefaultEndpoints($endpoint)) {
+            return $this->dispatchToController($endpoint, $request, []);
         }
 
         throw new HttpNotFoundException();
@@ -90,6 +104,23 @@ class Router
 
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * Tells if is there any default endpoint and brings up the first found.
+     * 
+     * @param PSharp\Http\Endpoint|null &$endpoint - Returns the first-found endpoint here, if any
+     * @return bool
+     */
+    protected function hasDefaultEndpoints(Endpoint &$endpoint = null)
+    {
+        foreach ($this->getEndpoints() as $end) if ($end->isDefaultWhenNotFound()) {
+            $endpoint = $end;
+
+            return true;
         }
 
         return false;
