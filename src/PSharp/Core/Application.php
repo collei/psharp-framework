@@ -45,6 +45,11 @@ final class Application
     private $router;
 
     /**
+     * @var string
+     */
+    private $appPrefix;
+
+    /**
      * @var array
      */
     private $middleware = [];
@@ -71,6 +76,8 @@ final class Application
     {
         $this->baseDir = $baseDir;
         $this->config = $this->loadConfig($configFile ?? 'appsettings.json');
+
+        $this->appPrefix = Str::commonPrefix($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']);
 
         $this->initialize();
     }
@@ -166,6 +173,16 @@ final class Application
     public function router()
     {
         return $this->router;
+    }
+
+    /**
+     * Retrieves the application URL prefix.
+     * 
+     * @return string
+     */
+    public function prefix()
+    {
+        return $this->appPrefix;
     }
 
     /**
@@ -563,6 +580,7 @@ final class Application
     {
         return [
             'baseDir' => $this->baseDir,
+            'prefix' => $this->appPrefix,
             'container' => get_instance_id($this->container),
             'config' => get_instance_id($this->config),
             'routeMapper' => get_instance_id($this->routeMapper),
