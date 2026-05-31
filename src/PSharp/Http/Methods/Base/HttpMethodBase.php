@@ -45,6 +45,11 @@ abstract class HttpMethodBase implements EndpointInterface
 	private $method = null;
 
 	/**
+	 * @var bool
+	 */
+	private $defaultWhenNotFound = false;
+
+	/**
 	 * Constructor.
 	 * 
 	 * @param string $path = "/"
@@ -98,6 +103,29 @@ abstract class HttpMethodBase implements EndpointInterface
 	{
 		$this->action = $action;
 		return $this;
+	}
+
+	/**
+	 * Define whether this route is default when a route not found.
+	 * 
+	 * @param bool|null $default = null
+	 * @return $this;
+	 */
+	public function setAsDefaultWhenNotFound(bool $default = true)
+	{
+		$this->defaultWhenNotFound = $default;
+
+		return $this;
+	}
+
+	/**
+	 * Tells whether this route is default when a route not found.
+	 * 
+	 * @return bool
+	 */
+	public function isDefaultWhenNotFound()
+	{
+		return $this->defaultWhenNotFound;
 	}
 
 	/**
@@ -209,7 +237,8 @@ abstract class HttpMethodBase implements EndpointInterface
 	{
 		return (new Endpoint($this->route, $this->path, $this->name))
 					->setAction($this->action)
-					->setMethod($this->method);
+					->setMethod($this->method)
+					->setAsDefaultWhenNotFound($this->isDefaultWhenNotFound());
 	}
 	
 	/**
@@ -234,6 +263,7 @@ abstract class HttpMethodBase implements EndpointInterface
 			'method' => $this->getMethod(),
 			'path' => $this->getPath(),
 			'action' => $this->getAction(),
+			'defaultOnNotFound' => $this->isDefaultWhenNotFound() ? 'yes' : 'no',
 		];
 	}
 }
