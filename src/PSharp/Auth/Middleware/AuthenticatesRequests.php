@@ -24,6 +24,19 @@ class AuthenticatesRequests implements MiddlewareInterface
     public function __construct(protected Application $app, protected AuthManager $manager) {}
 
     /**
+     * For use of PHP debug functions.
+     * 
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return [
+            'app' => get_instance_id($this->app),
+            'manager' => get_instance_id($this->manager),
+        ];
+    }
+
+    /**
      * Handles requests.
      * 
      * @param PSharp\Http\Request $request
