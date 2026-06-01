@@ -10,6 +10,7 @@ use PSharp\View\Interfaces\CompilerInterface;
 class VisCompiler extends Compiler implements CompilerInterface
 {
     use Traits\CompilesRaws;
+    use Traits\CompilesDumps;
     use Traits\CompilesEchos;
     use Traits\CompilesConditionals;
     use Traits\CompilesHelpers;
