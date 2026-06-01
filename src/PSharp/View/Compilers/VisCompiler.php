@@ -296,14 +296,14 @@ class VisCompiler extends Compiler implements CompilerInterface
         //
         $this->customDirective($name, function ($expression) use ($name) {
             return ($expression !== '')
-                    ? "<?php if (\\Vis::check('{$name}', {$expression})): ?>"
-                    : "<?php if (\\Vis::check('{$name}')): ?>";
+                    ? "<?php if (\\View::check('{$name}', {$expression})): ?>"
+                    : "<?php if (\\View::check('{$name}')): ?>";
         });
         //
         $this->customDirective('else'.$name, function ($expression) use ($name) {
             return ($expression !== '')
-                    ? "<?php elseif (\\Vis::check('{$name}', {$expression})): ?>"
-                    : "<?php elseif (\\Vis::check('{$name}')): ?>";
+                    ? "<?php elseif (\\View::check('{$name}', {$expression})): ?>"
+                    : "<?php elseif (\\View::check('{$name}')): ?>";
         });
         //
         $this->customDirective('end'.$name, function () {

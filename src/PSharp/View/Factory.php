@@ -4,6 +4,7 @@ namespace PSharp\View;
 use PSharp\Core\Container;
 use PSharp\View\Interfaces\FactoryInterface;
 use PSharp\View\Interfaces\RepositoryInterface;
+use PSharp\View\Interfaces\CompilerInterface;
 
 /**
  * The view factory.
@@ -255,5 +256,22 @@ class Factory implements FactoryInterface
         if ($this->doneRendering()) {
             $this->flushState();
         }
+    }
+
+    /**
+     * Execute check of custom 'if' statements in the
+     * context of the current compiler instance.
+     *
+     * @param string $name
+     * @param mixed ...$parameters
+     * @return mixed
+     */
+    public function check($name, ...$parameters)
+    {
+        if ($compiler = $this->container->make(CompilerInterface::class)) {
+            return $compiler->check($name, ...$parameters);
+        }
+
+        return null;
     }
 }

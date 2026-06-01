@@ -17,6 +17,7 @@ class View extends PSharp\Support\Facade
             'share',
             'shared',
             'getShared',
+            'check',
         ];
     }
 
