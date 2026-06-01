@@ -161,6 +161,29 @@ abstract class HttpMethodBase implements EndpointInterface
 	}
 
 	/**
+	 * Return the path segment of this endpoint.
+	 * 
+	 * @return string
+	 */
+	public function getPathSegment()
+	{
+		return $this->path;
+	}
+
+	/**
+	 * Set the path segment.
+	 * 
+	 * @param string $path
+	 * @return this
+	 */
+	public function setPathSegment(string $path)
+    {
+		$this->path = $path;
+
+		return $this;
+	}
+
+	/**
 	 * Return the full name of this endpoint.
 	 * 
 	 * @return string
@@ -173,26 +196,24 @@ abstract class HttpMethodBase implements EndpointInterface
 	}
 
 	/**
-	 * Return the simple name of this endpoint.
+	 * Return the name segment of this endpoint.
 	 * 
 	 * @return string
 	 */
-	public function getSimpleName()
+	public function getNameSegment()
 	{
 		return $this->name;
 	}
 
 	/**
-	 * Set the simple name only if empty.
+	 * Set the name segment.
 	 * 
 	 * @param string $name
 	 * @return this
 	 */
-	public function setSimpleNameIfEmpty(string $name)
+	public function setNameSegment(string $name)
     {
-		if (empty($this->name)) {
-			$this->name = $name;
-		}
+		$this->name = $name;
 
 		return $this;
 	}

@@ -90,6 +90,8 @@ class RouteMapper
 
 		$files = array_diff(scandir($path), array('.','..'));
 
+		pretty_dump(compact('appDir','namespace','path','files'));
+
 		foreach ($files as $file) {
 			if (is_file($path . DIRECTORY_SEPARATOR . $file)) {
 				if (Str::endsWith(strtolower($file), '.php')) {
@@ -189,10 +191,17 @@ class RouteMapper
 			}
 
 			// If name is omitted, take the method name in kebab case
-			if (empty($endpoint->getSimpleName())) {
+			if (empty($endpoint->getNameSegment())) {
 				$kebabName = Str::kebab($methodName);
 
-				$endpoint->setSimpleNameIfEmpty($kebabName);
+				$endpoint->setNameSegment($kebabName);
+			}
+
+			// If path is omitted, take the method name in kebab case
+			if (empty($endpoint->getPathSegment())) {
+				$kebabPath = Str::kebab($methodName);
+
+				$endpoint->setPathSegment($kebabPath);
 			}
 
 			$endpoint->setRoute($route)->setAction($action);
