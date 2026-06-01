@@ -90,8 +90,6 @@ class RouteMapper
 
 		$files = array_diff(scandir($path), array('.','..'));
 
-		pretty_dump(compact('appDir','namespace','path','files'));
-
 		foreach ($files as $file) {
 			if (is_file($path . DIRECTORY_SEPARATOR . $file)) {
 				if (Str::endsWith(strtolower($file), '.php')) {
