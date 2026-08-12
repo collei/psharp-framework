@@ -266,6 +266,31 @@ final class Application
     }
 
     /**
+     * Register a service provider for later booting, but does nothing if class doesn't exist.
+     * 
+     * @param PSharp\Core\Providers\ServiceProvider
+     * @return $this
+     */
+    public function provideIfExists(string $providerClass, string $alias = null)
+    {
+        if (! class_exists($providerClass)) {
+            return $this;
+        }
+
+        if (! empty($alias)) {
+            $this->container->alias($alias, $providerClass);
+        }
+
+        $provider = $this->container->make($providerClass);
+
+        $provider->register();
+
+        $this->providers[$providerClass] = $provider;
+
+        return $this;
+    }
+
+    /**
      * Boots providers right before running.
      * 
      * @return void
