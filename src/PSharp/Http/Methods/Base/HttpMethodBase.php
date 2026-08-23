@@ -55,9 +55,9 @@ abstract class HttpMethodBase implements EndpointInterface
 	 * @param string $path = "/"
 	 * @param string $name = null
 	 */
-	public function __construct(string $path = null, string $name = null)
+	public function __construct(string $path = '/', string $name = null)
 	{
-		$this->path = $path ?? '';
+		$this->path = empty($path) ? '/' : $path;
 		$this->name = $name;
 		$this->method = $this->catterMethod();
 	}
