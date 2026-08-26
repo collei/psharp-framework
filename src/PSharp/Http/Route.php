@@ -16,10 +16,10 @@ class Route
 	/**
 	 * Constructor.
 	 * 
-	 * @param string $rootPath = "/"
+	 * @param string $rootPath = null
 	 * @param string $rootName = null
 	 */
-	public function __construct(string $rootPath = "/", string $rootName = null)
+	public function __construct(?string $rootPath = null, ?string $rootName = null)
 	{
 		$this->rootPath = $rootPath;
 		$this->rootName = $rootName;
