@@ -26,6 +26,26 @@ class Route
 	}
 
 	/**
+	 * Tells if the root path is empty.
+	 * 
+	 * @return bool
+	 */
+	public function isRootPathEmpty()
+	{
+		return empty($this->rootPath);
+	}
+
+	/**
+	 * Tells if the root name is empty.
+	 * 
+	 * @return bool
+	 */
+	public function isRootNameEmpty()
+	{
+		return empty($this->rootName);
+	}
+
+	/**
 	 * Return the root path of this endpoint.
 	 * 
 	 * @return string
