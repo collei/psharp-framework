@@ -66,17 +66,26 @@ class Route
 	}
 
 	/**
-	 * Set the root name only if empty.
+	 * Set the root path.
 	 * 
 	 * @param string $rootName
 	 * @return this
 	 */
-	public function setRootNameIfEmpty(string $rootName)
+	public function setRootPath(string $rootPath)
 	{
-		if (empty($this->rootName)) {
-			$this->rootName = $rootName;
-		}
+		$this->rootPath = $rootPath;
+		return $this;
+	}
 
+	/**
+	 * Set the root name.
+	 * 
+	 * @param string $rootName
+	 * @return this
+	 */
+	public function setRootName(string $rootName)
+	{
+		$this->rootName = $rootName;
 		return $this;
 	}
 	
