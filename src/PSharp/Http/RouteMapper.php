@@ -140,7 +140,7 @@ class RouteMapper
 
 			// If route basename is not set,
 			// craft it from controller name in kebab case.
-			if (empty($route->getRootName())) {
+			if (empty($route->getRootPath()) || empty($route->getRootName())) {
 				$kebabName = Str::kebab($reflect->getShortName());
 
 				// strip the '-controller' part if any
@@ -148,8 +148,16 @@ class RouteMapper
 					$kebabName = Str::trimSuffix($kebabName, '-controller');
 				}
 
-				$route->setRootNameIfEmpty($kebabName);
+				if ($route->isRootPathEmpty()) {
+					$route->setRootPath('/' . $kebabName);
+				}
+
+				if ($route->isRootNameEmpty()) {
+					$route->setRootName($kebabName);
+				}
 			}
+
+			echo sprintf('<fieldset><legend>%s</legend>%s</fieldset>', $className, print_r(compact('route'),true));
 
 			// Maps endpoints from class methods
 			foreach ($reflect->getMethods() as $method) {
