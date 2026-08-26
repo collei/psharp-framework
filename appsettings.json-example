@@ -37,6 +37,30 @@
             }
         }
     },
+    "rovi": {
+        "version": "1.1.1",
+        "logs": {
+            "enabled": true,
+            "path": "storage/logs/rovi/{conn_name}/{date}_{level}.log",
+            "dateFormat": "Y-m-d",
+            "dateEntryFormat": "Y-m-d H:i:s",
+            "level": "ERROR" 
+        },
+        "db": {
+            "default": "sqlite-local",
+            "connectionAutoImport": true,
+            "connections": [
+                {
+                    "name": "sqlite-local",
+                    "type": "sqlite",
+                    "server": null,
+                    "database": "storage/app/sqlite-example.db",
+                    "user": null,
+                    "password": null
+                }
+            ]
+        }
+    },
     "auth": {
         "default": {
             "repository": "db",
