@@ -157,8 +157,6 @@ class RouteMapper
 				}
 			}
 
-			echo sprintf('<fieldset><legend>%s</legend>%s</fieldset>', $className, print_r(compact('route'),true));
-
 			// Maps endpoints from class methods
 			foreach ($reflect->getMethods() as $method) {
 				$this->mapControllerMethodEndpoint($route, $method, $className);
