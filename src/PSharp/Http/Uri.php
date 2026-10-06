@@ -332,6 +332,26 @@ class Uri implements UriInterface, Stringable
 	}
 
 	/**
+	 * Retrieves the current URL without query string.
+	 * 
+	 * @return string
+	 */
+	public function current()
+	{
+		return rtrim(app()->prefix(), '/') . $this->getPath();
+	}
+
+	/**
+	 * Retrieves the full current URL (with query string, if any).
+	 * 
+	 * @return string
+	 */
+	public function full()
+	{
+		return rtrim(app()->prefix(), '/') . $this->toString();
+	}
+
+	/**
 	 * For PHP internal debug functions.
 	 * 
 	 * @param array;
