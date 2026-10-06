@@ -324,6 +324,18 @@ class Request implements RequestInterface, ServerRequestInterface
 	}
 
 	/**
+	 * Checks if the request URI matches the given route.
+	 *
+	 * @param string $name
+	 * @param array $parameters = []
+	 * @return bool
+	 */
+	public function routeIs(string $name, array $parameters = [])
+	{
+		return $this->is(route($name, $parameters));
+	}
+
+	/**
 	 * Checks whether the request is secure or not.
 	 *
 	 * @return bool
