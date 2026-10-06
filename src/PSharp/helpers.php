@@ -52,12 +52,17 @@ if (! function_exists('session')) {
 
 if (! function_exists('app')) {
     /**
-     * Returns the app instance.
+     * Returns the app instance or an instance of the given class (if any) from the container.
      * 
+     * @param string $class = null
      * @return PSharp\Core\Application
      */
-    function app()
+    function app(string $class = null)
     {
+        if (! empty($class)) {
+            return app()->container()->get($class);
+        }
+
         return PSharp\Core\Application::getInstance();
     }
 }
