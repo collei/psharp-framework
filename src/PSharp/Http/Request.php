@@ -293,7 +293,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	 */
 	public function is(string ...$patterns) : bool
 	{
-		$path = $this->getUri()->getPath();
+		$path = rtrim(app()->prefix(), '/') . $this->getUri()->getPath();
 		//
 		foreach ($patterns as $pattern) {
 			if (Str::is($pattern, $path, '#')) {
@@ -312,7 +312,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	 */
 	public function fullUrlIs(string ...$patterns) : bool
 	{
-		$url = $this->getUri()->toString();
+		$url = rtrim(app()->prefix(), '/') . $this->getUri()->toString();
 		//
 		foreach ($patterns as $pattern) {
 			if (Str::is($pattern, $url, '#')) {
