@@ -157,6 +157,53 @@ if (! function_exists('route')) {
 	}
 }
 
+if (! function_exists('route_matcher')) {
+	/**
+	 * Retrieves the route path, with parameters replaced with *.
+	 * 
+	 * @param string $name
+	 * @return string|null
+	 */
+	function route_matcher(string $name)
+	{
+        $app = app();
+
+		foreach ($app->router()->getEndpoints() as $endpoint) {
+			if ($endpoint->getName() == $name) {
+                $path = preg_replace('/\{[^\}]*\}/', '*', $endpoint->getPath());
+
+				return rtrim($app->prefix(), '/') . $path;
+			}
+		}
+
+		return null;
+	}
+}
+
+if (! function_exists('request')) {
+	/**
+	 * Retrieves the current request.
+	 * 
+	 * @return PSharp\Http\Request
+	 */
+	function request()
+	{
+        return app(\PSharp\Http\Request::class);
+	}
+}
+
+if (! function_exists('uri')) {
+	/**
+	 * Retrieves the current uri.
+	 * 
+	 * @return PSharp\Http\Uri
+	 */
+	function uri()
+	{
+        return request()->getUri();
+	}
+}
+
 if (! function_exists('coalesce')) {
 	/**
 	 * Retrieves the first non-null argument, or null if all are null.
