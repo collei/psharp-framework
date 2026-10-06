@@ -566,6 +566,10 @@ abstract class Str
 		for ($x = 0; $x < $len_max; $x++) if ($str_one[$x] != $str_another[$x]) {
 			return substr($str_one, 0, $x);
 		}
+
+		if ($str_one == $str_another) {
+			return $str_one;
+		} 
 		
 		return '';
 	}
@@ -596,6 +600,10 @@ abstract class Str
 		for ($x = $len_max - 1; $x >= 0; $x--) if ($str_one[$x] != $str_another[$x]) {
 			return substr($str_one, -($len_max - $x - 1));
 		}
+		
+		if ($str_one == $str_another) {
+			return $str_one;
+		} 
 		
 		return '';
 	}
