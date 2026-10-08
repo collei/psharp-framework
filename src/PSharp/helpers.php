@@ -204,6 +204,26 @@ if (! function_exists('uri')) {
 	}
 }
 
+if (! function_exists('redirect')) {
+    /**
+     * Get an instance of the redirector.
+     *
+     * @param  string|null  $to
+     * @param  int  $status
+     * @param  array  $headers
+     * @param  bool|null  $secure
+     * @return \PSharp\Http\Redirector|PSharp\Http\Response
+     */
+    function redirect($to = null, $status = 302, $headers = [], $secure = null)
+    {
+        if (is_null($to)) {
+            return app(\PSharp\Http\Redirector::class);
+        }
+
+        return app(\PSharp\Http\Redirector::class)->to($to, $status, $headers, $secure);
+    }
+}
+
 if (! function_exists('coalesce')) {
 	/**
 	 * Retrieves the first non-null argument, or null if all are null.
