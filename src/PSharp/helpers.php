@@ -149,7 +149,7 @@ if (! function_exists('route')) {
 			if ($endpoint->getName() == $name) {
                 $path = PSharp\Support\Str::replaceVariables($endpoint->getPath(), $parameters);
 
-				return rtrim($app->prefix(), '/') . $path;
+				return rtrim($app->prefix(), '/') . rtrim($path, '/');
 			}
 		}
 
@@ -172,7 +172,7 @@ if (! function_exists('route_matcher')) {
 			if ($endpoint->getName() == $name) {
                 $path = preg_replace('/\{[^\}]*\}/', '*', $endpoint->getPath());
 
-				return rtrim($app->prefix(), '/') . $path;
+				return rtrim($app->prefix(), '/') . rtrim($path, '/');
 			}
 		}
 
