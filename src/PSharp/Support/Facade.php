@@ -20,6 +20,11 @@ abstract class Facade
     protected static $facadeInstances = [];
 
     /**
+     * @var array
+     */
+    protected static $AVAILABLE = [];
+
+    /**
      * Retrieves the application container instance.
      * 
      * @return PSharp\Core\Container
@@ -99,8 +104,22 @@ abstract class Facade
      */
     protected static function available()
     {
-        throw new RuntimeException('Facade not implemented the available() method.');
+        return static::$AVAILABLE;
     }
+
+    /**
+     * Adds methods to the internal $AVAILABLE array.
+     * 
+     * @return void
+     */
+    public static function addMethod(string $name, ?string $alias = null)
+    {
+        if (! empty($alias)) {
+            static::$AVAILABLE[$name] = $alias;
+        }
+
+        static::$AVAILABLE = $name;
+    } 
 
     /**
      * Retrieves the facade acessor.
