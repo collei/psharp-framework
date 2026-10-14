@@ -5,24 +5,21 @@
 class Log extends PSharp\Support\Facade
 {
     /**
-     * Retrieves the available methods.
+     * The available methods.
      * 
-     * @return array
+     * @var array
      */
-    protected static function available()
-    {
-        return [
-            'log',
-            'emergency',
-            'alert',
-            'critical',
-            'error',
-            'warning',
-            'notice',
-            'info',
-            'debug'
-        ];
-    }
+    protected static $AVAILABLE = [
+        'log',
+        'emergency',
+        'alert',
+        'critical',
+        'error',
+        'warning',
+        'notice',
+        'info',
+        'debug'
+    ];
 
     /**
      * Retrieves the facade acessor.

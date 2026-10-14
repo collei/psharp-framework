@@ -5,22 +5,19 @@
 class Auth extends PSharp\Support\Facade
 {
     /**
-     * Retrieves the available methods.
+     * The available methods.
      * 
-     * @return array
+     * @var array
      */
-    protected static function available()
-    {
-        return [
-            'guard',
-            'guest',
-            'authorizes',
-            'authorizesWithDefault',
-            'userHas',
-            'logon',
-            'logoff',
-        ];
-    }
+    protected static $AVAILABLE = [
+        'guard',
+        'guest',
+        'authorizes',
+        'authorizesWithDefault',
+        'userHas',
+        'logon',
+        'logoff',
+    ];
 
     /**
      * Retrieves the facade acessor.

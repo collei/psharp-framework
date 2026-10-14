@@ -5,21 +5,18 @@
 class View extends PSharp\Support\Facade
 {
     /**
-     * Retrieves the available methods.
+     * The available methods.
      * 
-     * @return array
+     * @var array
      */
-    protected static function available()
-    {
-        return [
-            'file',
-            'make',
-            'share',
-            'shared',
-            'getShared',
-            'check',
-        ];
-    }
+    protected static $AVAILABLE = [
+        'file',
+        'make',
+        'share',
+        'shared',
+        'getShared',
+        'check',
+    ];
 
     /**
      * Retrieves the facade acessor.

@@ -5,16 +5,13 @@
 class DB extends PSharp\Support\Facade
 {
     /**
-     * Retrieves the available methods.
+     * The available methods.
      * 
-     * @return array
+     * @var array
      */
-    protected static function available()
-    {
-        return [
-            'connection',
-        ];
-    }
+    protected static $AVAILABLE = [
+        'connection',
+    ];
 
     /**
      * Retrieves the facade acessor.

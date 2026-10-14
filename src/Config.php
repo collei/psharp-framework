@@ -5,17 +5,14 @@
 class Config extends PSharp\Support\Facade
 {
     /**
-     * Retrieves the available methods.
+     * The available methods.
      * 
-     * @return array
+     * @var array
      */
-    protected static function available()
-    {
-        return [
-            'get',
-            'has',
-        ];
-    }
+    protected static $AVAILABLE = [
+        'get',
+        'has',
+    ];
 
     /**
      * Retrieves the facade acessor.
