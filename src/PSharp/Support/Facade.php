@@ -151,7 +151,7 @@ abstract class Facade
         
         $available = static::available();
 
-        if (array_key_exists($method)) {
+        if (array_key_exists($method, $available)) {
             $method = $available[$method];
         } elseif (! in_array($method, $available)) {
             throw new RuntimeException(sprintf('Method %s not available for this Facade.', $method));
