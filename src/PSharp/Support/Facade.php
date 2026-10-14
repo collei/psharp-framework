@@ -141,16 +141,26 @@ abstract class Facade
      */
     public static function __callStatic($method, $args)
     {
+        $instance = static::root();
+        
+        if (empty($instance)) {
+            throw new RuntimeException('Facade root not set.');
+        }
+
+        $alias = $method;
+        
         $available = static::available();
 
-        if (! in_array($method, $available) && ! array_key_exists($method, $available)) {
+        if (array_key_exists($method)) {
+            $method = $available[$method];
+        } elseif (! in_array($method, $available)) {
             throw new RuntimeException(sprintf('Method %s not available for this Facade.', $method));
         }
 
-        if ($instance = static::root()) {
+        if (method_exists($instance, $method)) {
             return $instance->$method(...$args);
         }
 
-        throw new RuntimeException('Facade root not set.');
+        throw new RuntimeException(sprintf('Method alias %s not available for this Facade.', $alias));
     }
 }
