@@ -13,6 +13,8 @@ use PSharp\Http\Actions\ControllerBase;
 use PSharp\Core\Exceptions\ApplicationException;
 use PSharp\Core\Providers\DeferrableProvider;
 use PSharp\Core\Middleware\MiddlewareInterface;
+use PSharp\Console\CommandLine;
+use PSharp\Console\CommandHolder;
 
 /**
  * The application main class.
@@ -43,6 +45,16 @@ final class Application
      * @var PSharp\Http\Router
      */
     private $router;
+
+    /**
+     * @var PSharp\Console\CommandLine
+     */
+    private $commandLine;
+
+    /**
+     * @var PSharp\Console\CommandHolder
+     */
+    private $commandHolder;
 
     /**
      * @var string
@@ -77,7 +89,9 @@ final class Application
         $this->baseDir = $baseDir;
         $this->config = $this->loadConfig($configFile ?? 'appsettings.json');
 
-        $this->appPrefix = Str::commonPrefix($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']);
+        $this->appPrefix = $this->isRunningOnConsoleMode()
+            ? ''
+            : Str::commonPrefix($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']);
 
         $this->initialize();
     }
@@ -140,6 +154,11 @@ final class Application
 
         $this->routeMapper = $this->container->make(RouteMapper::class);
         $this->router = $this->container->make(Router::class);
+
+        if ($this->isRunningOnConsoleMode()) {
+            $this->commandLine = $this->container->make(CommandLine::class);
+            $this->commandHolder = $this->container->make(CommandHolder::class);
+        }
     }
 
     /**
@@ -173,6 +192,16 @@ final class Application
     public function router()
     {
         return $this->router;
+    }
+
+    /**
+     * Retrieves the command line instance, if any.
+     * 
+     * @return PSharp\Console\CommandLine
+     */
+    public function getCommandLine()
+    {
+        return $this->commandLine ?? null;
     }
 
     /**
@@ -240,6 +269,21 @@ final class Application
     public function mapControllers(string $namespace = null)
     {
         $this->routeMapper->mapControllers($this->baseDir, $namespace);
+
+        return $this;
+    }
+
+    /**
+     * Maps all command classes under the given namespace, if any.
+     * 
+     * @param string|null $namespace
+     * @return $this
+     */
+    public function mapConsoleCommands(string $namespace = null)
+    {
+        if ($this->isRunningOnConsoleMode()) {
+            $this->commandHolder->mapCommands($this->baseDir, $namespace);
+        }
 
         return $this;
     }
@@ -493,11 +537,17 @@ final class Application
     {
         $this->prepareRun();
 
-        $request = $this->captureRequest();
+        if ($this->isRunningOnConsoleMode()) {
+            $this->handleCommand(
+                $this->captureCommand()
+            );
+        } else {
+            $response = $this->handleRequest(
+                $request = $this->captureRequest()
+            );
 
-        $response = $this->handleRequest($request);
-
-        $this->prepareResponse($request, $response)->send();
+            $this->prepareResponse($request, $response)->send();
+        }
 
         return $this;
     }
@@ -510,6 +560,36 @@ final class Application
     protected function prepareRun()
     {
         $this->bootProviders();
+    }
+
+    /**
+     * Performs detection of console mode.
+     * 
+     * @return void
+     */
+    public function isRunningOnConsoleMode()
+    {
+        return (php_sapi_name() === 'cli') || defined('STDIN');
+    }
+
+    /**
+     * Performs acquisition of the passed arguments.
+     * 
+     * @return mixed
+     */
+    protected function captureCommand()
+    {
+        return $this->getCommandLine();
+    }
+
+    /**
+     * Performs processing of the captured arguments.
+     * 
+     * @return mixed
+     */
+    protected function handleCommand(CommandLine $line)
+    {
+        return $this->commandHolder->processCommand($line, $returnCode, true);
     }
 
     /**
