@@ -96,6 +96,10 @@ class CommandHolder
                     $command = app($command);
                 }
 
+				if (empty($command->signature())) {
+					$command->setSignature($signature);
+				}
+
                 $this->commands[$name] = (object) compact('command','arguments','options','signature','closure');
 			}
 		}
@@ -111,13 +115,13 @@ class CommandHolder
 	 */
 	public function callCommand(string $commandInput, CommandBase $command, ?bool $silent = null)
 	{
-		$input = new CommandLine($commandInput);
+		$input = CommandLine::throughSignature($commandInput, $command->signature());
 
 		if (! is_null($silent)) {
 			$command->setSilent($silent);
 		}
 
-		if ($this->processClassCommand($command, $input, $returnCode)) {
+		if ($returnCode = $this->processClassCommand($command, $input, $returnCode)) {
 			return $returnCode;
 		}
 
@@ -128,13 +132,13 @@ class CommandHolder
 	 * Finds the command for the input line and, if command is found,
 	 * runs it with dependency injection and returns code.
 	 * 
-	 * @param \PSharp\Console\CommandLine $input
+	 * @param string $commandInput
 	 * @param ?int &$returnCode = null
 	 * @return bool
 	 */
-	public function processCommand(CommandLine $input, ?int &$returnCode = mull, bool $showNotice = false)
+	public function processCommand(string $commandInput, ?int &$returnCode = mull, bool $showNotice = false)
 	{
-		$name = $input->getName();
+		$name = (new CommandLine($commandInput))->getName();
 
 		$target = $this->commands[$name] ?? null;
 		
