@@ -68,26 +68,28 @@ class CommandLine
 	 */
 	protected function doParseCommandAndOptions()
 	{
-		$args = $this->arrayedLine;
-		//
-		array_shift($args);
-		//
+		$test = $args = $this->arrayedLine;
+
+		if (array_shift($test) == 'cl') {
+			array_shift($args);
+		}
+
 		$this->command = array_shift($args) ?? '';
-		//
+
 		if (preg_match(self::COMMAND_NAME_PATTERN, $this->command, $match)) {
 			$this->command = $match[1];
 			$this->subCommand = $match[3] ?? null;
 		}
-		//
+
 		$options = Input::parseOptions($args);
-		//
+
 		$this->arguments = $this->options = [];
-		//
+
 		foreach ($options as $name => $value) {
-			if (is_int($name)) {
-				$this->arguments[] = $value;
-			} else {
+			if (is_string($name)) {
 				$this->options[$name] = $value;
+			} else {
+				$this->arguments[$name] = $value;
 			}
 		}
 	}

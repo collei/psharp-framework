@@ -99,7 +99,7 @@ abstract class CommandBase
 	public function __construct()
 	{
 		$this->app = app();
-		//
+
 		if ($this->signature) {
 			$this->setSignature($this->signature);
 		}
@@ -134,7 +134,7 @@ abstract class CommandBase
 	public function setName(string $name)
 	{
 		$this->name = $name;
-		//
+
 		return $this;
 	}
 
