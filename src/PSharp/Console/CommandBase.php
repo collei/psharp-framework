@@ -149,13 +149,13 @@ abstract class CommandBase
 	}
 
 	/**
-	 * Retrieves the command signature.
+	 * Retrieves the command signature, if any.
 	 *
-	 * @return	string
+	 * @return	\PSharp\Console\Signature|null
 	 */
 	public function signature()
 	{
-		return $this->signature;
+		return $this->parsedSignature;
 	}
 
 	/**
@@ -164,11 +164,17 @@ abstract class CommandBase
 	 * @param	string	$signature
 	 * @return	$this
 	 */
-	public function setSignature(string $signature)
+	public function setSignature(string|Signature $signature)
 	{
-		$this->signature = $signature;
+		if (is_string($signature)) {
+			$this->signature = $signature;
 
-		$this->parsedSignature = new SignatureParser($signature);
+			$this->parsedSignature = new Signature($signature);
+		} else {
+			$this->signature = $signature->getSignature();
+
+			$this->parsedSignature = $signature;
+		}
 
 		$this->setName($this->parsedSignature->getCommand());
 

@@ -12,6 +12,11 @@ class Signature
 	/**
 	 * @var string
 	 */
+	protected $signature;
+
+	/**
+	 * @var string
+	 */
 	protected $command;
 
 	/**
@@ -33,7 +38,19 @@ class Signature
 	 */
 	public function __construct(string $signature)
 	{
+		$this->signature = $signature;
+
 		$this->parseSignature($signature);
+	}
+
+	/**
+	 *	Get the command signature.
+	 *
+	 *	@return	string
+	 */
+	public function getSignature()
+	{
+		return $this->signature;
 	}
 
 	/**
