@@ -152,11 +152,18 @@ class CommandHolder
 
 		$command = $target->command;
 
+		$input = CommandLine::throughSignature($commandInput, $command->signature());
+
+		app()->container()->instance($input);
+
 		if ($target->closure === true) {
 			return $command->handle();
 		}
 
-		$parameters = app(ParameterReaper::class)->reapMethodParameters($command, 'handle', []);
+		$parameters = array_merge(
+			app(ParameterReaper::class)->reapMethodParameters($command, 'handle', []),
+			$input->getArgumentsAndOptions()
+		);
 
 		return $command->handle(...$parameters);
 	}

@@ -248,6 +248,16 @@ class CommandLine
 	}
 
 	/**
+	 *	Returns an array of all arguments and of all options
+	 *
+	 *	@return	array
+	 */
+	public function getArgumentsAndOptions()
+	{
+		return array_merge($this->arguments ?? [], $this->options ?? []);
+	}
+
+	/**
 	 *	Capture the command line from the server - ignoring the first 
 	 *
 	 *	@return	array
@@ -268,11 +278,51 @@ class CommandLine
 	public static function parse(string $command, array $arguments = null)
 	{
 		$commandLine = new static($command);
-		//
+
 		if (!is_null($arguments)) foreach ($arguments as $k => $v) {
 			$commandLine->arguments[$k] = $v;
 		}
-		//
+
+		return $commandLine;
+	}
+
+	/**
+	 *	Parses the command line and join the arguments, if possible, and
+	 *	then returns a new CommandLine instance 
+	 *
+	 *	@param	string	$command
+	 *	@param	array	$arguments
+	 *	@return	\PSharp\Console\CommandLine
+	 */
+	protected static function parseAndMergeArguments(string $command, array $arguments = [])
+	{
+		$commandLine = new static($command);
+
+		$values = $commandLine->arguments;
+
+		foreach ($arguments as $name => $value) if (is_int($name)) {
+			$values[] = $value;
+			unset($arguments[$name]);
+		}
+
+		foreach ($arguments as $name => $value) {
+			if (empty($values)) {
+				break;
+			}
+
+			if (is_string($name)) {
+				if ($given = array_shift($values)) {
+					$arguments[$name] = $given;
+				}
+			}
+		}
+
+		$commandLine->arguments = $arguments;
+
+		if ($values) foreach ($values as $value) {
+			$commandLine->arguments[] = $value;
+		}
+
 		return $commandLine;
 	}
 
@@ -281,14 +331,18 @@ class CommandLine
 	 *	the given command $signature, so returns a new CommandLine instance.
 	 *
 	 *	@param	string	$command
-	 *	@param	string	$signature
+	 *	@param	string|PSharp\Console\Signature	$signature
 	 *	@return	\PSharp\Console\CommandLine
 	 */
-	public static function throughSignature(string $command, string $signature)
+	public static function throughSignature(string $command, string|Signature $signature)
 	{
+		if (is_string($signature)) {
+			$signature = new Signature($signature);
+		}
+
 		$arguments = static::parseSignature($signature);
-		//
-		return static::parse($command, $arguments);
+
+		return static::parseAndMergeArguments($command, $arguments);
 	}
 
 	/**
@@ -297,12 +351,33 @@ class CommandLine
 	 *	@param	string	$signature
 	 *	@return	array
 	 */
-	protected function parseSignature(string $signature)
+	protected static function parseSignature(Signature $signature)
 	{
-		$parsed = new Signature($signature);
-		//
-		return array_map(function ($item) {
-			return $item['default'] ?? '';
-		}, $parsed->arguments());
+		return array_combine(
+			array_map([self::class, 'parseSignatureMapperNames'], $signature->getArguments()),
+			array_map([self::class, 'parseSignatureMapperDefaultValues'], $signature->getArguments())
+		);
+	}
+
+	/**
+	 *	In use by parseSignature() method.
+	 *
+	 *	@param	mixed	$item
+	 *	@return	mixed
+	 */
+	private static function parseSignatureMapperNames($item)
+	{
+		return $item['name'];
+	}
+
+	/**
+	 *	In use by parseSignature() method.
+	 *
+	 *	@param	mixed	$item
+	 *	@return	mixed
+	 */
+	private static function parseSignatureMapperDefaultValues($item)
+	{
+		return $item['default'] ?? '';
 	}
 }
