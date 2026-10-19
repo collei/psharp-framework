@@ -57,15 +57,37 @@ class Input extends Terminal
 	protected $argvOptions = [];
 
 	/**
-	 * Captures args from PHP CLI environment.
+	 * Captures args from PHP CLI environment as array.
 	 *
-	 * @return	string
+	 * @return	array
 	 */
 	public static function captureArgs()
 	{
 		global $argv;
-		//
+
 		return $argv ?? $_SERVER['argv'];
+	}
+
+	/**
+	 * Captures args from PHP CLI environment as string.
+	 *
+	 * @return	string
+	 */
+	public static function captureCommandLine(bool $withCalleeScript = false)
+	{
+		$arguments = self::captureArgs();
+
+		if (! $withCalleeScript) {
+			array_shift($arguments);
+		}
+
+		foreach ($arguments as $n => $arg) {
+			if (strpos($arg, ' ')) {
+				$arguments[$n] = sprintf('"%s"', $arg);
+			}
+		}
+
+		return implode(' ', $arguments);
 	}
 
 	/**

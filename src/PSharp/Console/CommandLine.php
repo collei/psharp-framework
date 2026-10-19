@@ -52,12 +52,14 @@ class CommandLine
 	 */
 	public function __construct(string $commandLine = null)
 	{
-		$this->arrayedLine = !is_null($commandLine)
-			? Input::parseLine($commandLine)
-			: Input::captureArgs();
-		//
+		if (empty($commandLine)) {
+			$commandLine = Input::captureCommandLine();
+		}
+
+		$this->arrayedLine = Input::parseLine($commandLine);
+
 		$this->line = trim(implode(' ', $this->arrayedLine));
-		//
+
 		$this->doParseCommandAndOptions();
 	}
 
