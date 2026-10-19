@@ -160,12 +160,17 @@ class CommandHolder
 			return $command->handle();
 		}
 
-		$parameters = array_merge(
-			app(ParameterReaper::class)->reapMethodParameters($command, 'handle', []),
-			$input->getArgumentsAndOptions()
-		);
+		$expected = app(ParameterReaper::class)->reapMethodParameters($command, 'handle', []);
 
-		return $command->handle(...$parameters);
+		$passed = $input->getArgumentsAndOptions();
+
+		foreach ($expected as $name => $value) {
+			if (array_key_exists($name, $passed)) {
+				$expected[$name] = $passed[$name];
+			}
+		}
+
+		return $command->handle(...$expected);
 	}
 
 	/**
