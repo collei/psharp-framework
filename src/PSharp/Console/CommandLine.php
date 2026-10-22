@@ -107,6 +107,22 @@ class CommandLine
 	}
 
 	/**
+	 *	Returns debug info
+	 *
+	 *	@return	array
+	 */
+	public function __debugInfo()
+	{
+		return [
+			'line' => $this->line,
+			'command' => $this->command,
+			'subCommand' => $this->subCommand,
+			'arguments' => $this->arguments,
+			'options' => $this->options,
+		];
+	}
+
+	/**
 	 *	Returns if the specified value or option exists
 	 *
 	 *	@param	string	$name	
