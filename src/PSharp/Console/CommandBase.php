@@ -567,9 +567,22 @@ abstract class CommandBase
 	 */
 	public function write(string $text)
 	{
-		if (!$this->silent()) {
+		if (! $this->silent()) {
 			Formatter::make($text)->output();
 		}
+	}
+
+	/**
+	 *	Outputs to the console with newline
+	 *
+	 *	@param	string	$text	
+	 *	@return void
+	 */
+	public function writeLine(string $text)
+	{
+		$this->write($text);
+		
+		echo("\n");
 	}
 
 	/**
