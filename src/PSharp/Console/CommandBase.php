@@ -38,6 +38,11 @@ abstract class CommandBase
 	protected $app;
 
 	/**
+	 * @var \PSharp\Console\CommandHolder
+	 */
+	protected $holder;
+
+	/**
 	 * @var \PSharp\Console\Input\Input
 	 */
 	protected $input;
@@ -100,6 +105,8 @@ abstract class CommandBase
 	{
 		$this->app = app();
 
+		$this->holder = app(CommandHolder::class);
+
 		if ($this->signature) {
 			$this->setSignature($this->signature);
 		}
@@ -113,6 +120,16 @@ abstract class CommandBase
 	public function app()
 	{
 		return $this->app;
+	}
+
+	/**
+	 * Retrieves the underlying command holder.
+	 *
+	 * @return	\PSharp\Console\CommandHolder
+	 */
+	public function holder()
+	{
+		return $this->holder;
 	}
 
 	/**
