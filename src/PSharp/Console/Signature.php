@@ -2,6 +2,7 @@
 namespace PSharp\Console;
 
 use Attribute;
+use PSharp\Support\Str;
 
 /**
  * Class attribute for endpoints responding upon all verbs
@@ -9,6 +10,11 @@ use Attribute;
 #[Attribute(Attribute::TARGET_CLASS)]
 class Signature
 {
+	/**
+	 * @var string
+	 */
+	protected const REGEX_PATTERN = '/\\{(?>(?<option>--)?(?>(?<shortcut>\\w)\\|)?(?<name>\\w[\\w:]*\\w?)?)(?<optional>\\?)?(?<multiple>\\*)?(?>=(?<default>[^}]*))?\\}/i';
+
 	/**
 	 * @var string
 	 */
@@ -98,6 +104,23 @@ class Signature
 	}
 
 	/**
+	 *	Get the option name for the given shortcut, if any.
+	 *
+	 *	@param	string|null $shortcut
+	 *	@return string|null
+	 */
+	public function getOptionByShortcut(?string $shortcut = null)
+	{
+		foreach ($this->options as $item) {
+			if (($shortcut ?? '') == $item['shortcut']) {
+				return $item['name'];
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 *	Parses the command signature into an array info about the parameters
 	 *	the command expects
 	 *
@@ -107,46 +130,44 @@ class Signature
 	 */
 	protected function parseSignature(string $signature)
 	{
-		$pattern = '#\\{\\s*((\\w[\\w:\\-]*)(\\?\\*|[?*])?(=("[^"]*"|\''
-			. '[^\']*\'|[^\\s}]*)?)?|(-(\\w)\\|)?(--(\\w[\\w\\-]*\\w))(=("'
-			. '[^"]*"|\'[^\']*\'|[^\\s}]*)?)?)(\\s*:\\s*([^}]+))?\\s*\\}#i';
-
-		$line = str_replace(["\r","\n"], '', trim($signature));
-		$list = ($args = []);
+		[$line, $list] = [str_replace(["\r","\n"], '', trim($signature)), ($args = [])];
 
 		[$command, $signature] = explode(' ', $signature . ' ', 2);
 
 		$this->command = $command;
 
-		if (preg_match_all($pattern, $line, $list, PREG_SET_ORDER)) {
+		if (preg_match_all(self::REGEX_PATTERN, $line, $list, PREG_SET_ORDER)) {
 			$first = true;
 
 			foreach ($list as $item) {
-				// it's an option
-				if (!empty($item[9] ?? '')) {
-					$default = trim($item[11] ?? '');
+				$isOptional = ($item['optional'] ?? null) === '?';
+				$isMultiple = ($item['multiple'] ?? null) === '*';
 
-					$this->addOption(
-						$item[9],
-						trim($item[13] ?? ''),
-						trim($item[7] ?? ''),
-						$default,
-						true,
-						($default == '*')
-					);
+				if ($default = trim($item['default'] ?? null)) {
+					if (Str::isQuoted($default)) {
+						$default = trim($default, '\'"');
+					} elseif (is_numeric($default)) {
+						$number = (float) $default;
+						$default = ($number == (int) $number) ? (int) $number : $number;
+					} else {
+						$lowered = strtolower($default);
+						$default = ($lowered === 'true')
+							? true
+							: (($lowered === 'false') ? false : $default);
+					}
+				} else {
+					$default = null;
 				}
 
+				// it's an option
+				if (! empty($item['option'])) {
+					$shortcut = $item['shortcut'] ?? '';
+
+					$this->addOption($item['name'], '', $shortcut, $default, true, $isMultiple);
+				}
 				// it's an argument
-				elseif (!empty($item[2] ?? '')) {
-					$signal = trim($item[3] ?? '');
-					//
-					$this->addArgument(
-						$item[2],
-						trim($item[13] ?? ''),
-						trim($item[5] ?? ''),
-						(strpos($signal, '?') !== false),
-						(strpos($signal, '*') !== false)
-					);
+				else {
+					$this->addArgument($item['name'], '', $default, $isOptional, $isMultiple);
 				}
 
 				$first = false;
@@ -174,7 +195,7 @@ class Signature
 	) {
 		$default = empty($default)
 				? false
-				: (($default == '*') ? [] : $default);
+				: ($isMultiple ? [] : $default);
 		
 		$this->options[] = compact(
 			'name','description','shortcut','default','isOptional','isMultiple'
