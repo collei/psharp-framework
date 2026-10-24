@@ -538,6 +538,9 @@ final class Application
         $this->prepareRun();
 
         if ($this->isRunningOnConsoleMode()) {
+            // resident commands
+        	$this->mapConsoleCommands('PSharp\Core\Console');
+
             $this->handleCommand(
                 $this->captureCommand()
             );
