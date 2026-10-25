@@ -18,29 +18,26 @@ class RouteListCommand extends CommandBase
 	 * @param mixed $spec = null
 	 * @return mixed
 	 */
-	public function handle(CommandLine $input)
+	public function handle(CommandLine $input, $detailed = false)
 	{
-		print_r(compact('input'));
-	}
+		$routes = app(\PSharp\Http\RouteMapper::class)->getEndpoints();
 
-	/**
-	 * List available commands matching the given filter, or all if no filter.
-	 * 
-	 * @param ?string $filter = null
-	 * @return void
-	 */
-	protected function list(?string $filter = null)
-	{
-		$list = $this->holder()->available($filter ?: null);
+		$this->writeLine("<fg=green>-- Available routes:</>");
+		$this->line('');
 
-		if ($count = count($list)) {
-			$this->line("<fg=yellow>-- Found $count commands:</>");
+		foreach ($routes as $route) {
+			$action = $route->getAction();
+			$name = $route->getName();
+			$endpoint = $route->asString();
 
-			foreach ($list as $item) {
-				$this->line("<fg=yellow>\t* $item</>");
+			if ($detailed) {
+				$this->writeLine("\t* <fg=yellow>{$endpoint}</>");
+				$this->writeLine("\t\tname:<fg=green>\t{$name}</>");
+				$this->writeLine("\t\taction:<fg=green>\t{$action}</>");
+				$this->line('');
+			} else {
+				$this->writeLine("\t* <fg=yellow>{$endpoint}</> --> <fg=green>{$action}</>");
 			}
-		} else {
-			$this->line("<fg=yellow>-- Found no corresponding commands.</>");
 		}
 	}
 }
