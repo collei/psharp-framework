@@ -47,11 +47,18 @@ class CommandHolder
 	 * 
 	 * @param string $appDir
 	 * @param string $namespace = 'App\Controllers\Console'
+	 * @param bool $ignoreIfNotExists = false
 	 * @return $this
+	 * 
+	 * @throws \PSharp\Console\ConsoleException if path not found
 	 */
-	public function mapCommands(string $appDir, string $namespace = 'App\Controllers\Console')
+	public function mapCommands(string $appDir, string $namespace = 'App\Controllers\Console', bool $ignoreIfNotExists = false)
 	{
 		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, $appDir . DIRECTORY_SEPARATOR . $namespace);
+
+		if ((! $ignoreIfNotExists) && (! is_dir($path))) {
+			throw new ConsoleException(sprintf('Path not found on console command search: %s', $path));
+		}
 
 		$files = array_diff(scandir($path), array('.','..'));
 
@@ -72,10 +79,15 @@ class CommandHolder
 	 * Map the specified command object.
 	 * 
 	 * @param string|\PSharp\Console\CommandBase $command
+	 * @param bool $ignoreIfNotExists = false
 	 * @return $this
 	 */
-	public function mapCommand(string|CommandBase $command)
+	public function mapCommand(string|CommandBase $command, bool $ignoreIfNotExists = false)
 	{
+		if (! $ignoreIfNotExists && is_string($command) && ! class_exists($command, true)) {
+			throw new ConsoleException(sprintf('Command class not found: %s', $command));
+		}
+
 		$reflect = new ReflectionClass($command);
 		
 		$className = $reflect->getName();
