@@ -279,6 +279,38 @@ final class Application
      * @param string|null $namespace
      * @return $this
      */
+    public function mapConsoleCommand(string|CommandBase $command)
+    {
+        if ($this->isRunningOnConsoleMode()) {
+            $this->commandHolder->mapCommand($command);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Maps all resident command classes.
+     * 
+     * @return $this
+     */
+    protected function mapConsoleResidentCommands()
+    {
+        if ($this->isRunningOnConsoleMode()) {
+            $this->commandHolder->mapCommand(\PSharp\Core\Console\HelpCommand::class);
+            $this->commandHolder->mapCommand(\PSharp\Core\Console\ListCommand::class);
+            $this->commandHolder->mapCommand(\PSharp\Core\Console\DebugCommand::class);
+            $this->commandHolder->mapCommand(\PSharp\Core\Console\RouteListCommand::class);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Maps all command classes under the given namespace, if any.
+     * 
+     * @param string|null $namespace
+     * @return $this
+     */
     public function mapConsoleCommands(string $namespace = null)
     {
         if ($this->isRunningOnConsoleMode()) {
@@ -539,7 +571,7 @@ final class Application
 
         if ($this->isRunningOnConsoleMode()) {
             // resident commands
-        	$this->mapConsoleCommands('PSharp\Core\Console');
+        	$this->mapConsoleResidentCommands();
 
             $this->handleCommand(
                 $this->captureCommand()
