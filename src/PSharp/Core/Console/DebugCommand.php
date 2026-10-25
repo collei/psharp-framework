@@ -22,7 +22,7 @@ class DebugCommand extends CommandBase
 	 */
 	public function handle(CommandLine $input, $first = null, $second = null, $third = null)
 	{
-		$this->line(sprintf('<fg=yellow>%s</>', compact('first','second','third','input')));
+		$this->line(sprintf('<fg=yellow>%s</>', print_r(compact('first','second','third','input'), true)));
 
 		return 0;
 	}
