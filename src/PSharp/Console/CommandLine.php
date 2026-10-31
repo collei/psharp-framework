@@ -359,6 +359,8 @@ class CommandLine
 		if ($optionValues) foreach ($optionValues as $key => $value) {
 			if ($name = $signature->getOptionByShortcut($key)) {
 				$commandLine->options[$name] = $value;
+			} else {
+				$commandLine->options[$key] = $value;
 			}
 		}
 
