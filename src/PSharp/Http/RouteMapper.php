@@ -86,7 +86,7 @@ class RouteMapper
 	 */
 	public function mapControllers(string $appDir, string $namespace = 'App\Controllers')
 	{
-		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, $appDir . DIRECTORY_SEPARATOR . $namespace);
+		$path = preg_replace('#[\\\\/]+#', DIRECTORY_SEPARATOR, $appDir . DIRECTORY_SEPARATOR . $namespace);
 
 		$files = array_diff(scandir($path) ?: [], array('.','..'));
 

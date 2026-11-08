@@ -54,7 +54,7 @@ class CommandHolder
 	 */
 	public function mapCommands(string $appDir, string $namespace = 'App\Controllers\Console', bool $ignoreIfNotExists = false)
 	{
-		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, $appDir . DIRECTORY_SEPARATOR . $namespace);
+		$path = preg_replace('#[\\\\/]+#', DIRECTORY_SEPARATOR, $appDir . DIRECTORY_SEPARATOR . $namespace);
 
 		if ((! $ignoreIfNotExists) && (! is_dir($path))) {
 			throw new ConsoleException(sprintf('Path not found on console command search: %s', $path));
