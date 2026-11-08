@@ -88,7 +88,7 @@ class RouteMapper
 	{
 		$path = preg_replace('#[\\/]+#', DIRECTORY_SEPARATOR, $appDir . DIRECTORY_SEPARATOR . $namespace);
 
-		$files = array_diff(scandir($path), array('.','..'));
+		$files = array_diff(scandir($path) ?: [], array('.','..'));
 
 		foreach ($files as $file) {
 			if (is_file($path . DIRECTORY_SEPARATOR . $file)) {
