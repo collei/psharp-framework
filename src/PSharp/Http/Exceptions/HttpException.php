@@ -9,7 +9,7 @@ class HttpException extends Exception
     protected $statusCode;
     protected $headers;
 
-    public function __construct(int $statusCode, string $message = '', Throwable $previous = null, array $headers = null, int $code = 0)
+    public function __construct(int $statusCode, string $message = '', ?Throwable $previous = null, ?array $headers = null, int $code = 0)
     {
         parent::__construct($message, $code, $previous);
 

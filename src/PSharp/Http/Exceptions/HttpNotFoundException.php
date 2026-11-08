@@ -3,7 +3,7 @@ namespace PSharp\Http\Exceptions;
 
 class HttpNotFoundException extends HttpException
 {
-    public function __construct(string $message = '', Throwable $previous = null, array $headers = null)
+    public function __construct(string $message = '', ?Throwable $previous = null, ?array $headers = null)
     {
         parent::__construct(404, $message, $previous, $headers);
     }

@@ -20,8 +20,8 @@ class HelpCommand extends CommandBase
 	 * Command handler.
 	 * 
 	 * @param PSharp\Console\CommandLine $input
-	 * @param mixed $topic = null
-	 * @param mixed $subtopic = null
+	 * @param ?mixed $topic = null
+	 * @param ?mixed $subtopic = null
 	 * @return mixed
 	 */
 	public function handle(CommandLine $input, $topic = null, $subtopic = null)
@@ -32,8 +32,8 @@ class HelpCommand extends CommandBase
 	/**
 	 * Help content display.
 	 * 
-	 * @param ?string $topic = null
-	 * @param ?string $subtopic = null
+	 * @param ??string $topic = null
+	 * @param ??string $subtopic = null
 	 * @return void
 	 */
 	protected function displayHelpPage(?string $topic = null, ?string $subtopic = null)
@@ -83,7 +83,7 @@ class HelpCommand extends CommandBase
 	/**
 	 * Help content loader.
 	 * 
-	 * @param ?string $page = null
+	 * @param ??string $page = null
 	 * @return mixed
 	 */
 	protected function loadHelpContent(?string $page = null)

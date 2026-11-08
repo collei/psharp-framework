@@ -417,7 +417,7 @@ abstract class CommandBase
 	 *	@param	array	$arguments	arguments, if needed
 	 *	@return	mixed
 	 */
-	public function call(string $command, array $arguments = null)
+	public function call(string $command, ?array $arguments = null)
 	{
 		return $this->invokeAnother($command, $arguments);
 	}
@@ -429,7 +429,7 @@ abstract class CommandBase
 	 *	@param	array	$arguments	arguments, if needed
 	 *	@return	mixed
 	 */
-	public function callSilently(string $command, array $arguments = null)
+	public function callSilently(string $command, ?array $arguments = null)
 	{
 		return $this->invokeAnother($command, $arguments, self::CA_MODE_SILENT);
 	}
@@ -512,7 +512,7 @@ abstract class CommandBase
 	 *	@param	string	$value	
 	 *	@return	void
 	 */
-	public function setEnv(string $name, string $value = null)
+	public function setEnv(string $name, ?string $value = null)
 	{
 		$this->app->setEnv($name, $value);
 	}
@@ -593,7 +593,7 @@ abstract class CommandBase
 	 *	@return void
 	 */
 	public function writePad(
-		string $text, int $maxLength, int $padding = null, string $padWith = ' '
+		string $text, int $maxLength, ?int $padding = null, string $padWith = ' '
 	) {
 		$padding = in_array($padding, OutputFormat::PADDINGS)
 			? $padding
@@ -767,7 +767,7 @@ abstract class CommandBase
 	 *	@param	?bool	$silent		true or false (to define) or null (to keep the command default)
 	 *	@return	mixed
 	 */
-	protected function invokeAnother(string $name, array $arguments = null, ?bool $silent = null) 
+	protected function invokeAnother(string $name, ?array $arguments = null, ?bool $silent = null) 
 	{
 		foreach ($arguments as $n => $arg) {
 			if (strpos($arg, ' ') !== false) {

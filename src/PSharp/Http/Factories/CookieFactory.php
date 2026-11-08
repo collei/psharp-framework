@@ -199,9 +199,9 @@ class CookieFactory implements CookieFactoryInterface
 	 * @return \PSharp\Http\Cookie
 	 */
 	public function make(
-		$name, string $value = null, int $expires = null,
-		string $path = null, string $domain = null,
-		bool $secure = false, bool $httpOnly = false, string $sameSite = null
+		$name, ?string $value = null, ?int $expires = null,
+		?string $path = null, ?string $domain = null,
+		bool $secure = false, bool $httpOnly = false, ?string $sameSite = null
 	) {
 		$this->queued[$name] = $cookie = new Cookie(
 			$name,
@@ -230,8 +230,8 @@ class CookieFactory implements CookieFactoryInterface
 	 * @return \PSharp\Http\Cookie
 	 */
 	public function forever(
-		$name, string $value = null, string $path = null, string $domain = null,
-		bool $secure = false, bool $httpOnly = false, string $sameSite = null
+		$name, ?string $value = null, ?string $path = null, ?string $domain = null,
+		bool $secure = false, bool $httpOnly = false, ?string $sameSite = null
 	) {
 		return $this->make(
 			$name, $value, self::FOREVER, $path, $domain, $secure, $httpOnly, $sameSite
@@ -245,7 +245,7 @@ class CookieFactory implements CookieFactoryInterface
 	 * @param string $path
 	 * @param string $domain
 	 */
-	public function forget($name, string $path = null, string $domain = null)
+	public function forget($name, ?string $path = null, ?string $domain = null)
 	{
 		return $this->make($name, null, self::FORGET, $path, $domain);
 	}

@@ -77,7 +77,7 @@ class ResponsePreparator
 	 * @return \PSharp\Http\Response
 	 * @throws \InvalidArgumentException For invalid status code arguments
 	 */
-	protected function create(string $content, int $code, array $headers = null)
+	protected function create(string $content, int $code, ?array $headers = null)
 	{
 		return $this->responseFactory->create($content, $code, $headers);
 	}

@@ -51,10 +51,10 @@ class DatabaseManager
     /**
      * Retrieves a connection by its name, or the default, if any.
      * 
-     * @param string $name = null
+     * @param ?string $name = null
      * @return PSharp\DB\Connections\Connection|null
      */
-    public function connection(string $name = null)
+    public function connection(?string $name = null)
     {
         if (isset($this->connections[$name])) {
             return $this->connections[$name];

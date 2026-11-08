@@ -102,9 +102,9 @@ interface CookieFactoryInterface
 	 * @return \PSharp\Http\Cookie
 	 */
 	public function make(
-		$name, string $value = null, int $expires = null,
-		string $path = null, string $domain = null,
-		bool $secure = false, bool $httpOnly = false, string $sameSite = null
+		$name, ?string $value = null, ?int $expires = null,
+		?string $path = null, ?string $domain = null,
+		bool $secure = false, bool $httpOnly = false, ?string $sameSite = null
 	);
 
 	/**
@@ -120,8 +120,8 @@ interface CookieFactoryInterface
 	 * @return \PSharp\Http\Cookie
 	 */
 	public function forever(
-		$name, string $value = null, string $path = null, string $domain = null,
-		bool $secure = false, bool $httpOnly = false, string $sameSite = null
+		$name, ?string $value = null, ?string $path = null, ?string $domain = null,
+		bool $secure = false, bool $httpOnly = false, ?string $sameSite = null
 	);
 
 	/**
@@ -131,5 +131,5 @@ interface CookieFactoryInterface
 	 * @param string $path
 	 * @param string $domain
 	 */
-	public function forget($name, string $path = null, string $domain = null);
+	public function forget($name, ?string $path = null, ?string $domain = null);
 }

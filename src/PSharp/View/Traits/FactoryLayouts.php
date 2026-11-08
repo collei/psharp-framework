@@ -33,7 +33,7 @@ trait FactoryLayouts
      * Starts a section.
      *
      * @param string $section
-     * @param mixed $content = null
+     * @param ?mixed $content = null
      * @return void
      */
     public function startSection($section, $content = null)
@@ -51,7 +51,7 @@ trait FactoryLayouts
      * Performs section injection.
      *
      * @param string $section
-     * @param mixed $content = null
+     * @param ?mixed $content = null
      * @return void
      */
     public function inject($section, $content)
@@ -122,7 +122,7 @@ trait FactoryLayouts
      * Performs a section extension.
      *
      * @param string $section
-     * @param mixed $content = null
+     * @param ?mixed $content = null
      * @return void
      */
     public function extendSection($section, $content)
@@ -192,7 +192,7 @@ trait FactoryLayouts
      * Retrieves a section.
      *
      * @param string $section
-     * @param mixed $default = null
+     * @param ?mixed $default = null
      * @return mixed
      */
     public function getSection($section, $default = null)

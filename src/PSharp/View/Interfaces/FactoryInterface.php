@@ -49,7 +49,7 @@ interface FactoryInterface
      * Retrieves a shared datum by $key.
      *
      * @param string $key
-     * @param mixed $default = null
+     * @param ?mixed $default = null
      * @return mixed
      */
     public function shared($key, $default = null);
@@ -65,7 +65,7 @@ interface FactoryInterface
      * Share a datum across all views.
      *
      * @param string $key
-     * @param mixed $value = null
+     * @param ?mixed $value = null
      * @return mixed
      */
     public function share($key, $value = null);

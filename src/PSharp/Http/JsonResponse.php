@@ -114,7 +114,7 @@ class JsonResponse extends Response
 	 * @return $this
 	 * @throws \InvalidArgumentException When the callback name is not valid
 	 */
-	public function setCallback(string $callback = null)
+	public function setCallback(?string $callback = null)
 	{
 		if (null !== $callback) {
 			$pattern = '/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*(?:\[(?:"(?:\\\.|[^"\\\])*"|\'(?:\\\.|[^\'\\\])*\'|\d+)\])*?$/u';

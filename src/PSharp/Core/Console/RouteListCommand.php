@@ -15,7 +15,7 @@ class RouteListCommand extends CommandBase
 	 * Command handler.
 	 * 
 	 * @param PSharp\Console\CommandLine $input
-	 * @param mixed $spec = null
+	 * @param ?mixed $spec = null
 	 * @return mixed
 	 */
 	public function handle(CommandLine $input, $detailed = false)

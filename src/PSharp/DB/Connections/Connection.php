@@ -154,17 +154,17 @@ class Connection
      * @param string $username = ''
      * @param string $password = ''
      * @param int $port = 0
-     * @param string|null $charset = null
+     * @param string|?null $charset = null
      * @return string
      */
     public static function buildDsn(
         string $vendor,
-        string $server = null,
-        string $database = null,
-        string $username = null,
-        string $password = null,
-        int $port = null,
-        string $charset = null
+        ?string $server = null,
+        ?string $database = null,
+        ?string $username = null,
+        ?string $password = null,
+        ?int $port = null,
+        ?string $charset = null
     ) {
         if ($type = static::getSupportedType($vendor)) {
             $port = ($port > 0) ? $port : static::DB_STANDARD_PORTS[$type];
@@ -194,7 +194,7 @@ class Connection
      * @param string|null $type
      * @return bool
      */
-    public function isType(string $type = null)
+    public function isType(?string $type = null)
     {
         if (empty($type)) {
             return false;
@@ -407,7 +407,7 @@ class Connection
      * @param mixed &$errors
 	 * @return array
 	 */
-	public function select(string $sql, array $data = null, &$errors = null)
+	public function select(string $sql, ?array $data = null, &$errors = null)
 	{
 		try {
             if ($this->isOpen()) {
@@ -439,7 +439,7 @@ class Connection
      * @param mixed &$errors
 	 * @return Generator|null
 	 */
-	public function lazySelect(string $sql, array $data = null, &$errors = null)
+	public function lazySelect(string $sql, ?array $data = null, &$errors = null)
 	{
         if (! $this->isOpen()) {
             return null;
@@ -463,7 +463,7 @@ class Connection
      * @param mixed &$errors
 	 * @return Generator|null
 	 */
-	protected function performLazySelect(string $sql, array $data = null, &$errors = null)
+	protected function performLazySelect(string $sql, ?array $data = null, &$errors = null)
 	{
 		try {
             if ($this->isOpen()) {
@@ -501,7 +501,7 @@ class Connection
      * @param mixed &$errors
 	 * @return int
 	 */
-	public function insert(string $sql, array $data = null, &$errors = null)
+	public function insert(string $sql, ?array $data = null, &$errors = null)
 	{
 		try {
             if ($this->isOpen()) {
@@ -532,7 +532,7 @@ class Connection
      * @param mixed &$errors
 	 * @return int
 	 */
-	public function update(string $sql, array $data = null, &$errors = null)
+	public function update(string $sql, ?array $data = null, &$errors = null)
     {
         return $this->execute($sql, $data, $errors);
     }
@@ -547,7 +547,7 @@ class Connection
      * @param mixed &$errors
 	 * @return int
 	 */
-	public function delete(string $sql, array $data = null, &$errors = null)
+	public function delete(string $sql, ?array $data = null, &$errors = null)
     {
         return $this->execute($sql, $data, $errors);
     }
@@ -563,7 +563,7 @@ class Connection
      * @param mixed &$errors
 	 * @return int
 	 */
-	protected function execute(string $sql, array $data = null, &$errors = null)
+	protected function execute(string $sql, ?array $data = null, &$errors = null)
 	{
 		try {
             if ($this->isOpen()) {
@@ -611,7 +611,7 @@ class Connection
      * @param string|null $reason
      * @return object
      */
-    protected function processException(Throwable $exception, string $sql = null, string $reason = null)
+    protected function processException(Throwable $exception, ?string $sql = null, ?string $reason = null)
     {
         $reason = $reason ?? $exception->getMessage();
 

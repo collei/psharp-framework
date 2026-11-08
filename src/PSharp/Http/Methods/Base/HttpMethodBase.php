@@ -53,9 +53,9 @@ abstract class HttpMethodBase implements EndpointInterface
 	 * Constructor.
 	 * 
 	 * @param string $path = "/"
-	 * @param string $name = null
+	 * @param ?string $name = null
 	 */
-	public function __construct(string $path = '/', string $name = null)
+	public function __construct(string $path = '/', ?string $name = null)
 	{
 		$this->path = empty($path) ? '/' : $path;
 		$this->name = $name;
@@ -108,7 +108,7 @@ abstract class HttpMethodBase implements EndpointInterface
 	/**
 	 * Define whether this route is default when a route not found.
 	 * 
-	 * @param bool|null $default = null
+	 * @param bool|?null $default = null
 	 * @return $this;
 	 */
 	public function setAsDefaultWhenNotFound(bool $default = true)

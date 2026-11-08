@@ -15,7 +15,7 @@ class ListCommand extends CommandBase
 	 * Command handler.
 	 * 
 	 * @param PSharp\Console\CommandLine $input
-	 * @param mixed $spec = null
+	 * @param ?mixed $spec = null
 	 * @return mixed
 	 */
 	public function handle(CommandLine $input, $spec = null)
@@ -26,7 +26,7 @@ class ListCommand extends CommandBase
 	/**
 	 * List available commands matching the given filter, or all if no filter.
 	 * 
-	 * @param ?string $filter = null
+	 * @param ??string $filter = null
 	 * @return void
 	 */
 	protected function list(?string $filter = null)

@@ -214,7 +214,7 @@ class Input extends Terminal
 	 * @param	array	$argv
 	 * @return	array
 	 */
-	public function readLine(string $prompt = null)
+	public function readLine(?string $prompt = null)
 	{
 		$prompt = ($prompt ?? '::>') . ' ';
 		//
@@ -228,7 +228,7 @@ class Input extends Terminal
 	 * @param	string	$prompt = null
 	 * @return	array
 	 */
-	public function readParsedLine(string $prompt = null)
+	public function readParsedLine(?string $prompt = null)
 	{
 		return $this->parseLine($this->readLine($prompt));
 	}
@@ -366,7 +366,7 @@ class Input extends Terminal
 	public function choice(
 		string $prompt,
 		array $options,
-		int $defaultIndex = null,
+		?int $defaultIndex = null,
 		int $maxAttempts = 1,
 		int $maxSelections = 1
 	) {

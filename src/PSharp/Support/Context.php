@@ -18,7 +18,7 @@ class Context implements Arrayable
      * 
      * @param array|null $assets
      */
-    public function __construct(array $assets = null)
+    public function __construct(?array $assets = null)
     {
         $this->assets = $assets ?? [];
     }

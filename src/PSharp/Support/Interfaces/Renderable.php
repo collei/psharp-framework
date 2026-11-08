@@ -12,5 +12,5 @@ interface Renderable
      * @param callable|null $callback
      * @return string
      */
-    public function render(callable $callback = null): string;
+    public function render(?callable $callback = null): string;
 }

@@ -13,7 +13,7 @@ class Redirector
      * @param string $url
      * @param int $status = 302
      * @param array $headers = []
-     * @param bool $secure = null
+     * @param ?bool $secure = null
      * @return PSharp\Http\Response
      */
     public function to(string $url, int $status = 302, array $headers = [], ?bool $secure = null)

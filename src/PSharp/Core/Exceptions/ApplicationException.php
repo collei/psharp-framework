@@ -22,7 +22,7 @@ class ApplicationException extends Exception
      * @param PSharp\Core\Application|null $app
      * @param Throwable|null $previous
      */
-    public function __construct(string $message = '', Application $app = null, Throwable $previous = null)
+    public function __construct(string $message = '', ?Application $app = null, ?Throwable $previous = null)
     {
         parent::__construct($message, 0, $previous);
 

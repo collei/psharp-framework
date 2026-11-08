@@ -524,7 +524,7 @@ abstract class Arr
 	 * @param string $symbol
 	 * @return mixed
 	 */
-	public static function join(string $glue, array $array, string $symbol = null)
+	public static function join(string $glue, array $array, ?string $symbol = null)
 	{
 		if (is_null($symbol)) {
 			return implode($glue, $array);
@@ -779,7 +779,7 @@ abstract class Arr
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static function first(array $array, callable $filter = null, $default = null)
+	public static function first(array $array, ?callable $filter = null, $default = null)
 	{
 		if (!is_null($filter)) {
 			$array = array_filter($array, $filter, 0);
@@ -801,7 +801,7 @@ abstract class Arr
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static function firstBoth(array $array, callable $filter = null, $default = null)
+	public static function firstBoth(array $array, ?callable $filter = null, $default = null)
 	{
 		if (!is_null($filter)) {
 			$array = array_filter($array, $filter, ARRAY_FILTER_USE_BOTH);

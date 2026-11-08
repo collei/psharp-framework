@@ -193,10 +193,10 @@ class RequestFactory implements RequestFactoryInterface, ServerRequestFactoryInt
 	 */
 	protected function createUploadedFile(
 		string $filename,
-		int $size = null,
+		?int $size = null,
 		int $error = \UPLOAD_ERR_OK,
-		string $clientFilename = null,
-		string $clientMediaType = null
+		?string $clientFilename = null,
+		?string $clientMediaType = null
 	) {
 		if (! is_readable($filename)) {
 			throw new InvalidArgumentException("The file [{$filename}] is not readable.");

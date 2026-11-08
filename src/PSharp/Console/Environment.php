@@ -58,7 +58,7 @@ class Environment
 	 *
 	 *	@param	string	$fileName
 	 */
-	public function __construct(string $fileName = null)
+	public function __construct(?string $fileName = null)
 	{
 		$this->fileName = $fileName ?? '';
 		$this->variables = new Properties();

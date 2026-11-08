@@ -15,9 +15,9 @@ class DebugCommand extends CommandBase
 	 * Command handler.
 	 * 
 	 * @param PSharp\Console\CommandLine $input
-	 * @param mixed $first = null
-	 * @param mixed $second = null
-	 * @param mixed $third = null
+	 * @param ?mixed $first = null
+	 * @param ?mixed $second = null
+	 * @param ?mixed $third = null
 	 * @return mixed
 	 */
 	public function handle(CommandLine $input, $first = null, $second = null, $third = null)

@@ -67,7 +67,7 @@ class RouteMapper
 	 * @param Closure $action
 	 * @param string|null $name
 	 */
-	public function addClosure(string $method, string $path, Closure $action, string $name = null)
+	public function addClosure(string $method, string $path, Closure $action, ?string $name = null)
 	{
 		$endpoint = Endpoint::fromClosure($method, $path, $action, $name);
 

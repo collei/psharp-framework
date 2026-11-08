@@ -21,7 +21,7 @@ class DatabaseException extends RuntimeException
      * @param string|null $message
      * @param Throwable|null $previous
      */
-    public function __construct(string $sql = null, string $message = null, Throwable $previous = null)
+    public function __construct(?string $sql = null, ?string $message = null, ?Throwable $previous = null)
     {
         parent::__construct($message, 0, $previous);
 

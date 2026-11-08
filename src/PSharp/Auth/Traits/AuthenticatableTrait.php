@@ -119,7 +119,7 @@ trait AuthenticatableTrait
 	 *
 	 * @return string
 	 */
-	public function setUserToken(string $token = null)
+	public function setUserToken(?string $token = null)
 	{
 		$this->Token = $token;
 	}

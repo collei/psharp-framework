@@ -278,10 +278,10 @@ class AuthManager
      * Retrieves the given guard by its name, if any.
      * May retrieve the default guard if configured.
      * 
-     * @param string $name = null
+     * @param ??string $name = null
      * @return PSharp\Auth\Guard|null
      */
-    public function guard(string $name = null)
+    public function guard(?string $name = null)
     {
         if ($name) if ($guard = $this->guards[$name] ?? null) {
             return $guard;

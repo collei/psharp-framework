@@ -43,7 +43,7 @@ class ResponseFactory implements ResponseFactoryInterface
 	 * @param array|null $headers
 	 * @throws \InvalidArgumentException For invalid status code arguments
 	 */
-	public function create(string $body, int $statusCode = 200, array $headers = null)
+	public function create(string $body, int $statusCode = 200, ?array $headers = null)
 	{
 		return (new Response(
 			new StringStream($body), $statusCode, $headers
@@ -58,7 +58,7 @@ class ResponseFactory implements ResponseFactoryInterface
 	 * @param array|null $headers
 	 * @throws \InvalidArgumentException For invalid status code arguments
 	 */
-	public function json($body, int $statusCode = 200, array $headers = null)
+	public function json($body, int $statusCode = 200, ?array $headers = null)
 	{
 		return (new JsonResponse(
 			$body, $statusCode, $headers
@@ -73,7 +73,7 @@ class ResponseFactory implements ResponseFactoryInterface
 	 * @param array|null $headers
 	 * @throws \InvalidArgumentException For invalid status code arguments
 	 */
-	public function image(string $fileName, int $statusCode = 200, array $headers = null)
+	public function image(string $fileName, int $statusCode = 200, ?array $headers = null)
 	{
 		$headers = array_merge($headers ?? [], [
 			'Content-Disposition' => 'inline',
@@ -93,7 +93,7 @@ class ResponseFactory implements ResponseFactoryInterface
 	 * @param array|null $headers
 	 * @throws \InvalidArgumentException For invalid status code arguments
 	 */
-	public function download(string $fileName, int $statusCode = 200, array $headers = null)
+	public function download(string $fileName, int $statusCode = 200, ?array $headers = null)
 	{
 		$headers = array_merge($headers ?? [], [
 			'Content-Description' => 'File Transfer',

@@ -61,7 +61,7 @@ interface Authenticatable
      * @param string|null $token
      * @return mixed
      */
-    public function setUserToken(string $token = null);
+    public function setUserToken(?string $token = null);
 
     /**
      * Retrieves the field name for the user token.

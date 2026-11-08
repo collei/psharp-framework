@@ -177,7 +177,7 @@ class Response implements ResponseInterface
 	 * @param array|null $headers
 	 * @throws \InvalidArgumentException For invalid status code arguments
 	 */
-	public function __construct($body, int $statusCode = 200, array $headers = null)
+	public function __construct($body, int $statusCode = 200, ?array $headers = null)
 	{
 		if (!static::validateStatusCode($statusCode)) {
 			throw new InvalidArgumentException("Invalid status code: [$statusCode].");
@@ -338,7 +338,7 @@ class Response implements ResponseInterface
 	 *
 	 * @return bool
 	 */
-	public function isRedirect(string $location = null): bool
+	public function isRedirect(?string $location = null): bool
 	{
 		return in_array($this->statusCode, [201, 301, 302, 303, 307, 308])
 			&& (null === $location ?: $location == $this->getHeader('Location'));
@@ -701,7 +701,7 @@ class Response implements ResponseInterface
 	 * @param string|null $content
 	 * @return $this
 	 */
-	public function setContent(string $content = null)
+	public function setContent(?string $content = null)
 	{
 		$this->setBody(
 			new StringStream($content ?? '')
@@ -814,7 +814,7 @@ class Response implements ResponseInterface
 	 *
 	 * @return string|null
 	 */
-	public function getCharset(string $default = null)
+	public function getCharset(?string $default = null)
 	{
 		return $default;
 	}

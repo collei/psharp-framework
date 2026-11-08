@@ -81,7 +81,7 @@ class Stream implements StreamInterface
 	 *
 	 * @throws \InvalidArgumentException if the stream is not a stream resource
 	 */
-	public function __construct($stream, int $size = null, array $metadata = [])
+	public function __construct($stream, ?int $size = null, array $metadata = [])
 	{
 		$this->attach($stream, $size);
 		//
@@ -203,7 +203,7 @@ class Stream implements StreamInterface
 	 *
 	 * @throws \InvalidArgumentException if the stream is not a stream resource
 	 */
-	protected function attach($stream, int $size = null)
+	protected function attach($stream, ?int $size = null)
 	{
 		if (!is_resource($stream)) {
 			throw new \InvalidArgumentException('Stream must be a resource');

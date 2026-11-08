@@ -74,7 +74,7 @@ class NullStream extends Stream
 	 * @return never
 	 * @throws \LogicException upon call 
 	 */
-	protected function attach($stream, int $size = null)
+	protected function attach($stream, ?int $size = null)
 	{
 		throw new \LogicException('Cannot attach to a NullStream instance !');
 	}

@@ -222,7 +222,7 @@ abstract class Str
 	 * @param string $quoteType which types to consider (empty = all)
 	 * @return bool
 	 */
-	public static function isQuoted(string $str, string $quoteType = null)
+	public static function isQuoted(string $str, ?string $quoteType = null)
 	{
 		$first = substr($str, 0, 1);
 		$last = substr($str, -1);
@@ -891,7 +891,7 @@ abstract class Str
 	 * @param string $str
 	 * @param int $index
 	 * @param mixed $begin
-	 * @param mixed $end = null
+	 * @param ?mixed $end = null
 	 * @return string
 	 */
 	public static function getNamedArg(
@@ -965,7 +965,7 @@ abstract class Str
 	 * @param string|null $right
 	 * @return array
 	 */
-	public static function getVariables(string $text, string $left = null, string $right = null)
+	public static function getVariables(string $text, ?string $left = null, ?string $right = null)
 	{
 		if (empty($left) && empty($right)) {
 			list($left, $right) = array('{', '}');
@@ -1011,7 +1011,7 @@ abstract class Str
 	 * @param array|null $delimiters - If omitted, uses ['{','}']
 	 * @return string
 	 */
-	public static function replaceVariables(string $text, array $variables, array $delimiters = null)
+	public static function replaceVariables(string $text, array $variables, ?array $delimiters = null)
 	{
 		list($left, $right) = (is_array($delimiters) && count($delimiters) == 2)
 								? $delimiters
@@ -1037,7 +1037,7 @@ abstract class Str
 	 * @param int $limit
 	 * @return int
 	 */
-	public static function countLines(string $text, int $limit = null)
+	public static function countLines(string $text, ?int $limit = null)
 	{
 		if (!\is_null($limit) && ($limit > 0)) {
 			return 1 + \substr_count(
@@ -1179,10 +1179,10 @@ abstract class Str
 	 * Converts a wildcarded string to its regex version.
 	 *
 	 * @param string $wildcarded
-	 * @param string $delimiter = null
+	 * @param ?string $delimiter = null
 	 * @return string
 	 */
-	public static function wildcardToRegex(string $wildcarded, string $delimiter = null)
+	public static function wildcardToRegex(string $wildcarded, ?string $delimiter = null)
 	{
 		$regex = str_replace(['.','?','*'], ['\\.','.','.*'], $wildcarded);
 		//
@@ -1200,7 +1200,7 @@ abstract class Str
 	 * @param  string|null  $default
 	 * @return array<int, string|null>
 	 */
-	public static function parseCallback(string $callback, string $default = null)
+	public static function parseCallback(string $callback, ?string $default = null)
 	{
 		return static::contains($callback, '@') ? explode('@', $callback, 2) : [$callback, $default];
 	}
@@ -1230,7 +1230,7 @@ abstract class Str
 	 * @param  string  $subject
 	 * @return bool
 	 */
-	public static function is(string $wildcarded, string $subject, string $delimiter = null)
+	public static function is(string $wildcarded, string $subject, ?string $delimiter = null)
 	{
 		$regex = self::wildcardToRegex(
 			$wildcarded, (empty($delimiter) ? '/' : substr($delimiter,0,1))

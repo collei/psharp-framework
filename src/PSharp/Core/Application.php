@@ -84,7 +84,7 @@ final class Application
      * @param string|null $configFile - a JSON file name, relatively located to the app root folder.
      *                          Default is 'appsettings.json' 
      */
-    public function __construct(string $baseDir, string $configFile = null)
+    public function __construct(string $baseDir, ?string $configFile = null)
     {
         $this->baseDir = $baseDir;
         $this->config = $this->loadConfig($configFile ?? 'appsettings.json');
@@ -252,7 +252,7 @@ final class Application
      * @param string|PSharp\Http\Actions\ControllerBase|null $controller
      * @return $this
      */
-    public function mapController(string|ControllerBase $namespace = null)
+    public function mapController(string|ControllerBase|null $namespace = null)
     {
         $this->routeMapper->mapController($controller);
 
@@ -266,7 +266,7 @@ final class Application
      * @param string|null $namespace
      * @return $this
      */
-    public function mapControllers(string $namespace = null)
+    public function mapControllers(?string $namespace = null)
     {
         $this->routeMapper->mapControllers($this->baseDir, $namespace);
 
@@ -311,7 +311,7 @@ final class Application
      * @param string|null $namespace
      * @return $this
      */
-    public function mapConsoleCommands(string $namespace = null)
+    public function mapConsoleCommands(?string $namespace = null)
     {
         if ($this->isRunningOnConsoleMode()) {
             $this->commandHolder->mapCommands($this->baseDir, $namespace);
@@ -326,7 +326,7 @@ final class Application
      * @param PSharp\Core\Providers\ServiceProvider
      * @return $this
      */
-    public function provide(string $providerClass, string $alias = null)
+    public function provide(string $providerClass, ?string $alias = null)
     {
         if (! empty($alias)) {
             $this->container->alias($alias, $providerClass);
@@ -347,7 +347,7 @@ final class Application
      * @param PSharp\Core\Providers\ServiceProvider
      * @return $this
      */
-    public function provideIfExists(string $providerClass, string $alias = null)
+    public function provideIfExists(string $providerClass, ?string $alias = null)
     {
         if (! class_exists($providerClass)) {
             return $this;
@@ -398,7 +398,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function endpoint(string $method, string $path, Closure $action, string $name = null)
+    public function endpoint(string $method, string $path, Closure $action, ?string $name = null)
     {
         $this->mapper->addClosure($method, $path, $action, $name);
         
@@ -413,7 +413,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function get(string $path, Closure $action, string $name = null)
+    public function get(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('GET', $path, $action, $name);
     }
@@ -426,7 +426,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function post(string $path, Closure $action, string $name = null)
+    public function post(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('POST', $path, $action, $name);
     }
@@ -439,7 +439,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function put(string $path, Closure $action, string $name = null)
+    public function put(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('PUT', $path, $action, $name);
     }
@@ -452,7 +452,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function patch(string $path, Closure $action, string $name = null)
+    public function patch(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('PATCH', $path, $action, $name);
     }
@@ -465,7 +465,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function delete(string $path, Closure $action, string $name = null)
+    public function delete(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('DELETE', $path, $action, $name);
     }
@@ -478,7 +478,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function head(string $path, Closure $action, string $name = null)
+    public function head(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('HEAD', $path, $action, $name);
     }
@@ -491,7 +491,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function options(string $path, Closure $action, string $name = null)
+    public function options(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('OPTIONS', $path, $action, $name);
     }
@@ -504,7 +504,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function trace(string $path, Closure $action, string $name = null)
+    public function trace(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('TRACE', $path, $action, $name);
     }
@@ -517,7 +517,7 @@ final class Application
      * @param string|null $name 
      * @return $this
      */
-    public function any(string $path, Closure $action, string $name = null)
+    public function any(string $path, Closure $action, ?string $name = null)
     {
         return $this->endpoint('*', $path, $action, $name);
     }

@@ -190,7 +190,7 @@ class CommandHolder
 	 *
 	 *	@return	array
 	 */
-	public function available(string $prefix = null)
+	public function available(?string $prefix = null)
 	{
 		if (empty($prefix)) {
 			return array_keys($this->commands);

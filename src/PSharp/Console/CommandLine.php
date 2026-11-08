@@ -50,7 +50,7 @@ class CommandLine
 	 *
 	 *	@param	string	$commandLine = null
 	 */
-	public function __construct(string $commandLine = null)
+	public function __construct(?string $commandLine = null)
 	{
 		if (empty($commandLine)) {
 			$commandLine = Input::captureCommandLine();
@@ -293,7 +293,7 @@ class CommandLine
 	 *	@param	array	$arguments = null
 	 *	@return	\PSharp\Console\CommandLine
 	 */
-	public static function parse(string $command, array $arguments = null)
+	public static function parse(string $command, ?array $arguments = null)
 	{
 		$commandLine = new static($command);
 

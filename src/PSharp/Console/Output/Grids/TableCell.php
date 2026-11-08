@@ -37,7 +37,7 @@ class TableCell
 	 *
 	 *	@param	\PSharp\Geometry\Rect	$rect
 	 */
-	public function __construct(string $text = null, Rect $rect = null)
+	public function __construct(?string $text = null, ?Rect $rect = null)
 	{
 		$this->rect = $rect ?? Rect::new(0, 0, 0, 0);
 		$this->text = $text ?? "";

@@ -16,8 +16,8 @@ class Route
 	/**
 	 * Constructor.
 	 * 
-	 * @param string $rootPath = null
-	 * @param string $rootName = null
+	 * @param ?string $rootPath = null
+	 * @param ?string $rootName = null
 	 */
 	public function __construct(?string $rootPath = null, ?string $rootName = null)
 	{

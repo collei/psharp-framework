@@ -24,7 +24,7 @@ abstract class Compiler implements CompilerInterface
      * @param string|null $cachePath
      * @return void
      */
-    public function __construct(string $cachePath = null)
+    public function __construct(?string $cachePath = null)
     {
         if ($cachePath) {
             $this->cachePath = $cachePath;

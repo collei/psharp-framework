@@ -893,11 +893,11 @@ class Request implements RequestInterface, ServerRequestInterface
 	 * Returns the given $name field value from the POST and GET fields.
 	 * POST fields are priorized.
 	 *
-	 * @param string $name = null
+	 * @param ?string $name = null
 	 * @param mixed $default
 	 * @return mixed 
 	 */
-	public function input(string $name = null, $default = null)
+	public function input(?string $name = null, $default = null)
 	{
 		if (is_null($name)) {
 			if (is_array($this->parsedBodyContent)) {
@@ -931,7 +931,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	 * @param string $name
 	 * @return string|array|null
 	 */
-	public function server(string $name = null)
+	public function server(?string $name = null)
 	{
 		if ($name) {
 			return $this->serverParams[$name]
@@ -949,7 +949,7 @@ class Request implements RequestInterface, ServerRequestInterface
 	 * @param string $name
 	 * @return string|array|null
 	 */
-	public function query(string $name = null)
+	public function query(?string $name = null)
 	{
 		if ($name) {
 			return $this->queryStringParams[$name] ?? null;
@@ -961,11 +961,11 @@ class Request implements RequestInterface, ServerRequestInterface
 	/**
 	 * Alias of input()
 	 *
-	 * @param string $name = null
+	 * @param ?string $name = null
 	 * @param mixed $default
 	 * @return mixed 
 	 */
-	public function request(string $name = null, $default = null)
+	public function request(?string $name = null, $default = null)
 	{
 		return $this->input($name, $default);
 	}

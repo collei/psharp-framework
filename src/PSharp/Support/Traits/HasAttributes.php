@@ -27,7 +27,7 @@ trait HasAttributes
 	 * Obtain this attribute if set.
 	 * 
 	 * @param string $name
-	 * @param mixed $default = null
+	 * @param ?mixed $default = null
 	 * @return mixed
 	 */
 	public function attribute(string $name, $default = null)
@@ -49,7 +49,7 @@ trait HasAttributes
 	 * Obtain this attribute if set.
 	 * 
 	 * @param string $name
-	 * @param mixed $default = null
+	 * @param ?mixed $default = null
 	 * @return mixed
 	 */
 	public function getAttribute(string $name, $default = null)

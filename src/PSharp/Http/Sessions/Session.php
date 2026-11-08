@@ -69,10 +69,10 @@ class Session
 	/**
 	 *	Define the session name.
 	 *
-	 * @param string $name = null
+	 * @param ?string $name = null
 	 * @return void
 	 */
-	public static function setName(string $name = null)
+	public static function setName(?string $name = null)
 	{
 		if ($name) {
 			self::$name = $name;
@@ -104,7 +104,7 @@ class Session
 	/**
 	 *	(Re)starts the session.
 	 *
-	 * @param string $name = null
+	 * @param ?string $name = null
 	 * @return bool TRUE if the session has been initialized,
 	 * FALSE otherwise.
 	 */
@@ -243,7 +243,7 @@ class Session
 	 * Returns a value.
 	 *
 	 * @param string $name
-	 * @param mixed $default = null
+	 * @param ?mixed $default = null
 	 * @return mixed
 	 */
 	public function get(string $name, $default = null)
@@ -342,11 +342,11 @@ class Session
 	 * If $name is specified, behaves like pull() among the flashed values.
 	 * If not, returns an array of flash messages and erases them from the session.
 	 *
-	 * @param string|null $name = null
-	 * @param mixed $default = null
+	 * @param string|?null $name = null
+	 * @param ?mixed $default = null
 	 * @return string|array
 	 */
-	public function flashed(string $name = null, $default = null)
+	public function flashed(?string $name = null, $default = null)
 	{
 		if ($name) {
 			$flashed = $_SESSION['_flash'][$name] ?? $default;

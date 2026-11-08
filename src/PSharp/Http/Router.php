@@ -89,7 +89,7 @@ class Router
      * @param PSharp\Http\Endpoint|null &$endpoint - Returns the endpoint here, if matched
      * @return bool
      */
-    protected function matchesEndpoint(Request $request, array &$out = null, Endpoint &$endpoint = null)
+    protected function matchesEndpoint(Request $request, ?array &$out = null, ?Endpoint &$endpoint = null)
     {
         $requestUri = $request->getUri()->getPath();
         $requestMethod = $request->getMethod();
@@ -115,7 +115,7 @@ class Router
      * @param PSharp\Http\Endpoint|null &$endpoint - Returns the first-found endpoint here, if any
      * @return bool
      */
-    protected function hasDefaultEndpoints(Endpoint &$endpoint = null)
+    protected function hasDefaultEndpoints(?Endpoint &$endpoint = null)
     {
         foreach ($this->getEndpoints() as $end) if ($end->isDefaultWhenNotFound()) {
             $endpoint = $end;

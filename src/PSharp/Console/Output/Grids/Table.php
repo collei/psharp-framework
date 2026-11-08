@@ -207,7 +207,7 @@ class Table
 		Point $from,
 		int $width,
 		int $headerHeight = 1,
-		OutputFormatInterface $format = null
+		?OutputFormatInterface $format = null
 	) {
 		$this->origin = $from;
 		$this->width = $width;

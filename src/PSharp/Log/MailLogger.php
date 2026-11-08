@@ -47,7 +47,7 @@ class MailLogger extends Logger
      * @param string $name
      * @param array|null $settings
      */
-    public function __construct(string $name, array $settings = null)
+    public function __construct(string $name, ?array $settings = null)
     {
         $this->setName($name);
 

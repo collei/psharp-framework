@@ -43,9 +43,9 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 * 
 	 * @param Psharp\Http\Route $route
 	 * @param string $path = "/"
-	 * @param string $name = null
+	 * @param ?string $name = null
 	 */
-	public function __construct(Route $route, string $path = null, string $name = null)
+	public function __construct(Route $route, ?string $path = null, ?string $name = null)
 	{
 		parent::__construct($path, $name);
 
@@ -61,9 +61,9 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 * @param string $method
 	 * @param string $path
 	 * @param Closure $action
-	 * @param string $name = null
+	 * @param ?string $name = null
 	 */
-	public static function fromClosure(string $method, string $path, Closure $action, string $name = null)
+	public static function fromClosure(string $method, string $path, Closure $action, ?string $name = null)
 	{
 		$self = new static(new Route('', ''), $path, $name);
 
@@ -215,7 +215,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 * @param array &$values = null
 	 * @return bool
 	 */
-	public function matchesUri(string $requestUri, array &$values = null)
+	public function matchesUri(string $requestUri, ?array &$values = null)
 	{
 		if (preg_match($this->regex, $requestUri, $out) === 1) {
 			$values = [];
@@ -242,7 +242,7 @@ class Endpoint extends HttpMethodBase implements EndpointInterface
 	 * Coerces value to the specified type.
 	 * 
 	 * @param string $value
-	 * @param string|null $type = null
+	 * @param string|?null $type = null
 	 * @return mixed
 	 */
 	private function coerceType(string $value, $type = null)

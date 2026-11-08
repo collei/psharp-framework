@@ -54,10 +54,10 @@ if (! function_exists('app')) {
     /**
      * Returns the app instance or an instance of the given class (if any) from the container.
      * 
-     * @param string $class = null
+     * @param ??string $class = null
      * @return PSharp\Core\Application
      */
-    function app(string $class = null)
+    function app(?string $class = null)
     {
         if (! empty($class)) {
             return app()->container()->get($class);
@@ -106,7 +106,7 @@ if (! function_exists('view')) {
      * @param array $mergeData
      * @return PSharp\View\View|PSharp\View\ViewFactory
      */
-    function view(string $view = null, $data = [], array $mergeData = [])
+    function view(?string $view = null, $data = [], array $mergeData = [])
     {
         $factory = app()->container()->get(PSharp\View\Factory::class);
 
@@ -125,7 +125,7 @@ if (! function_exists('db')) {
      * @param string|null $connectionName
      * @return PSharp\DB\Connection
      */
-    function db(string $connectionName = null)
+    function db(?string $connectionName = null)
     {
         return app()->container()
                     ->get(PSharp\DB\DatabaseManager::class)

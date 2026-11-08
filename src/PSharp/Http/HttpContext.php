@@ -30,7 +30,7 @@ class HttpContext extends Context
      * @param PSharp\Http\Response $response
      * @param PSharp\Logging\Logger|null $logger
      */
-    public function __construct(Request $request, Response $response, Logger $logger = null)
+    public function __construct(Request $request, Response $response, ?Logger $logger = null)
     {
         $this->request = $request;
         $this->response = $response;

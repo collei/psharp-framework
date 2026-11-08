@@ -475,7 +475,7 @@ class ConsoleOutput extends Terminal
 	 *	@param	int		$line = null
 	 *	@return	void
 	 */
-	public static function clearLine(int $line = null)
+	public static function clearLine(?int $line = null)
 	{
 		if (null !== $line) {
 			$line = \abs($line);
