@@ -1,5 +1,5 @@
 <?php
-namespace Zelatus\Support;
+namespace PSharp\Support;
 
 /**
  * Embodies a mime-type repository.

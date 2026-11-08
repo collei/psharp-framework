@@ -1,5 +1,5 @@
 <?php
-namespace Zelatus\Support;
+namespace PSharp\Support;
 
 use ArrayObject as BaseArrayObject;
 use JsonSerializable;
