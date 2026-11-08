@@ -143,7 +143,7 @@ class Signature
 				$isOptional = ($item['optional'] ?? null) === '?';
 				$isMultiple = ($item['multiple'] ?? null) === '*';
 
-				if ($default = trim($item['default'] ?? null)) {
+				if ($default = trim($item['default'] ?? '')) {
 					if (Str::isQuoted($default)) {
 						$default = trim($default, '\'"');
 					} elseif (is_numeric($default)) {
